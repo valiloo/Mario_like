@@ -1,0 +1,34 @@
+.col {
+    display:inline-flex;
+
+}
+div {
+    height: 32px;    
+}
+
+.game-view {
+    overflow: scroll;
+    height : 710px;
+    width : 4100px;
+    z-index: 1;
+}
+
+.map {
+    overflow: visible;
+    z-index: 1;
+}
+
+.Player {
+    height : 53px;
+    width: 45px;
+    background: url('/src/assets/textures/perso1.png');
+    z-index: 2;
+}
+
+
+
+
+
+
+
+
