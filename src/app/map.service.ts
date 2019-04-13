@@ -88,7 +88,7 @@ export class MapTheme {
 
     this.textures[D4] = "assets/textures/mFlagMidShield.png" // bloc mur + bouclier //
     this.textures[M1] = "assets/textures/mFlagBasFlag.png" //bmpc drapeau partie basse basse //
-    this.textures[M2] = "assets/textures/mFlagMidWall.png" 
+    this.textures[M2] = "assets/textures/mFlagMidWall.png"
     this.textures[M3] = "assets/textures/mFlagTopWall.png"
 
     this.textures[PD] = "assets/textures/haut_coldroit.png"
@@ -100,6 +100,7 @@ export class MapTheme {
     this.textures[K2] = "assets/textures/WallKnightHaut.png"
 
     this.textures[S1] = "assets/textures/Shield2.png"
+
   }
 
   getTexture() {
@@ -116,7 +117,13 @@ export class MapService {
 
 
   public map = [
-
+    [VI],
+    [VI],
+    [VI],
+    [VI],
+    [VI],
+    [VI],
+    [VI],
     [VI],
     [VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI],
     [VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI],

@@ -1,15 +1,30 @@
 import { Injectable } from '@angular/core';
-import { GamestateService } from './gamestate.service';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT } from './gamestate.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameloopService {
-animationMove: boolean
+
+public move: boolean
 
 
 
-  constructor() { }
+  constructor(public gameService : GamestateService) { }
+
+  start(){
+    
+    if ((this.gameService.move === MOVE_RIGHT)||(this.gameService.move === MOVE_LEFT)){
+     this.move = true
+    }
+    else{
+      this.move = false
+    }
 
 
+  }
+refresh(){
+  return this.move
+}
 }

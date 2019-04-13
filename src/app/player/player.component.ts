@@ -1,5 +1,6 @@
-import { Component, OnInit, HostListener,HostBinding, ElementRef } from '@angular/core';
+import { Component, OnInit, HostListener,HostBinding, ElementRef, AfterViewInit } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT} from '../gamestate.service';
+import { GameloopService } from '../gameloop.service';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -14,27 +15,32 @@ export enum KEY_CODE {
 
 })
 
-export class PlayerComponent implements OnInit {
+export class PlayerComponent implements OnInit, AfterViewInit {
 
 
 
+constructor(public gameService : GamestateService, public element:ElementRef, public loop : GameloopService) {}
 
-  constructor(public gameService : GamestateService, public element:ElementRef) {}
-
-
+public move : any
 
   @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
 
     event.preventDefault()
 
     if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
-      this.gameService.move = MOVE_RIGHT
+
+      this.gameService.move = 1
       console.log(this.gameService.move)
+      console.log(this.loop.move)
 
     }
+
     if (event.keyCode === KEY_CODE.LEFT_ARROW){
-      this.gameService.move = MOVE_LEFT
+
+      this.gameService.move = 2
       console.log(this.gameService.move)
+      console.log(this.loop.move)
+
     }
 
   }
@@ -44,11 +50,23 @@ export class PlayerComponent implements OnInit {
     if (event.keyCode === KEY_CODE.RIGHT_ARROW || event.keyCode === KEY_CODE.LEFT_ARROW) {
      this.gameService.move = 0
      console.log(this.gameService.move)
+     console.log(this.loop.move)
     }
   }
 
+  getMove(){
+  this.loop.start()
+  this.loop.refresh()
+
+  }
 
   ngOnInit() {
+    this.getMove()
+    this.loop.start()
     
+  }
+
+  ngAfterViewInit(){
+
   }
 }

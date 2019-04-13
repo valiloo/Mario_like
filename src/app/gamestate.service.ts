@@ -9,13 +9,15 @@ export const MOVE_LEFT = 2
 })
 export class GamestateService {
 
-move: number  = 0
+public move : number
 
 
 
   constructor() { }
 
+setMove(){
+  return this.move
 
-
+}
 
 }
