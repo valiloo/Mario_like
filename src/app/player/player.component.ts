@@ -15,7 +15,7 @@ export enum KEY_CODE {
 
 })
 
-export class PlayerComponent implements OnInit, AfterViewInit {
+export class PlayerComponent implements OnInit {
 
 
 
@@ -29,7 +29,7 @@ public move : any
 
     if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
 
-      this.gameService.move = 1
+      this.gameService.move = MOVE_RIGHT
       console.log(this.gameService.move)
       console.log(this.loop.move)
 
@@ -37,7 +37,7 @@ public move : any
 
     if (event.keyCode === KEY_CODE.LEFT_ARROW){
 
-      this.gameService.move = 2
+      this.gameService.move = MOVE_LEFT
       console.log(this.gameService.move)
       console.log(this.loop.move)
 
@@ -50,23 +50,26 @@ public move : any
     if (event.keyCode === KEY_CODE.RIGHT_ARROW || event.keyCode === KEY_CODE.LEFT_ARROW) {
      this.gameService.move = 0
      console.log(this.gameService.move)
-     console.log(this.loop.move)
     }
   }
 
-  getMove(){
-  this.loop.start()
-  this.loop.refresh()
-
-  }
 
   ngOnInit() {
-    this.getMove()
-    this.loop.start()
+
+    setInterval(() => {
+      this.loop.start();
+  }, 1000/60);
+
+
+  }
+
+      
+  }
     
-  }
+  
 
-  ngAfterViewInit(){
 
-  }
-}
+
+
+ 
+
