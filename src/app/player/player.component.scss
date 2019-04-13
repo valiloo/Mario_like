@@ -14,18 +14,9 @@
     width: 36px;
     left: 15px;
     background: url('/assets/Sprites/sprite_course_perso/perso_debout.png/');
-    transform: scaleX(-1);
-  
-}
-.player-left {
-    animation-name: mouvement-left;
-    animation-duration: 1s;
+    transform: scaleX(-1); 
 }
 
-.player-right {
-    animation-name: mouvement-right;
-    animation-duration: 1s;
-}
 @keyframes movement {
 
 from {background-position : 0px;}
@@ -34,46 +25,4 @@ to {background-position: -318px;}
 
 
 }
-@keyframes mouvement-left {
-    0% {
-        top: 540px;
-        height: 45px;
-        width: 53px;
-        background-image: url('/assets/Sprites/sprite_course_perso/perso1.png')
-    }
 
-    20% {
-        top: 540px;
-        height: 45px;
-        width: 53px;
-        background-image: url('/assets/Sprites/sprite_course_perso/perso2.png')
-    }
-
-    40% {
-        top: 540px;
-        height: 45px;
-        width: 53px;
-        background-image: url('/assets/Sprites/sprite_course_perso/perso3.png')
-    }
-
-    60% {
-        top: 540px;
-        height: 45px;
-        width: 53px;
-        background-image: url('/assets/Sprites/sprite_course_perso/perso4.png')
-    }
-
-    80% {
-        top: 540px;
-        height: 45px;
-        width: 53px;
-        background-image: url('/assets/Sprites/sprite_course_perso/perso5.png')
-    }
-
-    100% {
-        top: 540px;
-        height: 45px;
-        width: 53px;
-        background-image: url('/assets/Sprites/sprite_course_perso/perso6.png')
-    }
-}
