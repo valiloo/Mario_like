@@ -1,1 +1,3 @@
-<div class="player player-left player-right"></div>
+
+
+<div (keydown)="handleMovement($event)" [ngClass]="{playerMovement: true, 'player': false}"></div>

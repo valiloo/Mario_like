@@ -1,11 +1,19 @@
+.playerMovement {
+    position: absolute;
+    top: 508px;
+    height: 45px;
+    width: 53px;
+    background: url('/assets/textures/sprite_course.png/');
+    animation: movement 0.7s steps(6) infinite; 
+}
 .player {
     position: absolute;
-    top: 523px;
-    height: 63px;
-    width: 35px;
-    background-image: url('/assets/Sprites/sprite_course_perso/perso_debout.png');  
+    top: 492px;
+    height: 60px;
+    width: 36px;
+    background: url('/assets/Sprites/sprite_course_perso/perso_debout.png/');
+  
 }
-
 .player-left {
     animation-name: mouvement-left;
     animation-duration: 1s;
@@ -15,7 +23,14 @@
     animation-name: mouvement-right;
     animation-duration: 1s;
 }
+@keyframes movement {
 
+from {background-position : 0px;}
+to {background-position: -318px;}
+
+
+
+}
 @keyframes mouvement-left {
     0% {
         top: 540px;

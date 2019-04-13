@@ -5,10 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class StateBoxService {
 
-player = {
-  moveLeft : false
-  moveRight: true
-}
+
 
   constructor() { }
 }
