@@ -1,3 +1,5 @@
 
 
-<div [ngClass]="loop.move ? 'playerMovement' : 'player'" [ngStyle]="{'transform': 'translateX(' + loop.xAxis + 'px) scaleX('+ loop.scaleX + ')'}"></div>
+<div [ngClass]="loop.move === 1 ? 'playerMovement' : 'player'"
+     [ngStyle]="{'transform': 'translateX(' + loop.xAxis + 'px) translateY('+ loop.yAxis +'px) scaleX('+ loop.scaleX + ')'}"
+     [ngStyle]="{'top': loop.yAxis + 'px'}"></div>

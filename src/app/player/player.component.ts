@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener,HostBinding, ElementRef, AfterViewInit } from '@angular/core';
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD} from '../gamestate.service';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD} from '../gamestate.service';
 import { GameloopService } from '../gameloop.service';
 
 export enum KEY_CODE {
@@ -17,13 +17,13 @@ export enum KEY_CODE {
 
 export class PlayerComponent implements OnInit {
 
-refresh : any
+public refresh : any
 
 constructor(public gameService : GamestateService, public element:ElementRef, public loop : GameloopService) {}
 
 public move : any
 
-
+  @HostBinding('style.top') yPos ="700"
   @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
 
     event.preventDefault()
@@ -43,6 +43,12 @@ public move : any
 
     }
 
+    if (event.keyCode === KEY_CODE.SPACE){
+
+      this.gameService.yVelocity = MOVE_UPWARD
+      console.log(this.loop.yAxis)
+    }
+
   }
 
   @HostListener('window:keyup', [('$event')]) stopMovement(event: KeyboardEvent) {
@@ -57,7 +63,7 @@ public move : any
 
   ngOnInit() {
 
-    this.refresh = () => {
+    this.refresh = (timestamp) => {
       this.loop.start();
       requestAnimationFrame(this.refresh)
   }

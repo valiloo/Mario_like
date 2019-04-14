@@ -1,6 +1,7 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD } from './gamestate.service';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from './gamestate.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { MapTheme, MapService, VI } from './map.service';
 
 
 
@@ -10,39 +11,62 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class GameloopService {
 
+  public canGoThrough
+  public gravity
+  public canMove
+  public canJump
 
 
-public move : boolean
-public xAxis : number = 0
-public yAxis : number
-public scaleX: number
 
-  constructor(public gameService : GamestateService) { }
+  public move: number
+  public xAxis: number = 0
+  public yAxis: number = 0
+  public scaleX: number
 
-  start(): any{
+  constructor(public gameService: GamestateService,public mapTheme: MapTheme, public mapService: MapService) { }
 
-    if(((this.gameService.move === MOVE_RIGHT)||(this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_FORWARD){
-        this.scaleX = -1
-        this.xAxis += 3
-        this.move = true 
-          
+  start(): any {
+
+    this.canMove = () => {
+
+
         
-    }
 
-    if(((this.gameService.move === MOVE_RIGHT)||(this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_BACKWARD){
+          if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_FORWARD) {
 
-      this.scaleX = 1
-      this.xAxis -= 3
-      this.move = true
-    }
+            this.scaleX = -1
+            this.xAxis += 3
+            this.move = 1
 
 
-    else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
+      }
+
+          if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_BACKWARD) {
+
+            this.scaleX = 1
+            this.xAxis -= 3
+            this.move = 1
+
+      }
+
+
+          else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
+
+           this.move = 0
+
+      }
       
-      this.move = false
-
     }
-   
-  }
+  
+    this.canMove()
+ 
+    for(let x= 0; x < this.mapService.map.length ; x++){
+      for(let y= 0; y < this.mapService.map[x].length; y++){
 
+        if(this.mapTheme.textures[y] === VI){
+            this.yAxis +=5
+        }
+      }
+    }
+    }
 }
