@@ -60,7 +60,7 @@ export class GameloopService {
           if (this.gameService.yVelocity === MOVE_UPWARD){
 
             this.jump = 45
-            this.yAxis -= 170
+            this.yAxis -= 230
             this.gameService.yVelocity = 0
 
           }
