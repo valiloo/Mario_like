@@ -43,12 +43,12 @@ public move : any
 
     }
 
-     if (event.keyCode === KEY_CODE.SPACE){
+    //  if (event.keyCode === KEY_CODE.SPACE){
 
-       this.gameService.yVelocity = MOVE_UPWARD
-       this.loop.jump = 1
-       console.log(this.loop.yAxis)
-     }
+    //    this.gameService.yVelocity = MOVE_UPWARD
+    //    this.loop.jump = 1
+    //    console.log(this.loop.yAxis)
+    //  }
 
   }
 
@@ -62,9 +62,8 @@ public move : any
 
     if(event.keyCode === KEY_CODE.SPACE){
 
-      this.gameService.yVelocity = 0
-      this.loop.jump = 0
-     
+      this.gameService.yVelocity = MOVE_UPWARD
+ 
     }
     
   }
