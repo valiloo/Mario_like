@@ -12,9 +12,7 @@ import { MapTheme, MapService, VI } from './map.service';
 export class GameloopService {
 
   public canGoThrough
-  public gravity
   public canMove
-  public canJump
 
 
   public jump: number = 0
@@ -62,7 +60,7 @@ export class GameloopService {
           if (this.gameService.yVelocity === MOVE_UPWARD){
 
             this.jump = 50
-            this.yAxis -= 150
+            this.yAxis -= 170
             this.gameService.yVelocity = 0
 
           }
@@ -76,7 +74,9 @@ export class GameloopService {
     }
   
     this.canMove()
- 
+    
+    this.canGoThrough = () => {
+
     for(let x= 0; x < this.mapService.map.length ; x++){
       for(let y= 0; y < this.mapService.map[x].length; y++){
 
@@ -86,4 +86,5 @@ export class GameloopService {
       }
     }
     }
+  }
 }
