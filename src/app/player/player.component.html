@@ -1,5 +1,10 @@
 
 
-<div [ngClass]="loop.move === 1 ? 'playerMovement' : 'player'"
+<div  
+     [ngClass]="{
+        'player' : loop.move !== 1 && loop.jump !== 1,
+        'playerMovement' : loop.move === 1 ,
+        'playerJump' : loop.jump === 1
+     }"
      [ngStyle]="{'transform': 'translateX(' + loop.xAxis + 'px) translateY('+ loop.yAxis +'px) scaleX('+ loop.scaleX + ')'}"
      [ngStyle]="{'top': loop.yAxis + 'px'}"></div>

@@ -17,12 +17,26 @@
     transform: scaleX(-1); 
 }
 
+.playerJump{
+    position : absolute;
+    top: 587px;
+    height:66px;
+    width: 79px;
+    transform: scaleX(-1);
+    background: url('/assets/textures/saut.png/');
+    animation : jump 0.5s steps(9) infinite;
+}
+
 @keyframes movement {
 
 from {background-position : 0px;}
 to {background-position: -318px;}
 
+}
 
+@keyframes jump {
 
+    from{background-position : 0px;}
+    to{background-position: -710px}
 }
 

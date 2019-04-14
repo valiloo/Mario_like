@@ -23,7 +23,7 @@ constructor(public gameService : GamestateService, public element:ElementRef, pu
 
 public move : any
 
-  @HostBinding('style.top') yPos ="700"
+  
   @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
 
     event.preventDefault()
@@ -43,11 +43,12 @@ public move : any
 
     }
 
-    if (event.keyCode === KEY_CODE.SPACE){
+     if (event.keyCode === KEY_CODE.SPACE){
 
-      this.gameService.yVelocity = MOVE_UPWARD
-      console.log(this.loop.yAxis)
-    }
+       this.gameService.yVelocity = MOVE_UPWARD
+       this.loop.jump = 1
+       console.log(this.loop.yAxis)
+     }
 
   }
 
@@ -58,6 +59,14 @@ public move : any
      this.gameService.move = 0
  
     }
+
+    if(event.keyCode === KEY_CODE.SPACE){
+
+      this.gameService.yVelocity = 0
+      this.loop.jump = 0
+     
+    }
+    
   }
 
 

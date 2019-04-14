@@ -17,7 +17,7 @@ export class GameloopService {
   public canJump
 
 
-
+  public jump: number = 0
   public move: number
   public xAxis: number = 0
   public yAxis: number = 0
@@ -29,8 +29,12 @@ export class GameloopService {
 
     this.canMove = () => {
 
+          if (this.yAxis < 0){
 
-        
+
+            this.yAxis += 5
+
+          }
 
           if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_FORWARD) {
 
@@ -49,6 +53,12 @@ export class GameloopService {
 
       }
 
+          if (this.gameService.yVelocity === MOVE_UPWARD){
+
+            this.jump = 1
+            this.yAxis -= 10
+
+          }
 
           else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
 
