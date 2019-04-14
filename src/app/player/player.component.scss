@@ -24,7 +24,7 @@
     width: 79px;
     transform: scaleX(-1);
     background: url('/assets/textures/saut.png/');
-    animation : jump 0.9s steps(9) infinite;
+    animation : jump 0.5s steps(9);
 }
 
 @keyframes movement {
