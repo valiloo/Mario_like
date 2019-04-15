@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { GamestateService } from '../gamestate.service';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, DONT_MOVE } from '../gamestate.service';
 
 
 export enum KEY_CODE {
@@ -17,13 +17,6 @@ export enum KEY_CODE {
 
 export class PlayerComponent implements OnInit {
 
-
-    positionX: number = 0
-    positionY: number = 0
-    moveLeft: boolean
-    moveRight: boolean 
-
-
   constructor(public gameService : GamestateService) {}
 
   @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
@@ -31,43 +24,30 @@ export class PlayerComponent implements OnInit {
     event.preventDefault()
 
     if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
-      this.moveRight == true
-      this.moveLeft == false
-      console.log(this.moveRight)
-      console.log(this.moveLeft)
-
-    }
-
-    if (this.moveRight === true && this.moveLeft === false) {
-      this.positionX += 1
-      
+      this.gameService.move = MOVE_RIGHT
+      console.log(this.gameService.move)
     }
 
     if (event.keyCode === KEY_CODE.LEFT_ARROW) {
-      this.moveLeft == true
-      this.moveRight == false
-      console.log(this.moveRight)
-      console.log(this.moveLeft)
+      this.gameService.move = MOVE_LEFT
+      console.log(this.gameService.move)
     }
-
-    if (this.moveLeft == true && this.moveRight == false) {
-      this.positionX -= 1
-      
-    }
-
   }
 
   @HostListener('window:keyup', [('$event')]) stopMovement(event: KeyboardEvent) {
 
-    if (event.keyCode === KEY_CODE.RIGHT_ARROW || event.keyCode === KEY_CODE.LEFT_ARROW) {
-     
+    if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
+     this.gameService.move = DONT_MOVE
+     console.log(this.gameService.move)
+    }
+
+    if (event.keyCode === KEY_CODE.LEFT_ARROW) {
+      this.gameService.move = DONT_MOVE
+      console.log(this.gameService.move)
     }
   }
-
-  sendPlayer(){
-    
-  }
-
+  
+  
   ngOnInit() {
     
   }
