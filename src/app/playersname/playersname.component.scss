@@ -1,0 +1,110 @@
+@font-face {
+    font-family: 'menu';
+    src: url('/assets/Police/superPolice.ttf');
+}
+
+h1{
+    font-size: 900%;
+    font-family: 'menu';
+    text-align: center;
+    text-shadow:1px 1px 5px #ca0d59;
+    color: #001233;
+   opacity: .8;
+  }
+  .background {
+    
+  background: url('/assets/textures/fond1.png')  ;
+    
+      /* On met en place le fond d'écran */
+    min-height: 100%;
+      min-width: 1024px;
+      /* On indique un redimensionnement proportionnel */
+      width: 100%;
+      height: auto;
+      /* L'image est positionnée en haut à gauche */
+      position: fixed;
+      top: 0;
+      left: 0;
+      }
+     
+      .buttonBack, .buttonPlay {
+        border-radius:12px 0 12px 0;
+        background-color:#001233;
+        border:none;
+        color:#d30255;
+        font-family: 'menu';
+        font-size: 50px;
+        padding:6px 20px 20px 20px;
+        text-align: center;
+        width: 400px;
+        opacity: .8;
+        margin-top: 200px;
+        -webkit-transition: all 200ms ease-in;
+       -webkit-transform: scale(1); 
+       -ms-transition: all 200ms ease-in;
+       -ms-transform: scale(1); 
+       -moz-transition: all 200ms ease-in;
+       -moz-transform: scale(1);
+       transition: all 200ms ease-in;
+       transform: scale(1); 
+        
+   }
+   
+   .buttonBack:hover, .buttonPlay:hover{
+   z-index: 2;
+   -webkit-transition: all 200ms ease-in;
+   -webkit-transform: scale(1.1);
+   -ms-transition: all 200ms ease-in;
+   -ms-transform: scale(1.1); 
+   -moz-transition: all 200ms ease-in;
+   -moz-transform: scale(1.1);
+   transition: all 200ms ease-in;
+   transform: scale(1.1);
+       background-color: #072b6d;
+
+   }
+.buttonBack{
+   margin-left: 2%;
+    }  
+  .buttonPlay{
+    margin-left: 44%;
+  }     
+
+  
+.curseur{ 
+
+      cursor: url('/assets/textures/Obsidian.cur'), pointer;
+    }
+    
+ .playername{
+    border-radius:12px 0 12px 0;
+    margin-left: 43%;
+    opacity: .9;
+    height: 50px;
+    font-size: 30px;
+    width: 200px;
+    max-width: 200px;   
+    border: solid 1px black;
+
+    }
+
+
+
+    .walk{
+
+      animation: movement .7s steps(6) infinite;
+     background: url('/assets/textures/sprite_course.png');
+      margin-left: 47%;
+      margin-top: -80px;
+      position: absolute;
+      top: 51.5%;
+      width: 53px;
+      height: 45px;
+             
+      }
+
+      
+@keyframes movement {
+  from {background-position: 0px}
+  to {background-position: -318px}
+                      }
