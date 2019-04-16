@@ -11,6 +11,7 @@ import { MapService } from './map.service';
 import { PlayerComponent } from './player/player.component';
 import { PlayerMovementDirective } from './player-movement.directive';
 import { GamestateService } from './gamestate.service';
+import { GameloopService } from './gameloop.service';
 
 
 @NgModule({
@@ -29,7 +30,7 @@ import { GamestateService } from './gamestate.service';
 
    
   ],
-  providers: [MapService, GamestateService],
+  providers: [MapService, GamestateService, GameloopService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

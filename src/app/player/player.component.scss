@@ -1,61 +1,42 @@
+.playerMovement {
+    position: absolute;
+    top: 602px;
+    height: 45px;
+    width: 53px;
+    background: url('/assets/textures/sprite_course.png/');
+    animation: movement 0.7s steps(6) infinite; 
+    transform : scaleX(-1)
+}
 .player {
     position: absolute;
-    top: 523px;
-    height: 63px;
-    width: 35px;
-    background-image: url('/assets/Sprites/sprite_course_perso/perso_debout.png');  
+    top: 587px;
+    height: 60px;
+    width: 36px;
+    left: 15px;
+    background: url('/assets/Sprites/sprite_course_perso/perso_debout.png/');
+    transform: scaleX(-1); 
 }
 
-.player-left {
-    animation-name: mouvement-left;
-    animation-duration: 1s;
+.playerJump{
+    position : absolute;
+    top: 587px;
+    height:66px;
+    width: 79px;
+    transform: scaleX(-1);
+    background: url('/assets/textures/saut.png/');
+    animation : jump 0.9s steps(9);
 }
 
-.player-right {
-    animation-name: mouvement-right;
-    animation-duration: 1s;
+@keyframes movement {
+
+from {background-position : 0px;}
+to {background-position: -318px;}
+
 }
 
-@keyframes mouvement-left {
-    0% {
-        top: 540px;
-        height: 45px;
-        width: 53px;
-        background-image: url('/assets/Sprites/sprite_course_perso/perso1.png')
-    }
+@keyframes jump {
 
-    20% {
-        top: 540px;
-        height: 45px;
-        width: 53px;
-        background-image: url('/assets/Sprites/sprite_course_perso/perso2.png')
-    }
-
-    40% {
-        top: 540px;
-        height: 45px;
-        width: 53px;
-        background-image: url('/assets/Sprites/sprite_course_perso/perso3.png')
-    }
-
-    60% {
-        top: 540px;
-        height: 45px;
-        width: 53px;
-        background-image: url('/assets/Sprites/sprite_course_perso/perso4.png')
-    }
-
-    80% {
-        top: 540px;
-        height: 45px;
-        width: 53px;
-        background-image: url('/assets/Sprites/sprite_course_perso/perso5.png')
-    }
-
-    100% {
-        top: 540px;
-        height: 45px;
-        width: 53px;
-        background-image: url('/assets/Sprites/sprite_course_perso/perso6.png')
-    }
+    from{background-position : 0px;}
+    to{background-position: -710px}
 }
+
