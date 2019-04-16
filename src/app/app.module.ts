@@ -1,7 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+
 import { MenuComponent } from './menu/menu.component'
 import {PlayersnameComponent } from './playersname/playersname.component'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MarioComponent } from './mario/mario.component';
@@ -13,6 +17,10 @@ import { PlayerMovementDirective } from './player-movement.directive';
 import { SettingsComponent } from './settings/settings.component'
 import { ROUTES } from './map/app-routes'
 import { RouterModule } from '@angular/router'
+import { GamestateService } from './gamestate.service';
+import { GameloopService } from './gameloop.service';
+
+
 
 @NgModule({
   declarations: [
@@ -30,10 +38,11 @@ import { RouterModule } from '@angular/router'
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(ROUTES),
+    BrowserAnimationsModule
 
-   
+
   ],
-  providers: [MapService],
+  providers: [MapService, GamestateService, GameloopService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
