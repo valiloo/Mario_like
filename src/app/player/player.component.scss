@@ -1,0 +1,42 @@
+.playerMovement {
+    position: absolute;
+    top: 602px;
+    height: 45px;
+    width: 53px;
+    background: url('/assets/textures/sprite_course.png/');
+    animation: movement 0.7s steps(6) infinite; 
+    transform : scaleX(-1)
+}
+.player {
+    position: absolute;
+    top: 587px;
+    height: 60px;
+    width: 36px;
+    left: 15px;
+    background: url('/assets/Sprites/sprite_course_perso/perso_debout.png/');
+    transform: scaleX(-1); 
+}
+
+.playerJump{
+    position : absolute;
+    top: 587px;
+    height:66px;
+    width: 79px;
+    transform: scaleX(-1);
+    background: url('/assets/textures/saut.png/');
+    animation : jump 0.9s steps(9);
+}
+
+@keyframes movement {
+
+from {background-position : 0px;}
+to {background-position: -318px;}
+
+}
+
+@keyframes jump {
+
+    from{background-position : 0px;}
+    to{background-position: -710px}
+}
+
