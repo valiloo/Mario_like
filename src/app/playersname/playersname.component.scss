@@ -64,13 +64,18 @@ h1{
 
    }
 .buttonBack{
-   margin-left: 2%;
     }  
   .buttonPlay{
-    margin-left: 44%;
+ 
   }     
 
-  
+.flexbox{
+  margin-left: 20px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .curseur{ 
 
       cursor: url('/assets/textures/Obsidian.cur'), pointer;
