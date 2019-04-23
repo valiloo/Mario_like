@@ -43,7 +43,7 @@ export class GameloopService {
           if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_FORWARD) {
 
             this.scaleX = -1
-            this.xAxis += 10
+            this.xAxis += 2
             this.move = 1
 
 
@@ -60,8 +60,8 @@ export class GameloopService {
           if (this.gameService.yVelocity === MOVE_UPWARD){
 
             this.jump = 45
-            this.yAxis -= 230
-            this.gameService.yVelocity = 0
+            this.yAxis -= 15
+            
 
           }
 
