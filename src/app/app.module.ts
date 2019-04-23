@@ -19,6 +19,7 @@ import { ROUTES } from './map/app-routes'
 import { RouterModule } from '@angular/router'
 import { GamestateService } from './gamestate.service';
 import { GameloopService } from './gameloop.service';
+import { GameOverComponent } from './game-over/game-over.component';
 
 
 
@@ -33,6 +34,7 @@ import { GameloopService } from './gameloop.service';
     PlayersnameComponent,
     SettingsComponent,
     MenuComponent,
+    GameOverComponent,
   ],
   imports: [
     BrowserModule,
