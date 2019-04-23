@@ -25,7 +25,6 @@ export class PlayerComponent implements OnInit {
 
 constructor(public gameService : GamestateService, public element:ElementRef, public loop : GameloopService, public mapService:MapService) {
 
-
 }
 
 public refresh : any
@@ -39,8 +38,6 @@ public y : number
   @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
 
     event.preventDefault()
-
-
 
     if (event.keyCode === KEY_CODE.RIGHT_ARROW ) {
 
@@ -56,11 +53,13 @@ public y : number
       this.gameService.move = MOVE_LEFT
       console.log(this.x)
 
-    
+
 
     }
 
      if (event.keyCode === KEY_CODE.SPACE){
+
+        
           
        this.gameService.yVelocity = MOVE_UPWARD
        
@@ -93,13 +92,6 @@ public y : number
 
     this.loop.start()
     
-
-
-
-      
-  }
-
-
 
   }
     
