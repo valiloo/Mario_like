@@ -99,17 +99,11 @@ public y : number
   ngOnInit() {
 
     this.loop.start()
-    
-
-
 
       
   }
 
-  abstract class ViewportScroller {
-    scrollToAnchor(camera){
 
-    }
 
   }
     
