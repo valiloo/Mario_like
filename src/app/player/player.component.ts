@@ -26,10 +26,6 @@ export class PlayerComponent implements OnInit {
 constructor(public gameService : GamestateService, public element:ElementRef, public loop : GameloopService, public mapService:MapService) {
 
 
-  this.y = this.loop.yAxis
-  this.x = this.loop.xAxis
-
-  this.myPosition = `top(${this.y} left(${this.x}))`
 }
 
 public refresh : any
@@ -43,6 +39,13 @@ public y : number
   @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
 
     event.preventDefault()
+
+    if((this.gameService.playerY + 54)) {
+
+        this.gameService.move = 0
+
+    }
+
 
     if (event.keyCode === KEY_CODE.RIGHT_ARROW ) {
 
@@ -58,22 +61,17 @@ public y : number
       this.gameService.move = MOVE_LEFT
       console.log(this.x)
 
-
+    
 
     }
 
      if (event.keyCode === KEY_CODE.SPACE){
-        if(this.loop.yAxis >= 150){
-          this.gameService.yVelocity = 0
-          console.log(this.y)
-        }
-        else{
           
        this.gameService.yVelocity = MOVE_UPWARD
        
         console.log(this.y)
         }
-     }
+     
 
   }
 
@@ -106,10 +104,7 @@ public y : number
       
   }
 
-  abstract class ViewportScroller {
-    scrollToAnchor(camera){
 
-    }
 
   }
     
