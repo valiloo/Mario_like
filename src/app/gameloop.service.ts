@@ -15,7 +15,7 @@ export class GameloopService {
   public move: number
   public xAxis: number = 0
   public yAxis: number = 0
-  
+  public scaleX: number
   public innerWidth
  
 
