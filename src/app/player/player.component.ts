@@ -40,11 +40,6 @@ public y : number
 
     event.preventDefault()
 
-    if((this.gameService.playerY + 54)) {
-
-        this.gameService.move = 0
-
-    }
 
 
     if (event.keyCode === KEY_CODE.RIGHT_ARROW ) {

@@ -16,6 +16,7 @@ export class GameloopService {
   public xAxis: number = 0
   public yAxis: number = 0
   public scaleX: number
+  public innerWidth
  
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService) { }
@@ -72,10 +73,15 @@ console.log(this.gameService.playerX)
     }
 
   }
+  cameraLock(){
 
+    this.innerWidth = window.innerWidth
+
+    window.scroll(this.gameService.playerX - ((this.innerWidth /2) -27), this.gameService.playerY)
+  }
   loop() {
     this.canMove()
-
+    this.cameraLock()
     requestAnimationFrame(() => this.loop())
   }
 
