@@ -1,0 +1,74 @@
+ @font-face {
+    font-family: 'menu';
+    src: url('/assets/Police/superPolice.ttf');
+} 
+.button {
+    border-radius:12px 0 12px 0;
+    background-color:#001233;
+    border:none;
+    color:#d30255;
+    font-family: 'menu';
+    font-size: 50px;
+    padding:6px 20px 20px 20px;
+    margin-left: 35%;
+    margin-top: 20px;
+    text-align: center;
+    width: 400px;
+    opacity: .8;
+   
+     
+}
+
+.button:hover{
+z-index: 2;
+-webkit-transition: all 200ms ease-in;
+-webkit-transform: scale(1.2);
+-ms-transition: all 200ms ease-in;
+-ms-transform: scale(1.2); 
+-moz-transition: all 200ms ease-in;
+-moz-transform: scale(1.2);
+transition: all 200ms ease-in;
+transform: scale(1.2);
+background-color: #072b6d
+}
+
+
+
+ h1{
+   font-size: 900%;
+   font-family: 'menu';
+   text-align: center;
+   text-shadow:1px 1px 5px #d30255;
+   color: #001233;
+  opacity: .8;
+ }
+
+ .background {
+    
+    background: url('/assets/textures/fond1.png')  ;
+    
+      /* On met en place le fond d'écran */
+      min-height: 100%;
+      min-width: 1024px;
+      /* On indique un redimensionnement proportionnel */
+      width: 100%;
+      height: auto;
+      /* L'image est positionnée en haut à gauche */
+      position: fixed;
+      top: 0;
+      left: 0;
+      }
+     
+
+  .curseur{ 
+
+      cursor: url('/assets/textures/Obsidian.cur'), pointer;
+    }
+   
+
+ /*  .button:hover{
+    font-size: 600%;
+    } */
+ 
+  
+   

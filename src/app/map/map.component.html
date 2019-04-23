@@ -1,17 +1,13 @@
 <body>
-  
-    <div class="game-view" [ngStyle]="{'background': 'url(assets/textures/test_fond.jpg) no-repeat fixed 100%'}">
-      <div class="perso">
-      </div>
-      <div appPlayerMovement class="Player"></div>
-      <div class="map">
-        <div class="row" *ngFor="let row of mapService.map">
-          <div class="col" *ngFor="let case of row">
-            <img [src]="mapTheme.textures[case]" />
-          </div>
+  <app-player></app-player>
+  <div class="game-view" [ngStyle]="{'background': 'url(assets/textures/test_fond.jpg) no-repeat fixed 100%'}">
+    <div class="map">
+      <div class="row" *ngFor="let row of mapService.map">
+        <div class="col" *ngFor="let case of row">
+          <img [src]="mapTheme.textures[case]" />
         </div>
       </div>
     </div>
+  </div>
 </body>
 
-<app-player></app-player>
