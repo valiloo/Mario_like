@@ -16,6 +16,7 @@ export class GameloopService {
   public xAxis: number = 0
   public yAxis: number = 0
   public scaleX: number
+  public innerWidth
  
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService) { }
@@ -30,38 +31,38 @@ export class GameloopService {
 
     }
 
-    if (this.yAxis < 0) {
+    if (this.gameService.playerY < 0) {
 
 
-      this.yAxis += 4
+      this.gameService.playerY += 4
 
     }
 
     if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_FORWARD) {
 
-            this.scaleX = -1
-            this.xAxis += 2
+            this.gameService.playerScaleX = -1
+            this.gameService.playerX += 3
             this.move = 1
 
-
+console.log(this.gameService.playerX)
 
     }
 
     if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_BACKWARD) {
 
-      this.scaleX = 1
-      this.xAxis -= 15
+      this.gameService.playerScaleX= 1
+      this.gameService.playerX -= 3
       this.move = 1
-
+      console.log(this.gameService.playerX)
     }
 
     if (this.gameService.yVelocity === MOVE_UPWARD) {
 
 
       this.jump = 45
-      this.yAxis -= 230
+      this.gameService.playerY -= 230
       this.gameService.yVelocity = 0
-
+      console.log(this.gameService.playerY)
 
     }
 
@@ -72,10 +73,15 @@ export class GameloopService {
     }
 
   }
+  cameraLock(){
 
+    this.innerWidth = window.innerWidth
+
+    window.scroll(this.gameService.playerX - ((this.innerWidth /2) -27), this.gameService.playerY)
+  }
   loop() {
     this.canMove()
-
+    this.cameraLock()
     requestAnimationFrame(() => this.loop())
   }
 
@@ -85,4 +91,6 @@ export class GameloopService {
   pause() {
 
   }
+
+ 
 }
