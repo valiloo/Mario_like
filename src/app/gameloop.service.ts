@@ -38,22 +38,21 @@ export class GameloopService {
 
     }
 
-    if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_FORWARD) {
+    if ((this.gameService.move === MOVE_RIGHT)  && this.gameService.xVelocity === MOVE_FORWARD) {
 
             this.gameService.playerScaleX = -1
-            this.gameService.playerX += 3
+            this.gameService.playerX += 7
             this.move = 1
 
-console.log(this.gameService.playerX)
 
     }
 
-    if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_BACKWARD) {
+    if ((this.gameService.move === MOVE_LEFT) && this.gameService.xVelocity === MOVE_BACKWARD) {
 
-      this.gameService.playerScaleX= 1
-      this.gameService.playerX -= 3
+      this.gameService.playerScaleX = 1
+      this.gameService.playerX -= 7
       this.move = 1
-      console.log(this.gameService.playerX)
+      
     }
 
     if (this.gameService.yVelocity === MOVE_UPWARD) {

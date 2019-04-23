@@ -1,15 +1,6 @@
-
-
-<div  
-      [ngClass]="{
-        'player' : gameService.move !== 1 && loop.jump !== 1,
-        'playerMovement' : gameService.move === 1 && loop.jump === 0,
+<div [ngClass]="{
+        'player' : loop.move !== 1 && loop.jump !== 1,
+        'playerMovement' : loop.move === 1 && loop.jump === 0,
         'playerJump' : loop.jump > 0
-     }"
-     [ngStyle]="{'transform': 'translateX(' + gameService.playerX + 'px) translateY('+gameService.playerY +'px) scaleX('+ gameService.playerScaleX + ')'}"
-     ></div>
-
-
-
-
-     
+     }" [ngStyle]="{'transform': 'translateX(' + gameService.playerX + 'px) translateY('+gameService.playerY +'px) scaleX('+ gameService.playerScaleX + ')'}"
+       ></div>
