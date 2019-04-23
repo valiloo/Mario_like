@@ -6,5 +6,9 @@
         'playerMovement' : loop.move === 1 && loop.jump === 0,
         'playerJump' : loop.jump > 0
      }"
-     [ngStyle]="{'transform': 'translateX(' + this.x + 'px) translateY('+ this.y +'px) scaleX('+ loop.scaleX + ')'}"
-     [ngStyle]="{'top': this.y + 'px'}"></div>
+     [ngStyle]="{'transform': 'translateX(' + loop.xAxis + 'px) translateY('+ loop.yAxis +'px) scaleX('+ loop.scaleX + ')'}"
+     [ngStyle]="{'top': loop.yAxis + 'px'}"></div>
+
+
+
+     
