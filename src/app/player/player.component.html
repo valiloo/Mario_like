@@ -1,6 +1,6 @@
 <div [ngClass]="{
-        'player' : loop.move !== 1 && loop.jump !== 1,
-        'playerMovement' : loop.move === 1 && loop.jump === 0,
+        'player' : gameService.move < 1 && loop.jump !== 1,
+        'playerMovement' : (gameService.move === 1 || gameService.move === 2) && loop.jump === 0,
         'playerJump' : loop.jump > 0
      }" [ngStyle]="{'transform': 'translateX(' + gameService.playerX + 'px) translateY('+gameService.playerY +'px) scaleX('+ gameService.playerScaleX + ')'}"
        ></div>

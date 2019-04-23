@@ -76,7 +76,7 @@ export class GameloopService {
 
     this.innerWidth = window.innerWidth
 
-    window.scroll(this.gameService.playerX - ((this.innerWidth /2) -27), this.gameService.playerY)
+    window.scroll(this.gameService.playerX - ((this.innerWidth /2) - 27), this.gameService.playerY)
   }
   loop() {
     this.canMove()
