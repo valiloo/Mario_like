@@ -40,7 +40,7 @@ export class GameloopService {
     if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_FORWARD) {
 
       this.scaleX = -1
-      this.xAxis += 10
+      this.xAxis += 15
       this.move = 1
 
 
@@ -49,7 +49,7 @@ export class GameloopService {
     if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_BACKWARD) {
 
       this.scaleX = 1
-      this.xAxis -= 3
+      this.xAxis -= 15
       this.move = 1
 
     }
@@ -70,9 +70,16 @@ export class GameloopService {
 
   }
 
-  start() {
+  loop() {
     this.canMove()
-    requestAnimationFrame(() => this.canMove())
+
+    requestAnimationFrame(() => this.loop())
   }
 
+  start() {
+    this.loop()
+  }
+  pause() {
+
+  }
 }

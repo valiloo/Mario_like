@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener,HostBinding, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, HostListener,HostBinding, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD} from '../gamestate.service';
 import { GameloopService } from '../gameloop.service';
 
@@ -19,10 +19,12 @@ export class PlayerComponent implements OnInit {
 
 public refresh : any
 
+
 constructor(public gameService : GamestateService, public element:ElementRef, public loop : GameloopService) {}
 
+
 public move : any
-innerWidth = window.innerWidth
+
 
   
   @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
@@ -77,15 +79,18 @@ innerWidth = window.innerWidth
 
 
   ngOnInit() {
-
-    this.refresh = (timestamp) => {
-      this.loop.start();
-      requestAnimationFrame(this.refresh)
-  }
-  requestAnimationFrame(this.refresh)
+    this.loop.start()
+    
   }
 
       
+  }
+
+  abstract class ViewportScroller {
+    scrollToAnchor(camera){
+
+    }
+
   }
     
   
