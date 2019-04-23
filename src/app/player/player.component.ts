@@ -22,6 +22,7 @@ public refresh : any
 constructor(public gameService : GamestateService, public element:ElementRef, public loop : GameloopService) {}
 
 public move : any
+innerWidth = window.innerWidth
 
   
   @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {

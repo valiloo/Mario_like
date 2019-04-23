@@ -10,20 +10,17 @@ import { MapTheme, MapService, VI } from './map.service';
 })
 export class GameloopService {
 
-  public canGoThrough
-
-
 
   public jump: number = 0
   public move: number
   public xAxis: number = 0
   public yAxis: number = 0
   public scaleX: number
-  public innerWidth: number
+ 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService) { }
 
-
+  
 
   public canMove() {
 
