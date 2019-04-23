@@ -1,7 +1,7 @@
 
 
 <div  
-     [ngClass]="{
+     #camera [ngClass]="{
         'player' : loop.move !== 1 && loop.jump !== 1,
         'playerMovement' : loop.move === 1 && loop.jump === 0,
         'playerJump' : loop.jump > 0

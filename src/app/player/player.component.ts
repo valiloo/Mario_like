@@ -1,4 +1,5 @@
-import { Component, OnInit, HostListener,HostBinding, ElementRef} from '@angular/core';
+
+import { Component, OnInit, HostListener,HostBinding, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD} from '../gamestate.service';
 import { GameloopService } from '../gameloop.service';
 import { MapService } from '../map.service';
@@ -19,6 +20,7 @@ export enum KEY_CODE {
 export class PlayerComponent implements OnInit {
 
 
+
 @HostBinding('style.position') myPosition : any
 
 constructor(public gameService : GamestateService, public element:ElementRef, public loop : GameloopService, public mapService:MapService) {
@@ -34,6 +36,7 @@ public refresh : any
 public move : any
 public x : number
 public y : number
+
 
 
 
@@ -95,16 +98,19 @@ public y : number
 
   ngOnInit() {
 
-    this.refresh = (timestamp) => {
-      this.loop.start();
-      this.y = this.loop.yAxis
-      this.x = this.loop.xAxis
-      requestAnimationFrame(this.refresh)
-  }
-  requestAnimationFrame(this.refresh)
-  }
+    this.loop.start()
+    
+
+
 
       
+  }
+
+  abstract class ViewportScroller {
+    scrollToAnchor(camera){
+
+    }
+
   }
     
   
