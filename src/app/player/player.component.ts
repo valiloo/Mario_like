@@ -35,57 +35,51 @@ public y : number
 
 
 
-  @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
+@HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
 
-    event.preventDefault()
+  event.preventDefault()
 
-    if (event.keyCode === KEY_CODE.RIGHT_ARROW ) {
+  if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
 
-      this.gameService.xVelocity = MOVE_FORWARD
-      this.gameService.move = MOVE_RIGHT
-     
-      console.log(this.loop.xAxis)
-    }
-
-    if (event.keyCode === KEY_CODE.LEFT_ARROW){
-
-      this.gameService.xVelocity = MOVE_BACKWARD
-      this.gameService.move = MOVE_LEFT
-      console.log(this.x)
-
-
-
-    }
-
-     if (event.keyCode === KEY_CODE.SPACE){
-
-        
-          
-       this.gameService.yVelocity = MOVE_UPWARD
-       
-        console.log(this.y)
-        }
-     
+    this.gameService.xVelocity = MOVE_FORWARD
+    this.gameService.move = MOVE_RIGHT
 
   }
 
-  @HostListener('window:keyup', [('$event')]) stopMovement(event: KeyboardEvent) {
+  if (event.keyCode === KEY_CODE.LEFT_ARROW) {
 
-    if (event.keyCode === KEY_CODE.RIGHT_ARROW || event.keyCode === KEY_CODE.LEFT_ARROW) {
-      
-     this.gameService.move = 0
- 
-    }
+    this.gameService.xVelocity = MOVE_BACKWARD
+    this.gameService.move = MOVE_LEFT
 
-    if(event.keyCode === KEY_CODE.SPACE){
 
-      this.gameService.yVelocity = 0
-      console.log(this.y)
+  }
 
- 
-    }
+   if (event.keyCode === KEY_CODE.SPACE){
+
+     this.gameService.yVelocity = MOVE_UPWARD
+     
     
+      
+   }
+
+}
+
+@HostListener('window:keyup', [('$event')]) stopMovement(event: KeyboardEvent) {
+
+  if (event.keyCode === KEY_CODE.RIGHT_ARROW || event.keyCode === KEY_CODE.LEFT_ARROW) {
+    
+   this.gameService.move = 0
+
   }
+
+  if(event.keyCode === KEY_CODE.SPACE){
+
+    this.gameService.yVelocity = 0
+
+
+  }
+  
+}
 
 
   ngOnInit() {
