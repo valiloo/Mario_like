@@ -15,6 +15,7 @@ export class GamestateService {
   public move: any = 0
   public xVelocity: any = 0
   public yVelocity: any = 0
+  public mechantVelocity: any =0
 
 
 

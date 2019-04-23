@@ -16,13 +16,23 @@ export class GameloopService {
   public xAxis: number = 0
   public yAxis: number = 0
   public scaleX: number
- 
+  public xMechant: boolean = false
+
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService) { }
 
-  
+
 
   public canMove() {
+    this.xMechant = !this.xMechant
+
+    if (this.xMechant === true) {
+      this.gameService.mechantVelocity += 10
+
+    }
+    else {
+      this.gameService.mechantVelocity -= 10
+    }
 
     if (this.jump > 0) {
 
@@ -39,9 +49,9 @@ export class GameloopService {
 
     if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_FORWARD) {
 
-            this.scaleX = -1
-            this.xAxis += 2
-            this.move = 1
+      this.scaleX = -1
+      this.xAxis += 2
+      this.move = 1
 
 
 
@@ -73,15 +83,22 @@ export class GameloopService {
 
   }
 
+  moveMonster(){
+    for(let monster in this.mapService.monsters){
+      monster.posX += 0.01;
+    }
+  }
+
   loop() {
     this.canMove()
-
+    this.moveMonster()
     requestAnimationFrame(() => this.loop())
   }
 
   start() {
     this.loop()
   }
+
   pause() {
 
   }

@@ -1,6 +1,5 @@
 .col {
     display: inline-flex;
-
 }
 
 div {
@@ -17,4 +16,13 @@ div {
 .map {
     overflow: visible;
     z-index: 1;
+}
+
+.monster {
+    width: 32px;
+    height: 32px;
+    background: red;
+    position:absolute;
+    top:0;
+    left:0;
 }

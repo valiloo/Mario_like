@@ -100,16 +100,7 @@ public y : number
 
     this.loop.start()
     
-
-
-
-      
   }
-
-  abstract class ViewportScroller {
-    scrollToAnchor(camera){
-
-    }
 
   }
     
