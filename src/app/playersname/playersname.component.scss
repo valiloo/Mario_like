@@ -128,10 +128,10 @@ h1{
           width: 50px;
           height: 72px;
           background-image : url(http://i.imgur.com/xtk0SCC.png);
-          animation: moveX 1s steps(10) infinite;
+          animation: moveE 1s steps(10) infinite;
         }
         
-        @keyframes moveX{
+        @keyframes moveE{
           from{background-position-x:0px;}
           to{background-position-x:-500px;}
 }   
@@ -151,19 +151,19 @@ h1{
       to {background-position-x: 1754px;} 
     } 
               
-    .dragonTest { 
+    .os{ 
       margin-left: 80%;
       margin-top: -140px;
       position: absolute;
       top: 20%;
-      width: 179px; 
-      height: 210px; 
-      background: url('/assets/Sprites/dragon40.png'); 
+      width: 63.77px; 
+      height: 72px; 
+      background: url('/assets/Sprites/os.png'); 
       animation: moveB 1s steps(9) infinite;
     }
     @keyframes moveB { 
       from {background-position-x: 0px;} 
-      to {background-position-x: -1611px;} 
+      to {background-position-x: -574px;} 
     } 
       
 @keyframes movement {
@@ -171,13 +171,24 @@ h1{
   to {background-position: -318px}
                       }
 
-
-
-  {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-left: 20px;
-    margin-right: 20px;
-   }
-
+ 
+  .os1 { 
+  margin-left: 20%;
+  margin-top: -140px;
+  position: absolute;
+  top: 30%;
+  width: 64px; 
+  height: 64px; 
+  background: url('/assets/Sprites/os1.png');  
+  animation: moveX 3s steps(9) infinite, 
+  moveY 3s steps(4) infinite; 
+                      }
+  @keyframes moveX { 
+  from {background-position-x: 0px;} 
+  to {background-position-x: -576px;} 
+                      }
+  @keyframes moveY { 
+  from {background-position-y: 0px;} 
+  to {background-position-y: -256px;} 
+                      } 
+                
