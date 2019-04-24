@@ -8,7 +8,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 export class GameOverComponent implements OnInit {
 
   constructor() { }
-  marche: string = "emmène sur le menu"
+  marche: string = "menu"
 
   tryAgain() {
     alert(this.marche)
