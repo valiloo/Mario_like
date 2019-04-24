@@ -1,0 +1,85 @@
+
+.background {
+
+background: url('/assets/textures/fond1.png') ;
+
+/* On met en place le fond d'écran */
+min-height: 1024px;
+min-width: 1024px;
+/* On indique un redimensionnement proportionnel */
+width: 100%;
+height: auto;
+/* L'image est positionnée en haut à gauche */
+position: fixed;
+top: 0;
+left: 0;
+}
+
+@font-face {
+font-family : "superPolice.ttf";
+src: url("/assets/Police/superPolice.ttf");
+}
+
+h1 {
+    font-family: 'superPolice.ttf';
+    text-align: center;
+    font-size: 150px;
+    opacity: 0.8;
+    color: #001233; 
+    text-shadow: #d30255 1px 1px 5px;
+}
+
+button {
+  
+display: block;
+margin : auto;
+border-radius:12px 0 12px 0;
+background-color:#001233;
+border:none;
+color:#d30255;
+font-family: 'superPolice.ttf';
+font-size: 30px;
+padding:20px 20px 20px 20px;
+margin-left: 35%;
+margin-top: 20px;
+text-align: center;
+width: 400px;
+opacity: .8;
+}
+
+
+button:hover
+{
+box-shadow: 0px 0px 10px #000000;
+z-index: 2;
+-webkit-transition: all 100ms ease-in;
+-webkit-transform: scale(1.5);
+-ms-transition: all 100ms ease-in;
+-ms-transform: scale(1.5); 
+-moz-transition: all 100ms ease-in;
+-moz-transform: scale(1.5);
+transition: all 100ms ease-in;
+transform: scale(1.5);
+}
+
+
+
+#monPersonnage{
+
+    position: absolute;
+    top: 50%;
+    height: 46px;
+    width: 56px;
+    background: url('/assets/sad.png') top center;
+    animation: sprite 3s steps(6) infinite;
+    animation-name: animer;
+}
+
+
+
+
+@keyframes animer{
+    from { background-position: 0px; }
+    to { background-position: -318px }
+    
+}
