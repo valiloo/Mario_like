@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Monster, OsMonster } from './models/monster';
-import { OgrMonster } from './models/ogr';
+import { Monster, OsMonster, } from './models/monster';
+import {OgrMonster} from './models/ogr';
 
 
 export const VI = 0

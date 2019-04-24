@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from './gamestate.service';
-import { MapTheme, MapService } from './map.service';
+import { MapTheme, MapService, } from './map.service';
+
 
 
 
@@ -100,6 +101,8 @@ export class GameloopService {
     window.scroll(this.gameService.playerX - ((this.innerWidth / 2) - 27), this.gameService.playerY)
   }
 
+
+
   moveMonster() {
     for (let index in this.mapService.monsters) {
       const monster = this.mapService.monsters[index]
@@ -117,9 +120,8 @@ export class GameloopService {
         }
       }
     }
+
   }
-
-
   moveOgr() {
     for (let index in this.mapService.ogrs) {
       const ogr = this.mapService.ogrs[index]
@@ -138,13 +140,13 @@ export class GameloopService {
       }
     }
 
-    window.scroll(this.gameService.playerX - ((this.innerWidth /2) - 27), this.gameService.playerY)
-
   }
 
   loop() {
     this.canMove()
     this.moveMonster()
+    this.moveOgr()
+
     this.cameraLock()
     requestAnimationFrame(() => this.loop())
   }

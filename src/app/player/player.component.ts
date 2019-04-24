@@ -38,6 +38,7 @@ export class PlayerComponent implements OnInit {
       this.gameService.move = MOVE_RIGHT
     }
 
+
     if (event.keyCode === KEY_CODE.LEFT_ARROW) {
       this.gameService.xVelocity = MOVE_BACKWARD
       this.gameService.move = MOVE_LEFT
@@ -63,8 +64,13 @@ export class PlayerComponent implements OnInit {
 
 
   ngOnInit() {
+
+    this.loop.start()
+  }
+
 /*     this.loop.start()
  */  }
+
 
 }
 
