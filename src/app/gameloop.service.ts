@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from './gamestate.service';
+
 import { MapTheme, MapService, } from './map.service';
 import { GameOverComponent } from './game-over/game-over.component';
 import { Route } from '@angular/compiler/src/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ROUTES } from './map/app-routes'
+
 
 
 
@@ -149,6 +151,7 @@ export class GameloopService {
     }
 
   }
+
 
   loop() {
     this.canMove()

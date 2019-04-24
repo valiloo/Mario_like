@@ -68,11 +68,14 @@ export class PlayerComponent implements OnInit {
     this.loop.start()
   }
 
-/*     this.loop.start()
- */  }
+ }
 
 
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6ed07ba1139505a2f1e255b8610f4392e3fd7a10
 
 
 
