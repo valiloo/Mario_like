@@ -27,7 +27,7 @@ public playerHeight : number = 60
 
 
 
-  constructor(mapService: MapService) { }
 
+  constructor(mapService: MapService) { }
 
 }
