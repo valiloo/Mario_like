@@ -4,7 +4,7 @@
     <div class="map">
       <div class="row" *ngFor="let row of mapService.map">
         <div class="col" *ngFor="let case of row">
-          <img [src]="mapTheme.textures[case]" />
+          <img [src]="mapTheme.blocs[case].textureURL">
         </div>
       </div>
     </div>

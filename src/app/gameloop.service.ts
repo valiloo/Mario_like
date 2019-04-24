@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from './gamestate.service';
-import { MapTheme, MapService, VI } from './map.service';
+import { MapTheme, MapService } from './map.service';
 
 
 
@@ -41,7 +41,7 @@ export class GameloopService {
     if ((this.gameService.move === MOVE_RIGHT)  && this.gameService.xVelocity === MOVE_FORWARD) {
 
             this.gameService.playerScaleX = -1
-            this.gameService.playerX += 7
+            this.gameService.playerX += 5
             this.move = 1
 
 
@@ -50,7 +50,7 @@ export class GameloopService {
     if ((this.gameService.move === MOVE_LEFT) && this.gameService.xVelocity === MOVE_BACKWARD) {
 
       this.gameService.playerScaleX = 1
-      this.gameService.playerX -= 7
+      this.gameService.playerX -= 5
       this.move = 1
       
     }
@@ -78,6 +78,8 @@ export class GameloopService {
 
     window.scroll(this.gameService.playerX - ((this.innerWidth /2) - 27), this.gameService.playerY)
   }
+
+
   loop() {
     this.canMove()
     this.cameraLock()
@@ -87,6 +89,7 @@ export class GameloopService {
   start() {
     this.loop()
   }
+
   pause() {
 
   }
