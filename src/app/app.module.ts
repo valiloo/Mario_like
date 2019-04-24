@@ -8,29 +8,32 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MarioComponent } from './mario/mario.component';
 import { MapComponent } from './map/map.component';
 import { MapService } from './map.service';
 import { PlayerComponent } from './player/player.component';
-import { PlayerMovementDirective } from './player-movement.directive';
 import { SettingsComponent } from './settings/settings.component'
 import { ROUTES } from './map/app-routes'
 import { RouterModule } from '@angular/router'
 import { GamestateService } from './gamestate.service';
 import { GameloopService } from './gameloop.service';
+import { GameOverComponent } from './game-over/game-over.component';
+import { MechantComponent } from './mechant/mechant.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    MarioComponent,
     MapComponent,
     PlayerComponent,
-    PlayerMovementDirective,
     PlayersnameComponent,
     SettingsComponent,
     MenuComponent,
+
+    GameOverComponent,
+
+    MechantComponent,
+
   ],
   imports: [
     BrowserModule,

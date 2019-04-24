@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MarioComponent } from './mario.component';
+import { GameOverComponent } from './game-over.component';
 
-describe('MarioComponent', () => {
-  let component: MarioComponent;
-  let fixture: ComponentFixture<MarioComponent>;
+describe('GameOverComponent', () => {
+  let component: GameOverComponent;
+  let fixture: ComponentFixture<GameOverComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MarioComponent ]
+      declarations: [ GameOverComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MarioComponent);
+    fixture = TestBed.createComponent(GameOverComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

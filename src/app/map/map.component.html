@@ -1,13 +1,15 @@
+
 <body>
   <app-player></app-player>
   <div class="game-view" [ngStyle]="{'background': 'url(assets/textures/test_fond.jpg) no-repeat fixed 100%'}">
     <div class="map">
       <div class="row" *ngFor="let row of mapService.map">
         <div class="col" *ngFor="let case of row">
-          <img [src]="mapTheme.textures[case]" />
+          <img [src]="mapTheme.blocs[case].textureURL">
         </div>
+
       </div>
     </div>
+    <div *ngFor="let monster of mapService.monsters" class="OsMonster" [ngStyle]="{top: '' + monster.posY * 32 + 'px', left: '' + monster.posX * 32 + 'px'}"></div> 
+    <div *ngFor="let ogr of mapService.ogrs" class="OgrMonster" [ngStyle]="{top: '' + ogr.posY * 32 + 'px', left: '' + ogr.posX * 32 + 'px'}"></div> 
   </div>
-</body>
-
