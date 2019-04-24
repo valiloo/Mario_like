@@ -20,11 +20,18 @@ export class GameloopService {
   public yAxis: number = 0
   public scaleX: number
   public innerWidth;
+  public playerBlocY
+  public playerBlocX
+  public cell : any
+  
+ 
+  
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService) { }
 
-
+  
+  
 
   public canMove() {
 
@@ -34,21 +41,20 @@ export class GameloopService {
 
     }
 
-    if (this.gameService.playerY < 0) {
-
+    if (this.gameService.playerY < 588) {
 
       this.gameService.playerY += 4
-
     }
 
-    if ((this.gameService.move === MOVE_RIGHT)  && this.gameService.xVelocity === MOVE_FORWARD) {
 
-
+    if ((this.gameService.move === MOVE_RIGHT)  && this.gameService.xVelocity === MOVE_FORWARD && this.getTopRightCollision(this.playerBlocX, this.playerBlocY)) {
+     
       this.gameService.playerScaleX = -1
       this.gameService.playerX += 3
       this.move = 1
+      
+  
 
-      console.log(this.gameService.playerX)
 
 
     }
@@ -69,7 +75,6 @@ export class GameloopService {
       this.jump = 45
       this.gameService.playerY -= 230
       this.gameService.yVelocity = 0
-      console.log(this.gameService.playerY)
 
     }
 
@@ -78,14 +83,7 @@ export class GameloopService {
       this.gameService.playerX = 0
     }
   
-      //  this.gameService.playerY = case.y - this.gameService.playerHeight
-
-    // }
-    // if(this.gameService.playerY - this.gameService.playerHeight === ){
-
-    //  this.gameService.playerY = case.y + this.gameService.playerHeight
-
-    // }
+  
 
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
 
@@ -140,19 +138,37 @@ export class GameloopService {
     }
 
   }
+  
+ 
+  
+  getTopRightCollision(playerBlocX, playerBlocY) : boolean {
+    this.playerBlocY = Math.round((this.gameService.playerY+this.gameService.playerHeight) / 32)
+    this.playerBlocX = Math.round((this.gameService.playerX+this.gameService.playerWidth) / 32)
+    this.cell = this.mapService.map[this.playerBlocY + 1][this.playerBlocX + 1 ]
+    console.log(this.mapTheme.blocs[this.cell])
+  if (this.mapTheme.blocs[this.mapService.map[this.playerBlocY + 1][this.playerBlocX + 1 ]].canGoThrough === false) {
+    
+    return false
+  }
+  else if (this.mapTheme.blocs[this.cell].canGoThrough === true) {
+    return true
+  }
+}
+  
 
 
   loop() {
     this.canMove()
     this.moveMonster()
     this.moveOgr()
-
     this.cameraLock()
     requestAnimationFrame(() => this.loop())
   }
 
   start() {
     this.loop()
+    this.gameService.playerY += 568
+    
   }
 
   pause() {

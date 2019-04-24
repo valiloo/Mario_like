@@ -7,7 +7,7 @@ export const MOVE_FORWARD = 3
 export const MOVE_BACKWARD = 4
 export const MOVE_UPWARD = 5
 export const FALL = 6
-export const CANGOTHROUGH = 7
+
 
 @Injectable({
   providedIn: 'root'
