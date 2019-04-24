@@ -38,7 +38,8 @@ export class GameloopService {
 
     }
 
-    if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_FORWARD) {
+    if ((this.gameService.move === MOVE_RIGHT)  && this.gameService.xVelocity === MOVE_FORWARD) {
+
 
       this.gameService.playerScaleX = -1
       this.gameService.playerX += 3
@@ -46,14 +47,17 @@ export class GameloopService {
 
       console.log(this.gameService.playerX)
 
+
     }
 
-    if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_BACKWARD) {
+    if ((this.gameService.move === MOVE_LEFT) && this.gameService.xVelocity === MOVE_BACKWARD) {
 
       this.gameService.playerScaleX = 1
+
       this.gameService.playerX -= 3
+
       this.move = 1
-      console.log(this.gameService.playerX)
+      
     }
 
     if (this.gameService.yVelocity === MOVE_UPWARD) {
@@ -65,6 +69,23 @@ export class GameloopService {
       console.log(this.gameService.playerY)
 
     }
+
+   if(this.gameService.playerX < 0){
+
+      this.gameService.playerX = 0
+    }
+
+
+    // if(this.gameService.playerY + this.gameService.playerHeight === ){
+
+      //  this.gameService.playerY = case.y - this.gameService.playerHeight
+
+    // }
+    // if(this.gameService.playerY - this.gameService.playerHeight === ){
+
+    //  this.gameService.playerY = case.y + this.gameService.playerHeight
+
+    // }
 
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
 
@@ -78,6 +99,7 @@ export class GameloopService {
     this.innerWidth = window.innerWidth
     window.scroll(this.gameService.playerX - ((this.innerWidth / 2) - 27), this.gameService.playerY)
   }
+
 
   moveMonster() {
     for (let index in this.mapService.monsters) {
@@ -96,6 +118,7 @@ export class GameloopService {
         }
       }
     }
+
   }
   moveOgr() {
     for (let index in this.mapService.ogrs) {
