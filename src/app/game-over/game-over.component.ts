@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { GameloopService } from '../gameloop.service';
 
 @Component({
-  selector: 'app-game-over',
+  selector: 'app-game-overapp',
   templateUrl: './game-over.component.html',
   styleUrls: ['./game-over.component.scss']
 })
@@ -19,7 +20,10 @@ export class GameOverComponent implements OnInit {
   onAudioPlay() {
     this.audioPlayerRef.nativeElement.play();
   }
-
+GameOver()
+{
+  this.GameOver();
+}
 
   ngOnInit() {
     this.onAudioPlay();

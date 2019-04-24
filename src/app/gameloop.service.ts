@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from './gamestate.service';
 import { MapTheme, MapService, } from './map.service';
+import { GameOverComponent } from './game-over/game-over.component';
+import { Route } from '@angular/compiler/src/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 
@@ -20,7 +23,7 @@ export class GameloopService {
   public innerWidth;
 
 
-  constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService) { }
+  constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public gameOver: GameOverComponent, public route : Router) { }
 
 
 
@@ -75,7 +78,10 @@ export class GameloopService {
 
       this.gameService.playerX = 0
     }
-
+ if (this.gameService.playerX > 3){
+    
+     this.route.navigateByUrl('/Over')
+ }
 
     // if(this.gameService.playerY + this.gameService.playerHeight === ){
 
