@@ -65,6 +65,20 @@ export class GameloopService {
 
     }
 
+   if(this.gameService.playerX < 0){
+
+      this.gameService.playerX = 0
+    }
+  
+      //  this.gameService.playerY = case.y - this.gameService.playerHeight
+
+    // }
+    // if(this.gameService.playerY - this.gameService.playerHeight === ){
+
+    //  this.gameService.playerY = case.y + this.gameService.playerHeight
+
+    // }
+
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
 
       this.move = 0
