@@ -18,13 +18,12 @@ export class GamestateService {
 public move : any = 0
 public xVelocity : any = 0
 public yVelocity : any = 0
-public playerX : any = 20
+public playerX : any = 0
 public playerY : any = 0
 public playerScaleX : any = 0
 public playerWidth : number = 53
 public playerHeight : number = 60
-  gameOver: typeof import("/Users/emiliegrimoud/Doc/AngularProjets/Mario_like/src/app/game-over/game-over.component").GameOverComponent;
-
+  
 
 
 

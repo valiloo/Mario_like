@@ -20,10 +20,7 @@ export class GameOverComponent implements OnInit {
   onAudioPlay() {
     this.audioPlayerRef.nativeElement.play();
   }
-GameOver()
-{
-  this.GameOver();
-}
+
 
   ngOnInit() {
     this.onAudioPlay();
