@@ -6,6 +6,7 @@
         <img [src]="mapTheme.textures[case]" />
       </div>
     </div>
-    <div *ngFor="let monster of mapService.monsters" class="monster" [ngStyle]="{top: '' + monster.posY * 32 + 'px', left: '' + monster.posX * 32 + 'px'}"></div> 
+    <div *ngFor="let monster of mapService.monsters" class="OsMonster" [ngStyle]="{top: '' + monster.posY * 32 + 'px', left: '' + monster.posX * 32 + 'px'}"></div> 
+    <div *ngFor="let ogr of mapService.ogrs" class="OgrMonstre" [ngStyle]="{top: '' + ogr.posY * 32 + 'px', left: '' + ogr.posX * 32 + 'px'}"></div> 
   </div>
 </div>

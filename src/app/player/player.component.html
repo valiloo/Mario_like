@@ -1,14 +1,14 @@
 
 
 <div  
-     #camera [ngClass]="{
-        'player' : loop.move !== 1 && loop.jump !== 1,
-        'playerMovement' : loop.move === 1 && loop.jump === 0,
+      [ngClass]="{
+        'player' : gameService.move !== 1 && loop.jump !== 1,
+        'playerMovement' : gameService.move === 1 && loop.jump === 0,
         'playerJump' : loop.jump > 0
      }"
-     [ngStyle]="{'transform': 'translateX(' + loop.xAxis + 'px) translateY('+ loop.yAxis +'px) scaleX('+ loop.scaleX + ')'}"
-     [ngStyle]="{'top': loop.yAxis + 'px'}">
-</div>
+     [ngStyle]="{'transform': 'translateX(' + gameService.playerX + 'px) translateY('+gameService.playerY +'px) scaleX('+ gameService.playerScaleX + ')'}"
+     ></div>
+
 
 
 

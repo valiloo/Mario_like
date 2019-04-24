@@ -1,11 +1,10 @@
-
-export class Monster {
+export class Ogr {
     constructor(public assetUrl: string, public posX: number, public posY: number) {
 
     }
 
 }
-export class OsMonster extends Monster {
+export class OgrMonster extends Ogr {
     
     constructor(public initPosX: number, initPosY: number, public amplitude: number = 2, public direction = 1 /* MOVE_RIGHT */) {
 
