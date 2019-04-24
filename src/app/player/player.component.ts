@@ -1,6 +1,8 @@
-import { Component, OnInit, HostListener,HostBinding, ElementRef, AfterViewInit } from '@angular/core';
+
+import { Component, OnInit, HostListener,HostBinding, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD} from '../gamestate.service';
 import { GameloopService } from '../gameloop.service';
+import { MapService } from '../map.service';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -17,43 +19,54 @@ export enum KEY_CODE {
 
 export class PlayerComponent implements OnInit {
 
+
+
+@HostBinding('style.position') myPosition : any
+
+constructor(public gameService : GamestateService, public element:ElementRef, public loop : GameloopService, public mapService:MapService) {
+
+
+}
+
 public refresh : any
-
-constructor(public gameService : GamestateService, public element:ElementRef, public loop : GameloopService) {}
-
 public move : any
+public x : number
+public y : number
 
-  
+
+
+
   @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
 
     event.preventDefault()
 
-    if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
+
+
+    if (event.keyCode === KEY_CODE.RIGHT_ARROW ) {
 
       this.gameService.xVelocity = MOVE_FORWARD
       this.gameService.move = MOVE_RIGHT
-
+     
+      console.log(this.loop.xAxis)
     }
 
     if (event.keyCode === KEY_CODE.LEFT_ARROW){
 
       this.gameService.xVelocity = MOVE_BACKWARD
       this.gameService.move = MOVE_LEFT
+      console.log(this.x)
 
+    
 
     }
 
      if (event.keyCode === KEY_CODE.SPACE){
-        if(this.loop.yAxis >= 150){
-          this.gameService.yVelocity = 0
-        }
-        else{
           
        this.gameService.yVelocity = MOVE_UPWARD
        
-        console.log(this.loop.yAxis)
+        console.log(this.y)
         }
-     }
+     
 
   }
 
@@ -68,6 +81,7 @@ public move : any
     if(event.keyCode === KEY_CODE.SPACE){
 
       this.gameService.yVelocity = 0
+      console.log(this.y)
 
  
     }
@@ -77,14 +91,16 @@ public move : any
 
   ngOnInit() {
 
-    this.refresh = (timestamp) => {
-      this.loop.start();
-      requestAnimationFrame(this.refresh)
-  }
-  requestAnimationFrame(this.refresh)
-  }
+    this.loop.start()
+    
+
+
 
       
+  }
+
+
+
   }
     
   
