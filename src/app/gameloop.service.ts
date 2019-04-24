@@ -69,10 +69,7 @@ export class GameloopService {
 
       this.gameService.playerX = 0
     }
-
-
-    // if(this.gameService.playerY + this.gameService.playerHeight === ){
-
+  
       //  this.gameService.playerY = case.y - this.gameService.playerHeight
 
     // }
