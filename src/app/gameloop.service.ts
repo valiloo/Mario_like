@@ -1,6 +1,5 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from './gamestate.service';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { MapTheme, MapService, VI } from './map.service';
 
 
@@ -11,80 +10,127 @@ import { MapTheme, MapService, VI } from './map.service';
 })
 export class GameloopService {
 
-  public canGoThrough
-  public canMove
-
 
   public jump: number = 0
   public move: number
   public xAxis: number = 0
   public yAxis: number = 0
   public scaleX: number
+  public innerWidth;
+ 
 
-  constructor(public gameService: GamestateService,public mapTheme: MapTheme, public mapService: MapService) { }
-
-  start(): any {
-
-    this.canMove = () => {
-
-          if (this.jump > 0) {
-
-            this.jump -= 1
-
-          }
-
-          if (this.yAxis < 0){
+  constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService) { }
 
 
-            this.yAxis += 4
 
-          }
+  public canMove() {
 
-          if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_FORWARD) {
+    if (this.jump > 0) {
 
-            this.scaleX = -1
-            this.xAxis += 10
-            this.move = 1
+      this.jump -= 1
 
-
-      }
-
-          if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_BACKWARD) {
-
-            this.scaleX = 1
-            this.xAxis -= 3
-            this.move = 1
-
-      }
-
-          if (this.gameService.yVelocity === MOVE_UPWARD){
-
-            this.jump = 45
-            this.yAxis -= 230
-            this.gameService.yVelocity = 0
-
-          }
-
-          else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
-
-           this.move = 0
-
-      }
-      
     }
-  
-    this.canMove()
+
+    if (this.gameService.playerY < 0) {
+
+
+      this.gameService.playerY += 4
+
+    }
+
+    if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_FORWARD) {
+
+            this.gameService.playerScaleX = -1
+            this.gameService.playerX += 3
+            this.move = 1
+
+console.log(this.gameService.playerX)
+
+    }
+
+    if (((this.gameService.move === MOVE_RIGHT) || (this.gameService.move === MOVE_LEFT)) && this.gameService.xVelocity === MOVE_BACKWARD) {
+
+      this.gameService.playerScaleX= 1
+      this.gameService.playerX -= 3
+      this.move = 1
+      console.log(this.gameService.playerX)
+    }
+
+    if (this.gameService.yVelocity === MOVE_UPWARD) {
+
+
+      this.jump = 45
+      this.gameService.playerY -= 230
+      this.gameService.yVelocity = 0
+      console.log(this.gameService.playerY)
+
+    }
+
+    else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
+
+      this.move = 0
+
+    }
+
+  }
+  cameraLock(){
+
+    this.innerWidth = window.innerWidth
+    window.scroll(this.gameService.playerX - ((this.innerWidth /2) -27), this.gameService.playerY)
+  }
+
+  moveMonster(){
+    for(let index in this.mapService.monsters){
+      const monster = this.mapService.monsters[index]
+
+      if (monster.direction == MOVE_RIGHT) {
+        monster.posX += 0.1;
+        if (monster.initPosX + monster.amplitude < monster.posX){
+          monster.direction = MOVE_LEFT
+        }  
+      }
+      else if (monster.direction == MOVE_LEFT) {
+        monster.posX -= 0.1;
+        if (monster.initPosX - monster.amplitude > monster.posX){
+          monster.direction = MOVE_RIGHT
+        }  
+      }
+
+      moveOgr(){
+        for(let index in this.mapService.ogrs){
+          const ogr = this.mapService.ogrs[index]
     
-    this.canGoThrough = () => {
-
-    for(let x= 0; x < this.mapService.map.length ; x++){
-      for(let y= 0; y < this.mapService.map[x].length; y++){
-
-        if(this.mapTheme.textures[y] === VI){
-            this.yAxis +=5
-        }
-      }
-    }
+          if (ogr.direction == MOVE_RIGHT) {
+            ogr.posX += 0.1;
+            if (ogr.initPosX + ogr.amplitude < ogr.posX){
+              ogr.direction = MOVE_LEFT
+            }  
+          }
+          else if (ogr.direction == MOVE_LEFT) {
+            ogr.posX -= 0.1;
+            if (ogr.initPosX - ogr.amplitude > ogr.posX){
+              ogr.direction = MOVE_RIGHT
+            }  
+          }
+            
+    
     }
   }
+
+  loop() {
+    this.canMove()
+    this.moveMonster()
+    this.cameraLock()
+    requestAnimationFrame(() => this.loop())
+  }
+
+  start() {
+    this.loop()
+  }
+
+  pause() {
+
+  }
+
+ 
 }

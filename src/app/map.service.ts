@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Monster, OsMonster, OgrMonster } from './models/monster';
 
 export const VI = 0
 export const T1 = 1
@@ -155,7 +156,8 @@ export class MapTheme {
 })
 export class MapService {
 
-
+  public monsters: OsMonster[] = [new OsMonster(19, 19),]
+  public ogrs: OgrMonster[] =  [new OgrMonster(15, 19),]
 
   public map = [
     [T5, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7],
@@ -183,6 +185,7 @@ export class MapService {
 
   ]
 
+  
 
   constructor() {
 
