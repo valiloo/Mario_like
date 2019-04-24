@@ -1,6 +1,6 @@
 
-import { Component, OnInit, HostListener,HostBinding, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD} from '../gamestate.service';
+import { Component, OnInit, HostListener, HostBinding, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from '../gamestate.service';
 import { GameloopService } from '../gameloop.service';
 import { MapService } from '../map.service';
 
@@ -19,80 +19,62 @@ export enum KEY_CODE {
 
 export class PlayerComponent implements OnInit {
 
+  public refresh: any
+  public move: any
+  public x: number
+  public y: number
+  @HostBinding('style.position') myPosition: any
 
-
-@HostBinding('style.position') myPosition : any
-
-constructor(public gameService : GamestateService, public element:ElementRef, public loop : GameloopService, public mapService:MapService) {
-
-}
-
-public refresh : any
-public move : any
-public x : number
-public y : number
-
-
-
-
-@HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
-
-  event.preventDefault()
-
-  if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
-
-    this.gameService.xVelocity = MOVE_FORWARD
-    this.gameService.move = MOVE_RIGHT
+  constructor(public gameService: GamestateService, public element: ElementRef, public loop: GameloopService, public mapService: MapService) {
 
   }
 
-  if (event.keyCode === KEY_CODE.LEFT_ARROW) {
+  @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
 
-    this.gameService.xVelocity = MOVE_BACKWARD
-    this.gameService.move = MOVE_LEFT
+    event.preventDefault()
+
+    if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
+      this.gameService.xVelocity = MOVE_FORWARD
+      this.gameService.move = MOVE_RIGHT
+    }
 
 
-  }
+    if (event.keyCode === KEY_CODE.LEFT_ARROW) {
+      this.gameService.xVelocity = MOVE_BACKWARD
+      this.gameService.move = MOVE_LEFT
+    }
 
-   if (event.keyCode === KEY_CODE.SPACE){
-
-     this.gameService.yVelocity = MOVE_UPWARD
-     
-    
-      
-   }
-
-}
-
-@HostListener('window:keyup', [('$event')]) stopMovement(event: KeyboardEvent) {
-
-  if (event.keyCode === KEY_CODE.RIGHT_ARROW || event.keyCode === KEY_CODE.LEFT_ARROW) {
-    
-   this.gameService.move = 0
+    if (event.keyCode === KEY_CODE.SPACE) {
+      this.gameService.yVelocity = MOVE_UPWARD
+    }
 
   }
 
-  if(event.keyCode === KEY_CODE.SPACE){
+  @HostListener('window:keyup', [('$event')]) stopMovement(event: KeyboardEvent) {
 
-    this.gameService.yVelocity = 0
+    if (event.keyCode === KEY_CODE.RIGHT_ARROW || event.keyCode === KEY_CODE.LEFT_ARROW) {
+      this.gameService.move = 0
+    }
 
+    if (event.keyCode === KEY_CODE.SPACE) {
+      this.gameService.yVelocity = 0
+    }
 
   }
-  
-}
 
 
   ngOnInit() {
 
     this.loop.start()
-    
-
   }
-    
-  
+
+/*     this.loop.start()
+ */  }
+
+
 }
 
 
 
- 
+
 
