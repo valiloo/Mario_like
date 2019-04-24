@@ -28,7 +28,6 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.initMap();
-
   }
 
 }

@@ -15,17 +15,13 @@ export const CANGOTHROUGH = 7
 })
 export class GamestateService {
 
-public move : any = 0
-public xVelocity : any = 0
-public yVelocity : any = 0
-public playerX : any = 0
-public playerY : any = 0
-public playerScaleX : any = 0
-
-
-
+  public move : any = 0
+  public xVelocity : any = 0
+  public yVelocity : any = 0
+  public playerX : any = 0
+  public playerY : any = 0
+  public playerScaleX : any = 0
 
   constructor(mapService: MapService) { }
-
 
 }

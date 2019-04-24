@@ -16,6 +16,7 @@ import { ROUTES } from './map/app-routes'
 import { RouterModule } from '@angular/router'
 import { GamestateService } from './gamestate.service';
 import { GameloopService } from './gameloop.service';
+import { MechantComponent } from './mechant/mechant.component';
 
 
 
@@ -27,6 +28,7 @@ import { GameloopService } from './gameloop.service';
     PlayersnameComponent,
     SettingsComponent,
     MenuComponent,
+    MechantComponent,
   ],
   imports: [
     BrowserModule,
