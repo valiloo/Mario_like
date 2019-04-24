@@ -5,6 +5,7 @@ import { MapTheme, MapService, } from './map.service';
 
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -101,6 +102,7 @@ export class GameloopService {
   }
 
 
+
   moveMonster() {
     for (let index in this.mapService.monsters) {
       const monster = this.mapService.monsters[index]
@@ -137,12 +139,14 @@ export class GameloopService {
         }
       }
     }
+
   }
 
   loop() {
     this.canMove()
     this.moveMonster()
     this.moveOgr()
+
     this.cameraLock()
     requestAnimationFrame(() => this.loop())
   }
