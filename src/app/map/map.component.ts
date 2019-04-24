@@ -13,9 +13,12 @@ export class MapComponent implements OnInit {
   map = []
 
 
+
   constructor(public mapService: MapService, private mapTheme: MapTheme) {
 
   }
+
+
 
   initMap(): void {
     this.map = this.mapService.getMap();
