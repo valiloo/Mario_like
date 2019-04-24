@@ -41,7 +41,7 @@ export class GameloopService {
     if ((this.gameService.move === MOVE_RIGHT)  && this.gameService.xVelocity === MOVE_FORWARD) {
 
             this.gameService.playerScaleX = -1
-            this.gameService.playerX += 7
+            this.gameService.playerX += 5
             this.move = 1
 
 
@@ -50,7 +50,7 @@ export class GameloopService {
     if ((this.gameService.move === MOVE_LEFT) && this.gameService.xVelocity === MOVE_BACKWARD) {
 
       this.gameService.playerScaleX = 1
-      this.gameService.playerX -= 7
+      this.gameService.playerX -= 5
       this.move = 1
       
     }
@@ -64,6 +64,23 @@ export class GameloopService {
       console.log(this.gameService.playerY)
 
     }
+
+   if(this.gameService.playerX < 0){
+
+      this.gameService.playerX = 0
+    }
+
+
+    // if(this.gameService.playerY + this.gameService.playerHeight === ){
+
+      //  this.gameService.playerY = case.y - this.gameService.playerHeight
+
+    // }
+    // if(this.gameService.playerY - this.gameService.playerHeight === ){
+
+    //  this.gameService.playerY = case.y + this.gameService.playerHeight
+
+    // }
 
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
 
