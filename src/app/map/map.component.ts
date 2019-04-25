@@ -33,7 +33,7 @@ export class MapComponent implements OnInit {
 
 
   ngOnInit() {
-
+    set
     this.initMap();
 
   }
