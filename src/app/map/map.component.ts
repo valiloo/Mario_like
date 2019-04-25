@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MapService, MapTheme } from '../map.service';
 import { GameloopService } from '../gameloop.service';
 
@@ -27,10 +27,16 @@ export class MapComponent implements OnInit {
 
   }
 
+  
+
+  
+
+
 
   ngOnInit() {
    
     this.initMap();
+    
   }
 
 
