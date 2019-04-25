@@ -84,17 +84,7 @@ export class GameloopService {
       this.move = 0
 
     }
-     for(let i = 0; i< this.mapService.map.length; i++){
       
-      for(let j = 0; j < this.mapService.map[i].length; j++){
-  
-          if(this.mapPosition === j && this.mapTheme.textures[j] === 3){
-
-            this.gameService.playerY = this.mapPosition * 32
-          }
-      
-  
-      }}
   }
   cameraLock() {
 
@@ -148,7 +138,6 @@ export class GameloopService {
     this.canMove()
     this.moveMonster()
     this.moveOgr()
-
     this.cameraLock()
     requestAnimationFrame(() => this.loop())
   }
@@ -158,7 +147,7 @@ export class GameloopService {
   }
 
   pause() {
-
+    cancelAnimationFrame(0)
   }
 
 }
