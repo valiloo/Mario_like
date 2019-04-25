@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { GameloopService } from '../gameloop.service';
+import { GamestateService } from '../gamestate.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ROUTES } from '../map/app-routes'
 
 @Component({
   selector: 'app-game-overapp',
@@ -8,7 +11,7 @@ import { GameloopService } from '../gameloop.service';
 })
 export class GameOverComponent implements OnInit {
 
-  constructor() { }
+  constructor(public gameState: GamestateService, public gameLoopService : GameloopService, public route : Router,) { }
   marche: string = "menu"
 
   tryAgain() {

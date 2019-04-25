@@ -6,7 +6,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
-
+ 
+  counter = 10;
+   intervalId = null;
+  
+  
 /* onMouseOver(){
 this.mSpanColor=  "/assets/son/cool.mp3";
 }
@@ -16,6 +20,7 @@ onMouseOut(){
 } */
 
   constructor() {
+    
    }
 
    /* @ViewChild('audioOption') audioPlayerRef: ElementRef;
