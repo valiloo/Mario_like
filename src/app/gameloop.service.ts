@@ -28,6 +28,7 @@ export class GameloopService {
   public playerBlocX
   public cell: any
   public canJump : boolean 
+  public stop = false
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route : Router) { }
@@ -38,7 +39,7 @@ export class GameloopService {
   public canMove() { 
 
     
-
+this.stop = false
   
 
     if (this.jump > 0) {
@@ -80,10 +81,11 @@ export class GameloopService {
 
     }
     
-    if (this.gameService.playerX > 20){
-      this.gameService.playerX=0;
-      
+    if (this.gameService.playerY > 650){
+     this.gameService.playerY = 0
+      this.stop = true
       this.route.navigate(['/Over'])
+      
     
     }
 // gere le saut : verifie que la touche espace est enfoncee, que le joueur ne sort pas de la carte, appelle la fonction qui verifie la collision avec le bloc au dessus de lui//
@@ -234,16 +236,22 @@ isTheEnd(playerBlocX, playerBlocY){
 
 
   loop() {
+    
     this.canMove() // appelle de fonction explique au dessus //
+    this.pause()
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
     this.cameraLock() // appelle de fonction explique au dessus //
-    requestAnimationFrame(() => this.loop()) // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
+    
+
+     // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
   }
 
   start() {
     this.loop() // lance le loop au lancement du jeu //
+
+    
 
 
   }
@@ -251,10 +259,12 @@ isTheEnd(playerBlocX, playerBlocY){
   pause() {
     if (!this.stop)
     {
+      requestAnimationFrame(() => this.loop())
         this.stop = true;
     } else if (this.stop)
     {
        this.stop = false;
+
     }
 }}
 

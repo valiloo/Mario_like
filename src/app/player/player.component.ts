@@ -18,7 +18,7 @@ export enum KEY_CODE {
 
 })
 
-export class PlayerComponent implements OnInit,DoCheck{
+export class PlayerComponent implements OnInit{
 
   public refresh: any
   public move: any
@@ -74,11 +74,9 @@ export class PlayerComponent implements OnInit,DoCheck{
 
 ngOnInit(){
   this.loop.start()
+  this.gameService.playerX -= this.gameService.playerX
 }
-ngDoCheck(){
 
-  this.loop.stop=false
-}
 }
 
 
