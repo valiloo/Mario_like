@@ -26,17 +26,15 @@ export class MapComponent implements OnInit {
 
   }
 
-  @ViewChild('audioOption') audioPlayerRef: ElementRef;
+  
 
-  onAudioPlay() {
-    this.audioPlayerRef.nativeElement.play();
-  }
+  
 
 
 
   ngOnInit() {
     this.initMap();
-    this.onAudioPlay();
+    
   }
 
 
