@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from './gamestate.service';
+
 import { MapTheme, MapService, } from './map.service';
+
 
 
 
@@ -75,10 +77,7 @@ export class GameloopService {
 
       this.gameService.playerX = 0
     }
-
-
-    // if(this.gameService.playerY + this.gameService.playerHeight === ){
-
+  
       //  this.gameService.playerY = case.y - this.gameService.playerHeight
 
     // }
@@ -141,6 +140,7 @@ export class GameloopService {
     }
 
   }
+
 
   loop() {
     this.canMove()
