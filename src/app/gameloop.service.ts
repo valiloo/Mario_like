@@ -28,6 +28,7 @@ export class GameloopService {
   public playerBlocX
   public cell: any
   public canJump : boolean 
+  public stop = false
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route : Router) { }
@@ -36,6 +37,10 @@ export class GameloopService {
 
 // fonction globale encadrant tout les types de deplacements //
   public canMove() { 
+
+    
+this.stop = false
+  
 
     if (this.jump > 0) {
 
@@ -53,6 +58,7 @@ export class GameloopService {
       this.gameService.playerY += 4
       
     }
+    
 
 // gère le deplacement vers la droite : verifie que la touche fleche droite est enfoncé et appelle la fonction gérant la collision sur la droite du personnage//
     if ((this.gameService.move === MOVE_RIGHT) &&  this.gameService.xVelocity === MOVE_FORWARD && this.getRightCollision(this.playerBlocX, this.playerBlocY)) { 
@@ -71,7 +77,15 @@ export class GameloopService {
       this.gameService.playerX -= 8 // deplace le personnage de 8px sur la gauche//
       
       this.move = 1 // indique le mouvement en cours //
- 
+  
+
+    }
+    
+    if (this.gameService.playerY > 650){
+     this.gameService.playerY = 0
+      this.stop = true
+      this.route.navigate(['/Over'])
+      
     }
 // gere le saut : verifie que la touche espace est enfoncee, que le joueur ne sort pas de la carte, appelle la fonction qui verifie la collision avec le bloc au dessus de lui//
     if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
@@ -222,24 +236,35 @@ isTheEnd(playerBlocX, playerBlocY){
 
 
   loop() {
+    
     this.canMove() // appelle de fonction explique au dessus //
+    this.pause()
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
     this.cameraLock() // appelle de fonction explique au dessus //
-    requestAnimationFrame(() => this.loop()) // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
+    
+
+     // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
   }
 
   start() {
     this.loop() // lance le loop au lancement du jeu //
 
+    
+
 
   }
 
   pause() {
+    if (!this.stop)
+    {
+      requestAnimationFrame(() => this.loop())
+        this.stop = true;
+    } else if (this.stop)
+    {
+       this.stop = false;
 
-  }
-
-
-}
+    }
+}}
 

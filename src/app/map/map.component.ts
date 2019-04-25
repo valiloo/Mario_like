@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MapService, MapTheme } from '../map.service';
+import { GameloopService } from '../gameloop.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class MapComponent implements OnInit {
 
 
 
-  constructor(public mapService: MapService, private mapTheme: MapTheme) {
+  constructor(public loop : GameloopService,  public mapService: MapService, private mapTheme: MapTheme) {
 
   }
 
@@ -32,7 +33,6 @@ export class MapComponent implements OnInit {
 
 
   ngOnInit() {
-    setInterval(() => { if (this.time >= 0) this.time++; }, 1000);
 
     this.initMap();
 
