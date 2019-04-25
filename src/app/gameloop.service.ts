@@ -23,9 +23,7 @@ export class GameloopService {
   public playerBlocY
   public playerBlocX
   public cell: any
-
-
-
+  public canJump : boolean 
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService) { }
@@ -41,11 +39,15 @@ export class GameloopService {
 
     }
 
+    if (this.getBottomCollision(this.playerBlocX,this.playerBlocY) === false) { // si le joueur touche le sol il peut ressauter //
+      this.canJump = true
+    }
+
 // gere la gravité, fait redescendre le personnage jusqu'au bas de la carte ou qu'il rencontre un bloc avec collision //
     if (this.gameService.playerY < 657 && this.getBottomCollision(this.playerBlocX, this.playerBlocY)) { 
 
-
       this.gameService.playerY += 4
+      
     }
 
 // gère le deplacement vers la droite : verifie que la touche fleche droite est enfoncé et appelle la fonction gérant la collision sur la droite du personnage//
@@ -71,12 +73,15 @@ export class GameloopService {
 
     }
 // gere le saut : verifie que la touche espace est enfoncee, que le joueur ne sort pas de la carte, appelle la fonction qui verifie la collision avec le bloc au dessus de lui//
-    if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY)) {
+    if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
       this.jump = 45 // gere l'animation de saut //
-      for (let i = 0; i <= 4; i ++) { // boucle for decoupant le saut en 4 partie //
+
+      for (let i = 0; i <= 6; i ++) { // boucle for decoupant le saut en 6 partie //
+        this.canJump = false // ne peux plus sauter avant de toucher le sol //
         if (this.getTopCollision(this.playerBlocX, this.playerBlocY)) { // check tout les 32px / tout les blocs si le bloc du dessus est traversable //
           this.gameService.playerY -= 32 // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
           this.gameService.yVelocity = 0 // indication saut //
+         
       }
     }
   }
@@ -85,7 +90,7 @@ export class GameloopService {
 
 // si aucune touche enfonce, le perso sera immobile //
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
-
+      
       this.move = 0
 
     }
