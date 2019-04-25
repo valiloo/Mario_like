@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { GameloopService } from './gameloop.service';
 import { MapService } from './map.service';
 
 export const MOVE_RIGHT = 1
@@ -23,6 +22,7 @@ public playerY : any = 0
 public playerScaleX : any = 0
 public playerWidth : number = 53
 public playerHeight : number = 60
+
 
 
 
