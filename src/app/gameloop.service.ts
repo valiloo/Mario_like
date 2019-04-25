@@ -40,7 +40,10 @@ export class GameloopService {
 
     
 this.stop = false
-  
+    if(this.gameService.pause === true){
+
+      this.pause()
+    }
 
     if (this.jump > 0) {
 
