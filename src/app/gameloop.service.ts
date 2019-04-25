@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from './gamestate.service';
 
 import { MapTheme, MapService, } from './map.service';
-import { GameOverComponent } from './game-over/game-over.component';
+import { MapComponent } from './map/map.component';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { ROUTES } from './map/app-routes'
@@ -159,8 +159,12 @@ isTheEnd(playerBlocX, playerBlocY){
   this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
   
   if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
-    console.log("CA MARCHE")
+    return true
   }
+  else if(this.mapTheme.blocs[this.cell].isEnd === false) {
+    return false
+  }
+
 }
 
 // fonction gerant la collision a droite //
