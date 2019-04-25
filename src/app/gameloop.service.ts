@@ -71,7 +71,7 @@ export class GameloopService {
       this.gameService.playerX -= 8 // deplace le personnage de 8px sur la gauche//
       
       this.move = 1 // indique le mouvement en cours //
-
+      
     }
 // gere le saut : verifie que la touche espace est enfoncee, que le joueur ne sort pas de la carte, appelle la fonction qui verifie la collision avec le bloc au dessus de lui//
     if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
@@ -95,8 +95,11 @@ export class GameloopService {
       this.move = 0
 
     }
+
+   
   }
 
+    
   // fonction bloquant la camera sur le personnage //
   cameraLock() {
 
@@ -145,7 +148,18 @@ export class GameloopService {
       }
     }
 
+    
   
+}
+
+isTheEnd(playerBlocX, playerBlocY){
+  this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
+  this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel vers une valeur de l'array de la carte  //
+  this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
+  
+  if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
+    console.log("CA MARCHE")
+  }
 }
 
 // fonction gerant la collision a droite //
@@ -206,14 +220,13 @@ export class GameloopService {
   }
 
 
-
-
   loop() {
     this.canMove() // appelle de fonction explique au dessus //
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
     this.cameraLock() // appelle de fonction explique au dessus //
     requestAnimationFrame(() => this.loop()) // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
+    this.isTheEnd(this.playerBlocX, this.playerBlocY)
   }
 
   start() {
