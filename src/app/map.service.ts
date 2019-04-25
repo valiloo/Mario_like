@@ -60,7 +60,7 @@ const B6 = 52
 
 
 export class Bloc {
-  constructor(public textureURL: string, public canGoThrough: boolean) { }
+  constructor(public textureURL: string, public canGoThrough: boolean, public isEnd?: boolean) { }
 }
 
 
@@ -126,7 +126,7 @@ export class MapTheme {
     this.blocs[B1] = new Bloc("assets/textures/portedroitebas.png", true) // porte
     this.blocs[B2] = new Bloc("assets/textures/portehautdroite1.png", true)
     this.blocs[B3] = new Bloc("assets/textures/portedroitemilieu.png", true)
-    this.blocs[B4] = new Bloc("assets/textures/portegauchebas.png", true)
+    this.blocs[B4] = new Bloc("assets/textures/portegauchebas.png", true, true)
     this.blocs[B5] = new Bloc("assets/textures/portegauchehaut.png", true)
     this.blocs[B6] = new Bloc("assets/textures/portegauchemilieu.png", true)
 
