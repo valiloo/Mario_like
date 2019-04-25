@@ -28,12 +28,13 @@ export class GameloopService {
   public playerBlocX
   public cell: any
   public canJump : boolean 
+  public jumpSound
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route : Router) { }
 
 
-
+  
 // fonction globale encadrant tout les types de deplacements //
   public canMove() { 
 
@@ -82,7 +83,10 @@ export class GameloopService {
         if (this.getTopCollision(this.playerBlocX, this.playerBlocY)) { // check tout les 32px / tout les blocs si le bloc du dessus est traversable //
           this.gameService.playerY -= 32 // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
           this.gameService.yVelocity = 0 // indication saut //
-         
+          this.jumpSound = new Audio()
+          this.jumpSound.src = "assets/audio/jump.wav"
+          this.jumpSound.load()
+          this.jumpSound.play()
       }
     }
   }
