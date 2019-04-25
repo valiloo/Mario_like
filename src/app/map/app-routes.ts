@@ -9,14 +9,14 @@ import { GameOverComponent } from '../game-over/game-over.component';
 
 export { ROUTES };
 const ROUTES: Routes = [
-
+    { path: 'Over', component: GameOverComponent },
     { path: 'route', component: Router },
     { path: 'menu', component: MenuComponent },
     { path: 'map', component: MapComponent },
     { path: 'settings', component: SettingsComponent },
     { path: 'player', component: PlayersnameComponent },
     { path: '', redirectTo: '/menu', pathMatch: 'full' },
-    { path: 'Over', component: GameOverComponent }
+   
 
 ];
 
