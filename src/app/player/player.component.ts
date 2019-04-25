@@ -19,99 +19,54 @@ export enum KEY_CODE {
 
 export class PlayerComponent implements OnInit {
 
-
-
-  @HostBinding('style.position') myPosition: any
-
-  constructor(public gameService: GamestateService, public element: ElementRef, public loop: GameloopService, public mapService: MapService) {
-
-
-  }
-
   public refresh: any
   public move: any
   public x: number
   public y: number
+  @HostBinding('style.position') myPosition: any
 
+  constructor(public gameService: GamestateService, public element: ElementRef, public loop: GameloopService, public mapService: MapService) {
 
-
+  }
 
   @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
 
     event.preventDefault()
 
-
-
     if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
-
       this.gameService.xVelocity = MOVE_FORWARD
       this.gameService.move = MOVE_RIGHT
-
-      console.log(this.loop.xAxis)
     }
 
     if (event.keyCode === KEY_CODE.LEFT_ARROW) {
-
       this.gameService.xVelocity = MOVE_BACKWARD
       this.gameService.move = MOVE_LEFT
-      console.log(this.x)
-
-
-
     }
 
     if (event.keyCode === KEY_CODE.SPACE) {
-
       this.gameService.yVelocity = MOVE_UPWARD
-
-      console.log(this.y)
     }
-
 
   }
 
   @HostListener('window:keyup', [('$event')]) stopMovement(event: KeyboardEvent) {
 
     if (event.keyCode === KEY_CODE.RIGHT_ARROW || event.keyCode === KEY_CODE.LEFT_ARROW) {
-
       this.gameService.move = 0
-
     }
 
     if (event.keyCode === KEY_CODE.SPACE) {
-
       this.gameService.yVelocity = 0
-      console.log(this.y)
-
-
     }
 
   }
 
 
-  //@HostListener('window:keyup', [('$event')]) dead(event: KeyboardEvent) {
-
-  //  if (event.keyCode ===  || event.keyCode === KEY_CODE.LEFT_ARROW) {
-
-  //   this.gameService.move = 0//
-
-
   ngOnInit() {
-
-    this.loop.start()
-
-
-
-
-
-  }
-
-
+/*     this.loop.start()
+ */  }
 
 }
-
-
-
 
 
 
