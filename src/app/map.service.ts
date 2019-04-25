@@ -60,7 +60,7 @@ const B6 = 52
 
 
 export class Bloc {
-  constructor(public textureURL: string, public canGoThrough: boolean, public isEnd?: boolean) { }
+  constructor(public textureURL: string, public canGoThrough: boolean, public isEnd: boolean) { }
 }
 
 
@@ -76,59 +76,59 @@ export class MapTheme {
   }
 
   constructor() {
-    this.blocs[VI] = new Bloc("assets/textures/vide.png", true)
-    this.blocs[T1] = new Bloc("assets/textures/bloc_pierre.png", false)
-    this.blocs[T2] = new Bloc("assets/textures/bloc_pierre2.png", false)
-    this.blocs[T3] = new Bloc("assets/textures/bloc_pierre3.png", false)
-    this.blocs[T4] = new Bloc("assets/textures/bloc_pierre_coin_droit.png", false)
-    this.blocs[T5] = new Bloc("assets/textures/leftTopBloc.png", true)
-    this.blocs[T6] = new Bloc("assets/textures/rightTopBloc.png", true)
-    this.blocs[T7] = new Bloc("assets/textures/middleTopBloc.png", true)
-    this.blocs[D1] = new Bloc("assets/textures/bloc_noire.png", false)
-    this.blocs[D2] = new Bloc("assets/textures/bloc_noire_pierre.png", false)
-    this.blocs[CG] = new Bloc("assets/textures/coinPatternEtageGauche.png", false)
-    this.blocs[CD] = new Bloc("assets/textures/coinPatternEtageDroit.png", false)
-    this.blocs[P1] = new Bloc("assets/textures/poteau2Bas.png", true)
-    this.blocs[P2] = new Bloc("assets/textures/poteau2milieu.png", true)
-    this.blocs[P3] = new Bloc("assets/textures/poteau2Haut.png", true)
-    this.blocs[P4] = new Bloc("assets/textures/poteauGaucheCutBas.png", true)
-    this.blocs[P5] = new Bloc("assets/textures/poteauGaucheCutMilieu.png", true)
-    this.blocs[P6] = new Bloc("assets/textures/poteauGaucheCutHaut.png", true)
-    this.blocs[P7] = new Bloc("assets/textures/poteauDroitCutBas.png", true)
-    this.blocs[P8] = new Bloc("assets/textures/poteauDroitCutMilieu.png", true)
-    this.blocs[P9] = new Bloc("assets/textures/poteauDroitCutHaut.png", true)
-    this.blocs[PX] = new Bloc("assets/textures/topBlocBlack.png", true)
-    this.blocs[F1] = new Bloc("assets/textures/mFlagBas.png", true)
-    this.blocs[F2] = new Bloc("assets/textures/mFlagMid.png", true)
-    this.blocs[F3] = new Bloc("assets/textures/mFlagTop.png", true)
-    this.blocs[F4] = new Bloc("assets/textures/topMiniFlag.png", true)
-    this.blocs[D4] = new Bloc("assets/textures/mFlagMidShield.png", true)
-    this.blocs[M1] = new Bloc("assets/textures/mFlagBasFlag.png", true)
-    this.blocs[M2] = new Bloc("assets/textures/mFlagMidWall.png", true)
-    this.blocs[M3] = new Bloc("assets/textures/mFlagTopWall.png", true)
-    this.blocs[PD] = new Bloc("assets/textures/haut_coldroit.png", true)
-    this.blocs[PG] = new Bloc("assets/textures/haut_colgauche.png", true)
-    this.blocs[L1] = new Bloc("assets/textures/lightWall.png", true)  // chandelle
-    this.blocs[K1] = new Bloc("assets/textures/WallKnightBas.png", true) // pattern chevalier
-    this.blocs[K2] = new Bloc("assets/textures/WallKnightHaut.png", true)
-    this.blocs[S1] = new Bloc("assets/textures/Shield2.png", true)
-    this.blocs[LU] = new Bloc("assets/textures/lustreDurHaut.png", true) //pattern lustre bloc
-    this.blocs[LR] = new Bloc("assets/textures/lustreDurBas.png", true)
-    this.blocs[LM] = new Bloc("assets/textures/ChandelierCable_Mid.png", true)
-    this.blocs[LT] = new Bloc("assets/textures/ChandelierCable_Top.png", true)
-    this.blocs[SB] = new Bloc("assets/textures/swordBot.png", true) // pattern big sword
-    this.blocs[ST] = new Bloc("assets/textures/swordTop.png", true)
-    this.blocs[SI] = new Bloc("assets/textures/sign1.png", true) // panneau tete de mort 
-    this.blocs[BL] = new Bloc("assets/textures/block-big.png", true) // bloc
-    this.blocs[BT] = new Bloc("assets/textures/face-block.png", true) //bloc
-    this.blocs[KK] = new Bloc("assets/textures/Cactus.png", true) // cactus rond
-    this.blocs[SK] = new Bloc("assets/textures/skulls.png", true) // crane
-    this.blocs[B1] = new Bloc("assets/textures/portedroitebas.png", true) // porte
-    this.blocs[B2] = new Bloc("assets/textures/portehautdroite1.png", true)
-    this.blocs[B3] = new Bloc("assets/textures/portedroitemilieu.png", true)
+    this.blocs[VI] = new Bloc("assets/textures/vide.png", true, false)
+    this.blocs[T1] = new Bloc("assets/textures/bloc_pierre.png", false, false)
+    this.blocs[T2] = new Bloc("assets/textures/bloc_pierre2.png", false, false)
+    this.blocs[T3] = new Bloc("assets/textures/bloc_pierre3.png", false, false)
+    this.blocs[T4] = new Bloc("assets/textures/bloc_pierre_coin_droit.png", false, false)
+    this.blocs[T5] = new Bloc("assets/textures/leftTopBloc.png", true, false)
+    this.blocs[T6] = new Bloc("assets/textures/rightTopBloc.png", true, false)
+    this.blocs[T7] = new Bloc("assets/textures/middleTopBloc.png", true, false)
+    this.blocs[D1] = new Bloc("assets/textures/bloc_noire.png", false, false)
+    this.blocs[D2] = new Bloc("assets/textures/bloc_noire_pierre.png", false, false)
+    this.blocs[CG] = new Bloc("assets/textures/coinPatternEtageGauche.png", false, false)
+    this.blocs[CD] = new Bloc("assets/textures/coinPatternEtageDroit.png", false, false)
+    this.blocs[P1] = new Bloc("assets/textures/poteau2Bas.png", true, false)
+    this.blocs[P2] = new Bloc("assets/textures/poteau2milieu.png", true, false)
+    this.blocs[P3] = new Bloc("assets/textures/poteau2Haut.png", true, false)
+    this.blocs[P4] = new Bloc("assets/textures/poteauGaucheCutBas.png", true, false)
+    this.blocs[P5] = new Bloc("assets/textures/poteauGaucheCutMilieu.png", true, false)
+    this.blocs[P6] = new Bloc("assets/textures/poteauGaucheCutHaut.png", true, false)
+    this.blocs[P7] = new Bloc("assets/textures/poteauDroitCutBas.png", true, false)
+    this.blocs[P8] = new Bloc("assets/textures/poteauDroitCutMilieu.png", true, false)
+    this.blocs[P9] = new Bloc("assets/textures/poteauDroitCutHaut.png", true, false)
+    this.blocs[PX] = new Bloc("assets/textures/topBlocBlack.png", true, false)
+    this.blocs[F1] = new Bloc("assets/textures/mFlagBas.png", true, false)
+    this.blocs[F2] = new Bloc("assets/textures/mFlagMid.png", true, false)
+    this.blocs[F3] = new Bloc("assets/textures/mFlagTop.png", true, false)
+    this.blocs[F4] = new Bloc("assets/textures/topMiniFlag.png", true, false)
+    this.blocs[D4] = new Bloc("assets/textures/mFlagMidShield.png", true, false)
+    this.blocs[M1] = new Bloc("assets/textures/mFlagBasFlag.png", true, false)
+    this.blocs[M2] = new Bloc("assets/textures/mFlagMidWall.png", true, false)
+    this.blocs[M3] = new Bloc("assets/textures/mFlagTopWall.png", true, false)
+    this.blocs[PD] = new Bloc("assets/textures/haut_coldroit.png", true, false)
+    this.blocs[PG] = new Bloc("assets/textures/haut_colgauche.png", true, false)
+    this.blocs[L1] = new Bloc("assets/textures/lightWall.png", true, false)  // chandelle
+    this.blocs[K1] = new Bloc("assets/textures/WallKnightBas.png", true, false) // pattern chevalier
+    this.blocs[K2] = new Bloc("assets/textures/WallKnightHaut.png", true, false)
+    this.blocs[S1] = new Bloc("assets/textures/Shield2.png", true, false)
+    this.blocs[LU] = new Bloc("assets/textures/lustreDurHaut.png", true, false) //pattern lustre bloc
+    this.blocs[LR] = new Bloc("assets/textures/lustreDurBas.png", true, false)
+    this.blocs[LM] = new Bloc("assets/textures/ChandelierCable_Mid.png", true, false)
+    this.blocs[LT] = new Bloc("assets/textures/ChandelierCable_Top.png", true, false)
+    this.blocs[SB] = new Bloc("assets/textures/swordBot.png", true, false) // pattern big sword
+    this.blocs[ST] = new Bloc("assets/textures/swordTop.png", true, false)
+    this.blocs[SI] = new Bloc("assets/textures/sign1.png", true, false) // panneau tete de mort 
+    this.blocs[BL] = new Bloc("assets/textures/block-big.png", true, false) // bloc
+    this.blocs[BT] = new Bloc("assets/textures/face-block.png", true, false) //bloc
+    this.blocs[KK] = new Bloc("assets/textures/Cactus.png", true, false) // cactus rond
+    this.blocs[SK] = new Bloc("assets/textures/skulls.png", true, false) // crane
+    this.blocs[B1] = new Bloc("assets/textures/portedroitebas.png", true, true) // porte
+    this.blocs[B2] = new Bloc("assets/textures/portehautdroite1.png", true, true)
+    this.blocs[B3] = new Bloc("assets/textures/portedroitemilieu.png", true, true)
     this.blocs[B4] = new Bloc("assets/textures/portegauchebas.png", true, true)
-    this.blocs[B5] = new Bloc("assets/textures/portegauchehaut.png", true)
-    this.blocs[B6] = new Bloc("assets/textures/portegauchemilieu.png", true)
+    this.blocs[B5] = new Bloc("assets/textures/portegauchehaut.png", true, true)
+    this.blocs[B6] = new Bloc("assets/textures/portegauchemilieu.png", true, true)
 
 
   }
