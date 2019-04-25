@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GamestateService } from '../gamestate.service';
+import { GameloopService } from '../gameloop.service';
 
 @Component({
   selector: 'app-playersname',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlayersnameComponent implements OnInit {
 
-  constructor() { }
+  constructor(public gameState: GamestateService, public loop:GameloopService) { }
 
   ngOnInit() {
+
   }
 
 }
