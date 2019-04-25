@@ -180,15 +180,6 @@ export class MapService {
   getMap(): number[][] {
     return this.map
   }
-  getMapCoordinates(){
 
-    for(let i = 0; i < this.map.length; i++){
-
-      for(let j = 0 ; j < this.map[i].length; j++){
-
-      }
-
-    }
-  }
 }
 
