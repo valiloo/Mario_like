@@ -21,7 +21,6 @@ import { MechantComponent } from './mechant/mechant.component';
 
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +34,6 @@ import { MechantComponent } from './mechant/mechant.component';
 
     MechantComponent,
 
-    
 
   ],
   imports: [

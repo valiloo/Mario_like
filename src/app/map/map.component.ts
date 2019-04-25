@@ -10,12 +10,13 @@ import { GameloopService } from '../gameloop.service';
 })
 export class MapComponent implements OnInit {
   time: number = 0;
-
   map = []
 
 
 
-  constructor(public loop : GameloopService,  public mapService: MapService, private mapTheme: MapTheme) {
+
+  constructor(public mapService: MapService, private mapTheme: MapTheme, public gameLoop: GameloopService) {
+
 
   }
 
@@ -27,13 +28,24 @@ export class MapComponent implements OnInit {
   }
 
   
+  public startChrono() {
+    if (this.gameLoop.isTheEnd(this.gameLoop.playerBlocX, this.gameLoop.playerBlocY) === false) {
+    setInterval(() => { if (this.time >= 0) this.time++; }, 1000);
+    } else if (this.gameLoop.isTheEnd(this.gameLoop.playerBlocX, this.gameLoop.playerBlocY) === true){
+      setInterval(() => this.time, 0 )
+    }
 
+  }
+
+  
   
 
 
 
   ngOnInit() {
-    set
+
+    this.startChrono();
+
     this.initMap();
 
   }
