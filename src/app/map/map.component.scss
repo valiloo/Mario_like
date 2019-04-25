@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'timer';
+    src: url('/assets/Police/joystix.ttf');
+}
+
 .col {
     display: inline-flex;
 }
@@ -49,9 +54,22 @@ div {
     animation: moveX 3s steps(9) infinite, 
     moveY 3s steps(4) infinite; 
     transform : scaleX(-1)
-                        
-                                                }
-.A{
+ }
+/* .time{
     margin-left: 200px;
 }
-                  
+   */
+   .stopwatch{
+    position: fixed;
+    width: 3%;
+    height: auto;
+    margin-left: 35px;
+  }
+
+.time{
+    position: fixed;
+    margin-left: 90px;
+    padding-right: 30px;
+    font-family: 'timer';
+    font-size: 30px;
+}
