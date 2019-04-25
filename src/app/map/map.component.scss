@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'timer';
+    src: url('/assets/Police/joystix.ttf');
+}
+
 .col {
     display: inline-flex;
 }
@@ -49,8 +54,7 @@ div {
     animation: moveX 3s steps(9) infinite, 
     moveY 3s steps(4) infinite; 
     transform : scaleX(-1)
-                        
-                                                }
+ }
 /* .time{
     margin-left: 200px;
 }
@@ -60,8 +64,12 @@ div {
     top: 4%;
     width: 3%;
     height: auto;
+    margin-left: 35px;
   }
 
 .time{
     margin-left: 60px;
+    padding-right: 30px;
+    padding-left: 30px;
+    font-family: 'timer';
 }
