@@ -77,11 +77,7 @@ export class GameloopService {
 
     }
 
-    if (this.gameService.playerX > 20){
-  
-      this.route.navigate(['/Over'])
-      this.gameService.playerX=12;
-    }
+   
    if(this.gameService.playerX < 0){
 
       this.gameService.playerX = 0
