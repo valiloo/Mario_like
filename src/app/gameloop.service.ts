@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from './gamestate.service';
+
 import { MapTheme, MapService, } from './map.service';
+
 
 
 
@@ -77,7 +79,6 @@ export class GameloopService {
       this.gameService.playerX = 0
     }
 
-
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
 
       this.move = 0
@@ -142,6 +143,7 @@ export class GameloopService {
 
   }
 
+
   loop() {
     this.canMove()
     this.moveMonster()
@@ -158,6 +160,5 @@ export class GameloopService {
   pause() {
 
   }
-
 
 }
