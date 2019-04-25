@@ -77,7 +77,7 @@ this.stop = false
       this.gameService.playerX -= 8 // deplace le personnage de 8px sur la gauche//
       
       this.move = 1 // indique le mouvement en cours //
-      
+  
 
     }
     
@@ -86,7 +86,6 @@ this.stop = false
       this.stop = true
       this.route.navigate(['/Over'])
       
-    
     }
 // gere le saut : verifie que la touche espace est enfoncee, que le joueur ne sort pas de la carte, appelle la fonction qui verifie la collision avec le bloc au dessus de lui//
     if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
@@ -99,6 +98,7 @@ this.stop = false
           this.gameService.yVelocity = 0 // indication saut //
          
       }
+
     }
   }
 
