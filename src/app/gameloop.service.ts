@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from './gamestate.service';
 
 import { MapTheme, MapService, } from './map.service';
+import { GameOverComponent } from './game-over/game-over.component';
+
+import { ActivatedRoute, Router } from '@angular/router';
+import { ROUTES } from './map/app-routes'
 
 
 
@@ -26,7 +30,7 @@ export class GameloopService {
   public canJump : boolean 
 
 
-  constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService) { }
+  constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route : Router) { }
 
 
 
@@ -56,9 +60,6 @@ export class GameloopService {
       this.gameService.playerScaleX = -1 // gere le reverse d'animation du personnage //
       this.gameService.playerX += 8 // deplace le personnage de 8px sur la droite //
       this.move = 1 // indique le mouvement en cours //
-
-
-
 
 
     }
@@ -131,21 +132,21 @@ export class GameloopService {
       const ogr = this.mapService.ogrs[index]
 
       if (ogr.direction == MOVE_RIGHT) {
-        ogr.posX += 0.1;
+        ogr.posX += 0.02;
         if (ogr.initPosX + ogr.amplitude < ogr.posX) {
           ogr.direction = MOVE_LEFT
         }
       }
       else if (ogr.direction == MOVE_LEFT) {
-        ogr.posX -= 0.1;
+        ogr.posX -= 0.02;
         if (ogr.initPosX - ogr.amplitude > ogr.posX) {
           ogr.direction = MOVE_RIGHT
         }
       }
     }
 
-  }
-
+  
+}
 
 // fonction gerant la collision a droite //
   getRightCollision(playerBlocX, playerBlocY): boolean { // prend deux options : playerBlocY et playerBlocX // 
@@ -227,3 +228,4 @@ export class GameloopService {
 
 
 }
+

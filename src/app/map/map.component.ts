@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MapService, MapTheme } from '../map.service';
 
 
@@ -8,7 +8,8 @@ import { MapService, MapTheme } from '../map.service';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
-
+  timeLeft: number = 0;
+  interval;
 
   map = []
 
@@ -25,11 +26,37 @@ export class MapComponent implements OnInit {
 
   }
 
+  @ViewChild('audioOption') audioPlayerRef: ElementRef;
+
+  onAudioPlay() {
+    this.audioPlayerRef.nativeElement.play();
+  }
+
+
 
   ngOnInit() {
     this.initMap();
+<<<<<<< HEAD
+    this.onAudioPlay();
+=======
+>>>>>>> eaf30cf5f9726e61d62f1b7e7bacd4780d0f0e5f
   }
 
-}
 
+ 
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      if(this.timeLeft <1000) {
+        this.timeLeft++;
+      } else {
+        this.timeLeft = 0;
+      }
+    },1000)
+  }
+
+  pauseTimer() {
+    clearInterval(this.interval);
+  }
+}
 
