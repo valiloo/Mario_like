@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from './gamestate.service';
 
 import { MapTheme, MapService, } from './map.service';
+import { GameOverComponent } from './game-over/game-over.component';
+
+import { ActivatedRoute, Router } from '@angular/router';
+import { ROUTES } from './map/app-routes'
 
 
 
@@ -22,7 +26,7 @@ export class GameloopService {
   public innerWidth;
 
 
-  constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService) { }
+  constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route : Router) { }
 
 
 
@@ -48,7 +52,7 @@ export class GameloopService {
       this.gameService.playerX += 3
       this.move = 1
 
-      console.log(this.gameService.playerX)
+      
 
 
     }
@@ -69,15 +73,24 @@ export class GameloopService {
       this.jump = 45
       this.gameService.playerY -= 230
       this.gameService.yVelocity = 0
-      console.log(this.gameService.playerY)
+      
 
     }
 
+    if (this.gameService.playerX > 20){
+  
+      this.route.navigate(['/Over'])
+      this.gameService.playerX=12;
+    }
    if(this.gameService.playerX < 0){
 
       this.gameService.playerX = 0
     }
   
+    
+
+    // if(this.gameService.playerY + this.gameService.playerHeight === ){
+
       //  this.gameService.playerY = case.y - this.gameService.playerHeight
 
     // }
@@ -126,27 +139,27 @@ export class GameloopService {
       const ogr = this.mapService.ogrs[index]
 
       if (ogr.direction == MOVE_RIGHT) {
-        ogr.posX += 0.1;
+        ogr.posX += 0.02;
         if (ogr.initPosX + ogr.amplitude < ogr.posX) {
           ogr.direction = MOVE_LEFT
         }
       }
       else if (ogr.direction == MOVE_LEFT) {
-        ogr.posX -= 0.1;
+        ogr.posX -= 0.02;
         if (ogr.initPosX - ogr.amplitude > ogr.posX) {
           ogr.direction = MOVE_RIGHT
         }
       }
     }
 
-  }
-
+  
+}
 
   loop() {
     this.canMove()
     this.moveMonster()
     this.moveOgr()
-
+    
     this.cameraLock()
     requestAnimationFrame(() => this.loop())
   }
@@ -161,3 +174,4 @@ export class GameloopService {
 
 
 }
+
