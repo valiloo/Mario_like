@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Monster, OsMonster, } from './models/monster';
 import {OgrMonster} from './models/ogr';
+import { mapChildrenIntoArray } from '@angular/router/src/url_tree';
 
 
 export const VI = 0
@@ -160,7 +161,8 @@ export class MapService {
 
   public monsters: OsMonster[] = [new OsMonster(19, 19),]
   public ogrs: OgrMonster[] =  [new OgrMonster(15, 19),]
-
+  public x : number
+  public y : number
   public map = [
     [T5, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7],
     [VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, LT, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, LT, VI, VI, VI, VI, VI, VI, VI, VI, VI, LT, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, LT, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI],
@@ -193,6 +195,22 @@ export class MapService {
 
 
   }
+
+getMapCoordinates(){
+
+  for(let i = 0; i< this.map.length; i++){
+      this.x += 32
+    for(let j = 0; j < this.map[i].length; j++){
+
+     this.y += 32
+
+    }
+
+  }
+
+
+}
+
   getMap(): number[][] {
     return this.map
   }

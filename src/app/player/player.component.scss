@@ -1,6 +1,6 @@
 .playerMovement {
     position: absolute;
-    top: 602px;
+    
     height: 45px;
     width: 53px;  
     background: url('/assets/textures/sprite_course.png/');
@@ -9,7 +9,7 @@
 }
 .player {
     position: absolute;
-    top: 587px;
+  
     height: 60px;
     width: 36px;
     left: 15px;
@@ -19,7 +19,7 @@
 
 .playerJump{
     position : absolute;
-    top: 587px;
+   
     height:66px;
     width: 79px;
     transform: scaleX(-1);

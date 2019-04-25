@@ -14,10 +14,11 @@ export class GameloopService {
 
   public jump: number = 0
   public move: number
-  public xAxis: number = 0
-  public yAxis: number = 0
+  public x: number = 0
+  public y: number = 0
   public scaleX: number
   public innerWidth;
+  public mapPosition = Math.round((this.gameService.playerY+this.gameService.playerHeight)/ 32)
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService) { }
@@ -32,7 +33,7 @@ export class GameloopService {
 
     }
 
-    if (this.gameService.playerY < 0) {
+    if (this.gameService.playerY < 567) {
 
 
       this.gameService.playerY += 4
@@ -77,23 +78,22 @@ export class GameloopService {
     }
 
 
-    // if(this.gameService.playerY + this.gameService.playerHeight === ){
-
-      //  this.gameService.playerY = case.y - this.gameService.playerHeight
-
-    // }
-    // if(this.gameService.playerY - this.gameService.playerHeight === ){
-
-    //  this.gameService.playerY = case.y + this.gameService.playerHeight
-
-    // }
-
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
 
       this.move = 0
 
     }
+     for(let i = 0; i< this.mapService.map.length; i++){
+      
+      for(let j = 0; j < this.mapService.map[i].length; j++){
+  
+          if(this.mapPosition === j && this.mapTheme.textures[j] === 3){
 
+            this.gameService.playerY = this.mapPosition * 32
+          }
+      
+  
+      }}
   }
   cameraLock() {
 
