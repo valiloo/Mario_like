@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MapService, MapTheme } from '../map.service';
 
 
@@ -25,10 +25,17 @@ export class MapComponent implements OnInit {
 
   }
 
+  @ViewChild('audioOption') audioPlayerRef: ElementRef;
+
+  onAudioPlay() {
+    this.audioPlayerRef.nativeElement.play();
+  }
+
+
 
   ngOnInit() {
     this.initMap();
-
+    this.onAudioPlay();
   }
 
 }

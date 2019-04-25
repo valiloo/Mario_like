@@ -5,9 +5,14 @@
       <div class="row" *ngFor="let row of mapService.map">
         <div class="col" *ngFor="let case of row">
           <img [src]="mapTheme.textures[case]" />
+
         </div>
       </div>
     </div>
   </div>
 </body>
 
+
+<audio #audioOption>
+  <source src='/assets/audio/songMap.mp3' type="audio/mp3">
+</audio>
