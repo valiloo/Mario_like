@@ -41,16 +41,16 @@ export class GameloopService {
 
     }
 
-    if (this.gameService.playerY < 588) {
+    if (this.gameService.playerY < 585 && this.getBottomCollision(this.playerBlocX, this.playerBlocY)) {
 
       this.gameService.playerY += 4
     }
 
 
-    if ((this.gameService.move === MOVE_RIGHT)  && this.gameService.xVelocity === MOVE_FORWARD && this.getTopRightCollision(this.playerBlocX, this.playerBlocY)) {
+    if ((this.gameService.move === MOVE_RIGHT)  && this.gameService.xVelocity === MOVE_FORWARD && this.getRightCollision(this.playerBlocX, this.playerBlocY)) {
      
       this.gameService.playerScaleX = -1
-      this.gameService.playerX += 3
+      this.gameService.playerX += 7
       this.move = 1
       
   
@@ -63,7 +63,7 @@ export class GameloopService {
 
       this.gameService.playerScaleX = 1
 
-      this.gameService.playerX -= 3
+      this.gameService.playerX -= 7
 
       this.move = 1
       
@@ -141,12 +141,12 @@ export class GameloopService {
   
  
   
-  getTopRightCollision(playerBlocX, playerBlocY) : boolean {
-    this.playerBlocY = Math.round((this.gameService.playerY+this.gameService.playerHeight) / 32)
-    this.playerBlocX = Math.round((this.gameService.playerX+this.gameService.playerWidth) / 32)
-    this.cell = this.mapService.map[this.playerBlocY + 1][this.playerBlocX + 1 ]
+  getRightCollision(playerBlocX, playerBlocY) : boolean {
+    this.playerBlocY = Math.round((this.gameService.playerY) / 32)
+    this.playerBlocX = Math.round((this.gameService.playerX) / 32)
+    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX + 1]
     console.log(this.mapTheme.blocs[this.cell])
-  if (this.mapTheme.blocs[this.mapService.map[this.playerBlocY + 1][this.playerBlocX + 1 ]].canGoThrough === false) {
+  if (this.mapTheme.blocs[this.cell].canGoThrough === false) {
     
     return false
   }
@@ -154,6 +154,20 @@ export class GameloopService {
     return true
   }
 }
+
+  getBottomCollision(playerBlocX, playerBlocY) : boolean {
+    this.playerBlocY = Math.round((this.gameService.playerY) / 32)
+    this.playerBlocX = Math.round((this.gameService.playerX) / 32)
+    this.cell = this.mapService.map[this.playerBlocY + 1][this.playerBlocX]
+
+    if (this.mapTheme.blocs[this.cell].canGoThrough === false) {
+    
+      return false
+    }
+    else if (this.mapTheme.blocs[this.cell].canGoThrough === true) {
+      return true
+    }
+  }
   
 
 
@@ -167,7 +181,7 @@ export class GameloopService {
 
   start() {
     this.loop()
-    this.gameService.playerY += 568
+    
     
   }
 
