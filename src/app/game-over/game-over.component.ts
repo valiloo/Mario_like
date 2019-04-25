@@ -20,13 +20,12 @@ export class GameOverComponent implements OnInit {
 
   @ViewChild('audioOption') audioPlayerRef: ElementRef;
 
-  onAudioPlay() {
-    this.audioPlayerRef.nativeElement.play();
-  }
+  
 
 
   ngOnInit() {
-    this.onAudioPlay();
+  
+   
   }
 
 }

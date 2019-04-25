@@ -14,7 +14,9 @@ export class MapComponent implements OnInit {
 
 
 
+
   constructor(public mapService: MapService, private mapTheme: MapTheme, public gameLoop: GameloopService) {
+
 
   }
 
@@ -41,7 +43,9 @@ export class MapComponent implements OnInit {
 
 
   ngOnInit() {
+
     this.startChrono();
+
     this.initMap();
 
   }
