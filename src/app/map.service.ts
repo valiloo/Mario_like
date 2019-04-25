@@ -61,7 +61,7 @@ const B6 = 52
 
 
 export class Bloc {
-  constructor(public textureURL: string, public canGoTrough = true) { }
+  constructor(public textureURL: string, public canGoThrough: boolean) { }
 }
 
 
@@ -82,9 +82,9 @@ export class MapTheme {
     this.blocs[T2] = new Bloc("assets/textures/bloc_pierre2.png", false)
     this.blocs[T3] = new Bloc("assets/textures/bloc_pierre3.png", false)
     this.blocs[T4] = new Bloc("assets/textures/bloc_pierre_coin_droit.png", false)
-    this.blocs[T5] = new Bloc("assets/textures/leftTopBloc.png", false)
-    this.blocs[T6] = new Bloc("assets/textures/rightTopBloc.png", false)
-    this.blocs[T7] = new Bloc("assets/textures/middleTopBloc.png", false)
+    this.blocs[T5] = new Bloc("assets/textures/leftTopBloc.png", true)
+    this.blocs[T6] = new Bloc("assets/textures/rightTopBloc.png", true)
+    this.blocs[T7] = new Bloc("assets/textures/middleTopBloc.png", true)
     this.blocs[D1] = new Bloc("assets/textures/bloc_noire.png", false)
     this.blocs[D2] = new Bloc("assets/textures/bloc_noire_pierre.png", false)
     this.blocs[CG] = new Bloc("assets/textures/coinPatternEtageGauche.png", false)
@@ -175,7 +175,7 @@ export class MapService {
     [VI, VI, VI, P6, P9, VI, VI, VI, VI, VI, VI, P6, PX, M3, PX, PX, PX, M3, PX, P9, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, F2, F2, F2, S1, F2, F2, F2, P2, P2, F2, F2, F2, F2, F2, M1, F2, F2, F2, F2, F2, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, F2, F2, F2, SB, F2, F2, F2, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P6, P9, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, F2, F2, F2, F2, P8],
     [VI, VI, VI, P5, P8, VI, VI, VI, VI, VI, VI, P5, F2, M2, F2, D4, F2, M2, F2, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, F2, L1, F2, F2, F2, L1, F2, P2, P2, F2, F2, F2, F2, F2, F2, F2, F2, F2, F2, F2, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, F2, L1, F2, F2, F2, L1, F2, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, F2, B5, B2, F2, P8],
     [VI, VI, VI, P5, P8, VI, VI, VI, VI, VI, VI, P5, F2, M1, F2, F2, F2, M1, F2, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, F2, F2, F2, K2, F2, F2, F2, P2, P2, F2, F2, F2, F2, F2, K2, F2, F2, F2, F2, F2, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, F2, F2, F2, K2, F2, F2, F2, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, F2, B6, B3, F2, P8],
-    [VI, VI, VI, P4, P7, VI, VI, VI, VI, VI, VI, P4, F1, F1, F1, F1, F1, F1, F1, P7, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, F1, F1, F1, K1, F1, F1, F1, P1, P1, F1, F1, F1, F1, F1, K1, F1, F1, F1, F1, F1, P7, VI, VI, VI, VI, VI, SI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, F1, F1, F1, K1, F1, F1, F1, P7, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, P7, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, P7, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, F1, B4, B1, F1, P7],
+    [VI, VI, VI, P4, P7, VI, VI, T3, VI, VI, VI, P4, F1, F1, F1, F1, F1, F1, F1, P7, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, F1, F1, F1, K1, F1, F1, F1, P1, P1, F1, F1, F1, F1, F1, K1, F1, F1, F1, F1, F1, P7, VI, VI, VI, VI, VI, SI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, F1, F1, F1, K1, F1, F1, F1, P7, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, P7, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, P7, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, F1, B4, B1, F1, P7],
     [T1, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T4, VI, VI, VI, VI, T1, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T4, VI, VI, VI, VI, VI, VI, VI, VI, T1, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T2, T3, T3, T3, T3, T3, T3, T2, T3, T2, T3, T2, T3, T3, T3, T2, T3, T2, T3, T3, T2, T3, T3, T3, T2, T3],
     [CG, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D2, D1, D1, D1, D1, D1, D1, CD, VI, VI, VI, VI, CD, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, CD, VI, VI, VI, VI, VI, VI, VI, VI, CD, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D2, D1, D1, D1, D1, D1, D1, D1, D1, D2, D2, D2, D1, D1, D1, D1, D1, D1, D1, D2, D1, D1, D1, D1, D1, D1, D2, D1, D1],
 
