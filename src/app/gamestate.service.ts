@@ -22,6 +22,7 @@ public playerY : any = 0
 public playerScaleX : any = 0
 public playerWidth : number = 53
 public playerHeight : number = 60
+public pause: boolean = false
   
 
 

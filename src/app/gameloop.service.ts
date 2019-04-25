@@ -24,13 +24,17 @@ export class GameloopService {
   public yAxis: number = 0
   public scaleX: number
   public innerWidth;
-
+  public stop = false
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route : Router) { }
 
 
 
   public canMove() {
+
+    
+
+  
 
     if (this.jump > 0) {
 
@@ -52,10 +56,10 @@ export class GameloopService {
       this.gameService.playerX += 3
       this.move = 1
 
-      
-
+    
 
     }
+    
 
     if ((this.gameService.move === MOVE_LEFT) && this.gameService.xVelocity === MOVE_BACKWARD) {
 
@@ -76,11 +80,12 @@ export class GameloopService {
       
 
     }
-
+    
     if (this.gameService.playerX > 20){
-  
+      this.gameService.playerX=0;
+      
       this.route.navigate(['/Over'])
-      this.gameService.playerX=12;
+    
     }
    if(this.gameService.playerX < 0){
 
@@ -88,17 +93,6 @@ export class GameloopService {
     }
   
     
-
-    // if(this.gameService.playerY + this.gameService.playerHeight === ){
-
-      //  this.gameService.playerY = case.y - this.gameService.playerHeight
-
-    // }
-    // if(this.gameService.playerY - this.gameService.playerHeight === ){
-
-    //  this.gameService.playerY = case.y + this.gameService.playerHeight
-
-    // }
 
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
 
@@ -151,27 +145,37 @@ export class GameloopService {
         }
       }
     }
-
+    
+console.log(this.stop)
+console.log(this.gameService.playerX)
   
 }
 
   loop() {
+ 
     this.canMove()
     this.moveMonster()
     this.moveOgr()
-    
     this.cameraLock()
-    requestAnimationFrame(() => this.loop())
-  }
-
+    if(this.stop === true){
+      requestAnimationFrame(() => this.loop())
+    }
+ 
+}
+    
   start() {
     this.loop()
+   
+    
   }
 
   pause() {
-
-  }
-
-
-}
+    if (!this.stop)
+    {
+        this.stop = true;
+    } else if (this.stop)
+    {
+       this.stop = false;
+    }
+}}
 
