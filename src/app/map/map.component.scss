@@ -51,7 +51,17 @@ div {
     transform : scaleX(-1)
                         
                                                 }
-.A{
+/* .time{
     margin-left: 200px;
 }
-                  
+   */
+   .stopwatch{
+    position: absolute;
+    top: 4%;
+    width: 3%;
+    height: auto;
+  }
+
+.time{
+    margin-left: 60px;
+}

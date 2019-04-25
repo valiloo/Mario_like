@@ -18,6 +18,7 @@ import { GamestateService } from './gamestate.service';
 import { GameloopService } from './gameloop.service';
 import { GameOverComponent } from './game-over/game-over.component';
 import { MechantComponent } from './mechant/mechant.component';
+import { InterfaceComponent } from './interface/interface.component';
 
 
 
@@ -33,6 +34,8 @@ import { MechantComponent } from './mechant/mechant.component';
     GameOverComponent,
 
     MechantComponent,
+
+    InterfaceComponent,
 
   ],
   imports: [

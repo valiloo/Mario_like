@@ -8,8 +8,7 @@ import { MapService, MapTheme } from '../map.service';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
-  timeLeft: number = 0;
-  interval;
+  time: number = 0;
 
   map = []
 
@@ -35,6 +34,8 @@ export class MapComponent implements OnInit {
 
 
   ngOnInit() {
+    setInterval(() => { if (this.time >= 0) this.time++; }, 1000);
+
     this.initMap();
     this.onAudioPlay();
   }
@@ -42,7 +43,7 @@ export class MapComponent implements OnInit {
 
  
 
-  startTimer() {
+  /* startTimer() {
     this.interval = setInterval(() => {
       if(this.timeLeft <1000) {
         this.timeLeft++;
@@ -50,10 +51,9 @@ export class MapComponent implements OnInit {
         this.timeLeft = 0;
       }
     },1000)
-  }
+  } */
 
-  pauseTimer() {
-    clearInterval(this.interval);
-  }
+  
+
+
 }
-
