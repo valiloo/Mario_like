@@ -1,6 +1,5 @@
 .playerMovement {
     position: absolute;
-    top: 700px;
     height: 45px;
     width: 53px;  
     background: url('/assets/textures/sprite_course.png/');
@@ -9,17 +8,14 @@
 }
 .player {
     position: absolute;
-    top: 587px;
     height: 60px;
     width: 36px;
-    left: 15px;
     background: url('/assets/Sprites/sprite_course_perso/perso_debout.png/');
     transform: scaleX(-1); 
 }
 
 .playerJump{
     position : absolute;
-    top: 587px;
     height:66px;
     width: 79px;
     transform: scaleX(-1);

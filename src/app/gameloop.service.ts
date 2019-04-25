@@ -24,9 +24,16 @@ export class GameloopService {
   public yAxis: number = 0
   public scaleX: number
   public innerWidth;
+  public playerBlocY
+  public playerBlocX
+  public cell: any
+
+
+
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route : Router) { }
+
 
 
 
@@ -38,75 +45,59 @@ export class GameloopService {
 
     }
 
-    if (this.gameService.playerY < 0) {
-
+    if (this.gameService.playerY < 657 && this.getBottomCollision(this.playerBlocX, this.playerBlocY)) {
 
       this.gameService.playerY += 4
-
     }
 
-    if ((this.gameService.move === MOVE_RIGHT)  && this.gameService.xVelocity === MOVE_FORWARD) {
 
+    if ((this.gameService.move === MOVE_RIGHT) && this.gameService.xVelocity === MOVE_FORWARD && this.getRightCollision(this.playerBlocX, this.playerBlocY)) {
 
       this.gameService.playerScaleX = -1
-      this.gameService.playerX += 3
+      this.gameService.playerX += 8
       this.move = 1
-
-      
 
 
     }
 
-    if ((this.gameService.move === MOVE_LEFT) && this.gameService.xVelocity === MOVE_BACKWARD) {
+    if ((this.gameService.move === MOVE_LEFT) && this.gameService.playerX > 12 && this.gameService.xVelocity === MOVE_BACKWARD && this.getLeftCollision(this.playerBlocX, this.playerBlocY)) {
 
       this.gameService.playerScaleX = 1
 
-      this.gameService.playerX -= 3
-
+      this.gameService.playerX -= 8
+      
       this.move = 1
-      
-    }
-
-    if (this.gameService.yVelocity === MOVE_UPWARD) {
-
-
-      this.jump = 45
-      this.gameService.playerY -= 230
-      this.gameService.yVelocity = 0
-      
 
     }
 
-    if (this.gameService.playerX > 20){
-  
-      this.route.navigate(['/Over'])
-      this.gameService.playerX=12;
+    if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY)) {
+      for (let i = 0; i <= 4; i ++) {
+        if (this.getTopCollision(this.playerBlocX, this.playerBlocY)) {
+          this.gameService.playerY -= 32
+          this.jump = 45
+          this.gameService.yVelocity = 0
+      }
     }
-   if(this.gameService.playerX < 0){
+  }
+
+
+
+
+    if (this.gameService.playerX < 0) {
 
       this.gameService.playerX = 0
     }
-  
-    
 
-    // if(this.gameService.playerY + this.gameService.playerHeight === ){
 
-      //  this.gameService.playerY = case.y - this.gameService.playerHeight
 
-    // }
-    // if(this.gameService.playerY - this.gameService.playerHeight === ){
-
-    //  this.gameService.playerY = case.y + this.gameService.playerHeight
-
-    // }
 
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
 
       this.move = 0
 
     }
-
   }
+
   cameraLock() {
 
     this.innerWidth = window.innerWidth
@@ -155,17 +146,77 @@ export class GameloopService {
   
 }
 
+
+  getRightCollision(playerBlocX, playerBlocY): boolean {
+    this.playerBlocY = Math.round((this.gameService.playerY) / 32)
+    this.playerBlocX = Math.round((this.gameService.playerX) / 32)
+    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX + 1]
+
+    if (this.mapTheme.blocs[this.cell].canGoThrough === false) {
+
+      return false
+    }
+    else if (this.mapTheme.blocs[this.cell].canGoThrough === true) {
+      return true
+    }
+  }
+
+  getBottomCollision(playerBlocX, playerBlocY): boolean {
+    this.playerBlocY = Math.round((this.gameService.playerY) / 32)
+    this.playerBlocX = Math.round((this.gameService.playerX) / 32)
+    this.cell = this.mapService.map[this.playerBlocY + 1][this.playerBlocX]
+
+    if (this.mapTheme.blocs[this.cell].canGoThrough === false) {
+
+      return false
+    }
+    else if (this.mapTheme.blocs[this.cell].canGoThrough === true) {
+      return true
+    }
+  }
+
+  getLeftCollision(playerBlocX, playerBlocY): boolean {
+    this.playerBlocY = Math.round((this.gameService.playerY) / 32)
+    this.playerBlocX = Math.round((this.gameService.playerX) / 32)
+    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX - 1]
+
+    if (this.mapTheme.blocs[this.cell].canGoThrough === false) {
+
+      return false
+    }
+    else if (this.mapTheme.blocs[this.cell].canGoThrough === true) {
+      return true
+    }
+  }
+
+  getTopCollision(playerBlocX, playerBlocY) {
+    this.playerBlocY = Math.round((this.gameService.playerY) / 32)
+    this.playerBlocX = Math.round((this.gameService.playerX) / 32)
+    this.cell = this.mapService.map[this.playerBlocY - 1][this.playerBlocX]
+    if (this.mapTheme.blocs[this.cell].canGoThrough === false) {
+      return false
+    }
+    else if (this.mapTheme.blocs[this.cell].canGoThrough === true) {
+      return true
+    }
+  }
+
+
+
+
   loop() {
     this.canMove()
     this.moveMonster()
     this.moveOgr()
-    
     this.cameraLock()
     requestAnimationFrame(() => this.loop())
+    console.log(this.gameService.playerY)
   }
 
   start() {
     this.loop()
+
+
   }
 
   pause() {
