@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MapService, MapTheme } from '../map.service';
+import { GameloopService } from '../gameloop.service';
 
 
 @Component({
@@ -8,14 +9,13 @@ import { MapService, MapTheme } from '../map.service';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
-  timeLeft: number = 0;
-  interval;
+  time: number = 0;
 
   map = []
 
 
 
-  constructor(public mapService: MapService, private mapTheme: MapTheme) {
+  constructor(public loop : GameloopService,  public mapService: MapService, private mapTheme: MapTheme) {
 
   }
 
@@ -33,14 +33,14 @@ export class MapComponent implements OnInit {
 
 
   ngOnInit() {
+
     this.initMap();
-    
   }
 
 
  
 
-  startTimer() {
+  /* startTimer() {
     this.interval = setInterval(() => {
       if(this.timeLeft <1000) {
         this.timeLeft++;
@@ -48,10 +48,9 @@ export class MapComponent implements OnInit {
         this.timeLeft = 0;
       }
     },1000)
-  }
+  } */
 
-  pauseTimer() {
-    clearInterval(this.interval);
-  }
+  
+
+
 }
-

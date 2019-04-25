@@ -12,7 +12,6 @@ export class PlayersnameComponent implements OnInit {
   constructor(public gameState: GamestateService, public loop:GameloopService) { }
 
   ngOnInit() {
-
-  }
-
+  
+}
 }
