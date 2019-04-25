@@ -25,11 +25,9 @@ export class MapComponent implements OnInit {
 
   }
 
-  @ViewChild('audioOption') audioPlayerRef: ElementRef;
+  
 
-  onAudioPlay() {
-    this.audioPlayerRef.nativeElement.play();
-  }
+  
 
 
 
@@ -37,7 +35,7 @@ export class MapComponent implements OnInit {
     setInterval(() => { if (this.time >= 0) this.time++; }, 1000);
 
     this.initMap();
-    this.onAudioPlay();
+
   }
 
 
