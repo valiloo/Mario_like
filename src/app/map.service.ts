@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { Monster, OsMonster, } from './models/monster';
+import {  OsMonster, } from './models/monster';
 import {OgrMonster} from './models/ogr';
+import { mapChildrenIntoArray } from '@angular/router/src/url_tree';
 
 
 const VI = 0
@@ -142,8 +143,18 @@ export class MapTheme {
 })
 export class MapService {
 
-  public monsters: OsMonster[] = [new OsMonster(19, 18),]
-  public ogrs: OgrMonster[] =  [new OgrMonster(40, 18),]
+
+  public monsters : OsMonster[] = [
+    new OsMonster(29, 18.2),
+    new OsMonster(9, 18.2),
+  ]
+ 
+
+
+  
+    
+
+  
 
   public map = [
 
@@ -168,19 +179,29 @@ export class MapService {
     [VI, VI, VI, P5, P8, VI, VI, VI, VI, VI, VI, P5, F2, M1, F2, F2, F2, M1, F2, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, F2, F2, F2, K2, F2, F2, F2, P2, P2, F2, F2, F2, F2, F2, K2, F2, F2, F2, F2, F2, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, F2, F2, F2, K2, F2, F2, F2, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, P8, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P5, F2, B6, B3, F2, P8],
     [VI, VI, VI, P4, P7, VI, VI, T3, VI, VI, VI, P4, F1, F1, F1, F1, F1, F1, F1, P7, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, F1, F1, F1, K1, F1, F1, F1, P1, P1, F1, F1, F1, F1, F1, K1, F1, F1, F1, F1, F1, P7, VI, VI, VI, VI, VI, SI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, F1, F1, F1, K1, F1, F1, F1, P7, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, P7, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, P7, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, VI, P4, F1, B4, B1, F1, P7],
     [T1, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T4, VI, VI, VI, VI, T1, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T4, VI, VI, VI, VI, VI, VI, VI, VI, T1, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T3, T2, T3, T3, T3, T2, T3, T3, T3, T3, T3, T3, T2, T3, T2, T3, T2, T3, T3, T3, T2, T3, T2, T3, T3, T2, T3, T3, T3, T2, T3],
-    [CG, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D2, D1, D1, D1, D1, D1, D1, CD, VI, VI, VI, VI, CD, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, CD, VI, VI, VI, VI, VI, VI, VI, VI, CD, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D2, D1, D1, D1, D1, D1, D1, D1, D1, D2, D2, D2, D1, D1, D1, D1, D1, D1, D1, D2, D1, D1, D1, D1, D1, D1, D2, D1, D1],
+    [CG, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D2, D1, D1, D1, D1, D1, D1, CD, VI, VI, VI, VI, CG, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, CD, VI, VI, VI, VI, VI, VI, VI, VI, CG, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D1, D2, D1, D1, D1, D1, D1, D1, D1, D1, D2, D2, D2, D1, D1, D1, D1, D1, D1, D1, D2, D1, D1, D1, D1, D1, D1, D2, D1, D1],
 
   ]
 
 
 
-  constructor() {
+  constructor() {}
 
 
-  }
-  getMap(): number[][] {
+  
+
+
+
+  
+
+
+
+
+  
+  getMap(): number [] [] {
     return this.map
   }
 
 }
+
 
