@@ -85,9 +85,7 @@ this.stop = false
     
     if (this.gameService.playerY > 650){
      this.gameService.playerY = 0
-      this.stop = true
-      this.route.navigate(['/Over'])
-      
+      this.gameOver()
     }
 // gere le saut : verifie que la touche espace est enfoncee, que le joueur ne sort pas de la carte, appelle la fonction qui verifie la collision avec le bloc au dessus de lui//
     if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
@@ -252,6 +250,7 @@ isTheEnd(playerBlocX, playerBlocY){
 
      // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
+    
   }
   
   start() {
@@ -259,6 +258,11 @@ isTheEnd(playerBlocX, playerBlocY){
 
     
 
+
+  }
+  gameOver(){
+    this.stop = true
+    this.route.navigate(['/Over'])
 
   }
 
