@@ -31,6 +31,9 @@ export class GameloopService {
   public ennemiPosY: any 
   public canJump : boolean 
   public stop = false
+  public startTime : number
+  public endTime : number
+  public canStopTime : boolean = true
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route : Router) { }
@@ -125,6 +128,14 @@ this.stop = false
     window.scroll(this.gameService.playerX - ((this.innerWidth / 2) - 27), this.gameService.playerY) // bloque le scroll de page sur la position X du joueur - la moitie de l'ecran //
   }
 
+  getTimePlayed() {
+    if (this.canStopTime === true) {
+    this.endTime = Math.floor((Date.now() - this.startTime) / 1000)
+    console.log(this.endTime)
+    this.canStopTime = false
+    console.log(this.canStopTime)
+    }
+  }
 
 // fonction faisant se deplacer les monstres //
   moveMonster() {
@@ -194,6 +205,7 @@ isTheEnd(playerBlocX, playerBlocY){
   this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
   
   if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
+    this.getTimePlayed()
     return true
   }
   else if(this.mapTheme.blocs[this.cell].isEnd === false) {
@@ -291,6 +303,7 @@ isTheEnd(playerBlocX, playerBlocY){
   
   start() {
     this.loop() // lance le loop au lancement du jeu //
+    this.startTime = Date.now()
 
 
 
