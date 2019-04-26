@@ -28,7 +28,7 @@
     position: absolute;
     height:63px;
     width:68px;
-    transform: scaleX(1);
+    transform: scaleX(-1);
     background: url('/assets/textures/Tir.png/');
     animation : fire 0.5s steps(9) infinite;
 }
@@ -36,7 +36,7 @@
     position:absolute;
     height:63px;
     width:68px;
-    transform:scaleX(1);
+    transform:scaleX(-1);
     background: url('/assets/textures/finTir.png/');
 }
 
