@@ -6,6 +6,7 @@ import { MapComponent } from './map/map.component';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { ROUTES } from './map/app-routes'
+import { GameOverComponent } from './game-over/game-over.component';
 
 
 
@@ -42,10 +43,10 @@ export class GameloopService {
   public canMove() { 
 
     
-this.stop = false
+
+  this.stop = false
   
 
-    this.stop = false
 
     if (this.jump > 0) {
 
@@ -88,7 +89,7 @@ this.stop = false
     }
     
     if (this.gameService.playerY > 650){
-     this.gameService.playerY = 0
+    this.gameService.playerY = 0
       this.gameOver()
     }
 // gere le saut : verifie que la touche espace est enfoncee, que le joueur ne sort pas de la carte, appelle la fonction qui verifie la collision avec le bloc au dessus de lui//
@@ -100,7 +101,6 @@ this.stop = false
         if (this.getTopCollision(this.playerBlocX, this.playerBlocY)) { // check tout les 32px / tout les blocs si le bloc du dessus est traversable //
           this.gameService.playerY -= 32 // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
           this.gameService.yVelocity = 0 // indication saut //
-         
       }
 
     }
@@ -114,7 +114,7 @@ this.stop = false
 
     }
 
-   
+  
   }
 
     
@@ -178,7 +178,7 @@ this.stop = false
       let differanceX = Math.abs(this.playerBlocX - posX);
       let differanceY = Math.abs(this.playerBlocY - posY)
       if (differanceY && differanceX < 0.3 ){
-        console.log("toucher")      
+      this.gameOver()     
       }
     }
 
@@ -278,18 +278,22 @@ isTheEnd(playerBlocX, playerBlocY){
   loop() {
 
     this.canMove() // appelle de fonction explique au dessus //
-    this.pause()
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
     this.cameraLock() // appelle de fonction explique au dessus //
     this.getMonsterCollision()
-
-     // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
+    // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
-    
+
+    if(!this.stop){
+    requestAnimationFrame(() => this.loop())
+
+} 
+
   }
   
   start() {
+    this.gameService.reinit()    
     this.loop() // lance le loop au lancement du jeu //
 
 
@@ -298,19 +302,16 @@ isTheEnd(playerBlocX, playerBlocY){
   gameOver(){
     this.stop = true
     this.route.navigate(['/Over'])
+    
+
 
   }
 
   pause() {
     if (!this.stop)
     {
-      requestAnimationFrame(() => this.loop())
-        this.stop = true;
-    } else if (this.stop)
-    {
-       this.stop = false;
-
-    }
+      this.stop = true
+    } 
 }
 
 }
