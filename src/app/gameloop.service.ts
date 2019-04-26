@@ -20,8 +20,8 @@ export class GameloopService {
 
   public jump: number = 0
   public move: number
-  public xAxis: number = 0
-  public yAxis: number = 0
+  public x: number = 0
+  public y: number = 0
   public scaleX: number
   public innerWidth;
   public playerBlocY
@@ -44,6 +44,8 @@ export class GameloopService {
     
 this.stop = false
   
+
+    this.stop = false
 
     if (this.jump > 0) {
 
@@ -87,9 +89,7 @@ this.stop = false
     
     if (this.gameService.playerY > 650){
      this.gameService.playerY = 0
-      this.stop = true
-      this.route.navigate(['/Over'])
-      
+      this.gameOver()
     }
 // gere le saut : verifie que la touche espace est enfoncee, que le joueur ne sort pas de la carte, appelle la fonction qui verifie la collision avec le bloc au dessus de lui//
     if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
@@ -186,7 +186,7 @@ this.stop = false
 
     
   
-}
+
 
 isTheEnd(playerBlocX, playerBlocY){
   this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
@@ -286,12 +286,18 @@ isTheEnd(playerBlocX, playerBlocY){
 
      // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
+    
   }
-
+  
   start() {
     this.loop() // lance le loop au lancement du jeu //
 
 
+
+  }
+  gameOver(){
+    this.stop = true
+    this.route.navigate(['/Over'])
 
   }
 
@@ -305,5 +311,6 @@ isTheEnd(playerBlocX, playerBlocY){
        this.stop = false;
 
     }
-}}
+}
 
+}

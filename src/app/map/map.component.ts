@@ -47,7 +47,6 @@ export class MapComponent implements OnInit {
     this.startChrono();
 
     this.initMap();
-
   }
 
 
