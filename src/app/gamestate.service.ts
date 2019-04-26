@@ -9,6 +9,7 @@ export const MOVE_BACKWARD = 4
 export const MOVE_UPWARD = 5
 export const FALL = 6
 export const ISONFIRE = 7
+export const FINTIR = 8
 
 
 @Injectable({
@@ -29,7 +30,7 @@ public isOnFire : any = 0
 public fireBalls: Tir[]= []
 public fireBallX = this.playerX
 public fireBallY = this.playerY
- 
+
 
 
 

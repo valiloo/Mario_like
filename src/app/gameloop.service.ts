@@ -45,7 +45,7 @@ export class GameloopService {
 
 
 
-
+   
     this.stop = false
 
 
@@ -199,9 +199,26 @@ export class GameloopService {
       this.lastFireballDate = new Date();
     }
 
-    for (let i = 0; i < this.gameService.fireBalls.length; i++) {
-      this.gameService.fireBalls[i].posX += 10
+
+
+    if(this.gameService.playerScaleX === -1 && this.gameService.isOnFire === ISONFIRE){
+     for (let i = 0; i < this.gameService.fireBalls.length; i++) {
+
+      
+      this.gameService.fireBalls[i].posX+= 10
+      
+     
+     }
     }
+    if(this.gameService.playerScaleX === 1 && this.gameService.isOnFire === ISONFIRE)
+      for (let i = 0; i < this.gameService.fireBalls.length;i++){
+        this.gameService.fireBalls[i].posX -= 10
+      }
+    if(this.gameService.isOnFire !== ISONFIRE){
+      this.gameService.fireBalls = []
+    }
+    
+    
   }
 
 
