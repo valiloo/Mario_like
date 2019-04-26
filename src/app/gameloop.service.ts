@@ -32,6 +32,9 @@ export class GameloopService {
   public stop = false
   public fireBall
   public lastFireballDate = new Date();
+  public startTime : number
+  public endTime : number
+  public canStopTime : boolean = true
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route: Router) { }
@@ -132,6 +135,14 @@ export class GameloopService {
     window.scroll(this.gameService.playerX - ((this.innerWidth / 2) - 27), this.gameService.playerY) // bloque le scroll de page sur la position X du joueur - la moitie de l'ecran //
   }
 
+  getTimePlayed() {
+    if (this.canStopTime === true) {
+    this.endTime = Math.floor((Date.now() - this.startTime) / 1000)
+    console.log(this.endTime)
+    this.canStopTime = false
+    console.log(this.canStopTime)
+    }
+  }
 
   // fonction faisant se deplacer les monstres //
   moveMonster() {
@@ -326,6 +337,7 @@ export class GameloopService {
 
   start() {
     this.loop() // lance le loop au lancement du jeu //
+    this.startTime = Date.now()
 
 
 
