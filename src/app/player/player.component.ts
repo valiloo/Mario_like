@@ -77,6 +77,8 @@ ngOnInit(){
   this.gameService.playerX -= this.gameService.playerX
 }
 
+
+
 }
 
 

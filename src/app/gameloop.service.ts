@@ -27,11 +27,14 @@ export class GameloopService {
   public playerBlocY
   public playerBlocX
   public cell: any
+  public ennemiPosX: any 
+  public ennemiPosY: any 
   public canJump : boolean 
   public stop = false
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route : Router) { }
+
 
 
 
@@ -56,10 +59,9 @@ this.stop = false
 
 // gere la gravité, fait redescendre le personnage jusqu'au bas de la carte ou qu'il rencontre un bloc avec collision //
     if (this.gameService.playerY < 657 && this.getBottomCollision(this.playerBlocX, this.playerBlocY)) { 
-
       this.gameService.playerY += 4
-      
     }
+
     
 
 // gère le deplacement vers la droite : verifie que la touche fleche droite est enfoncé et appelle la fonction gérant la collision sur la droite du personnage//
@@ -68,6 +70,8 @@ this.stop = false
       this.gameService.playerScaleX = -1 // gere le reverse d'animation du personnage //
       this.gameService.playerX += 8 // deplace le personnage de 8px sur la droite //
       this.move = 1 // indique le mouvement en cours //
+
+
 
 
     }
@@ -103,7 +107,6 @@ this.stop = false
   }
 
 
-
 // si aucune touche enfonce, le perso sera immobile //
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
       
@@ -126,16 +129,17 @@ this.stop = false
 // fonction faisant se deplacer les monstres //
   moveMonster() {
     for (let index in this.mapService.monsters) {
-      const monster = this.mapService.monsters[index]
+      const monster = this.mapService.monsters[index] 
 
       if (monster.direction == MOVE_RIGHT) {
         monster.posX += 0.1;
         if (monster.initPosX + monster.amplitude < monster.posX) {
-          monster.direction = MOVE_LEFT
+          monster.direction = MOVE_LEFT;
         }
       }
       else if (monster.direction == MOVE_LEFT) {
         monster.posX -= 0.1;
+
         if (monster.initPosX - monster.amplitude > monster.posX) {
           monster.direction = MOVE_RIGHT
         }
@@ -163,9 +167,26 @@ this.stop = false
       }
     }
 
+
+  }
+    getMonsterCollision(){
+    this.playerBlocY = Math.round(this.gameService.playerY / 32)
+    this.playerBlocX = Math.round(this.gameService.playerX / 32)
+    for (let i = 0; i < this.mapService.monsters.length; i++){
+      let posX = this.mapService.monsters[i].posX;
+      let posY = this.mapService.monsters[i].posY;
+      let differanceX = Math.abs(this.playerBlocX - posX);
+      let differanceY = Math.abs(this.playerBlocY - posY)
+      if (differanceY && differanceX < 0.3 ){
+        console.log("toucher")      
+      }
+    }
+
+  }
+
     
   
-}
+
 
 isTheEnd(playerBlocX, playerBlocY){
   this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
@@ -238,15 +259,30 @@ isTheEnd(playerBlocX, playerBlocY){
     }
   }
 
+  getTopRightCollision(playerBlocY, playerBlocX): boolean {
+    this.playerBlocY = Math.round(this.gameService.playerY / 32)
+    this.playerBlocX = Math.round(this.gameService.playerX / 32)
+    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX + 1]
+    //console.log(this.mapTheme.blocs[this.cell])
+    if (this.mapTheme.blocs[this.mapService.map[this.playerBlocY + 1][this.playerBlocX + 1]].canGoThrough === false) {
+
+      return false
+    }
+    else  {
+      return true
+    }
+  }
+
+
 
   loop() {
-    
+
     this.canMove() // appelle de fonction explique au dessus //
     this.pause()
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
     this.cameraLock() // appelle de fonction explique au dessus //
-    
+    this.getMonsterCollision()
 
      // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
@@ -256,7 +292,6 @@ isTheEnd(playerBlocX, playerBlocY){
   start() {
     this.loop() // lance le loop au lancement du jeu //
 
-    
 
 
   }
@@ -277,5 +312,5 @@ isTheEnd(playerBlocX, playerBlocY){
 
     }
 }
-}
 
+}

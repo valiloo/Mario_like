@@ -41,6 +41,7 @@ import { MechantComponent } from './mechant/mechant.component';
     AppRoutingModule,
     RouterModule.forRoot(ROUTES, {enableTracing:true}),
     BrowserAnimationsModule
+    
 
 
   ],
