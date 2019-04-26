@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Monster, OsMonster, } from './models/monster';
+import {  OsMonster, } from './models/monster';
 import {OgrMonster} from './models/ogr';
 
 
@@ -142,8 +142,19 @@ export class MapTheme {
 })
 export class MapService {
 
+
+  public monsters : OsMonster[] = [
+    new OsMonster(29, 18.2),
+    new OsMonster(9, 18.2),
+  ]
   public monsters: OsMonster[] = [new OsMonster(19, 18),]
   public ogrs: OgrMonster[] =  [new OgrMonster(40, 18),]
+
+
+  
+    
+
+  
 
   public map = [
 
@@ -178,7 +189,7 @@ export class MapService {
 
 
   }
-  getMap(): number[][] {
+  getMap(): number [] [] {
     return this.map
   }
 
