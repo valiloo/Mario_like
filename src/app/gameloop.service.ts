@@ -36,8 +36,7 @@ export class GameloopService {
   public startTime : number
   public endTime : number
   public canStopTime : boolean = true
-  jumpHeight: number;
-  jumpNumber: number;
+  public jumpNumber: number = 2
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route: Router) { }
@@ -67,6 +66,7 @@ export class GameloopService {
 
     if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === false) { // si le joueur touche le sol il peut ressauter //
       this.canJump = true
+      this.jumpNumber = 2
     }
 
     // gere la gravité, fait redescendre le personnage jusqu'au bas de la carte ou qu'il rencontre un bloc avec collision //
@@ -110,7 +110,6 @@ export class GameloopService {
       if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
         this.jump = 45 // gere l'animation de saut //
         this.jumpNumber -= 1 // retire un du nombre de saut disponible //
-        this.jumpHeight = 60
         console.log("OK")
         
   
@@ -119,22 +118,14 @@ export class GameloopService {
           if (this.jumpNumber === 0) { // si plus de saut disponible //
             this.canJump = false // ne peux plus sauter avant de toucher le sol //
   
-          }
-  
-          }
+          } 
+          
           if (this.getTopCollision(this.playerBlocX, this.playerBlocY)) { // check tout les 32px / tout les blocs si le bloc du dessus est traversable //
-            while (this.jumpHeight !== 0) {
-              this.jumpHeight -= 10
-              this.gameService.playerY -= this.jumpHeight // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
+              this.gameService.playerY -= 20 // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
               this.gameService.yVelocity = 0 // indication saut //
             }
+          
           }
-
-  
-  
-
-        
-
       
     }
 
@@ -205,7 +196,7 @@ export class GameloopService {
         }
       }
     }
-    this.stop = false
+   
 
   }
   getMonsterCollision() {
@@ -327,22 +318,6 @@ export class GameloopService {
       return true
     }
   }
-
-  getTopRightCollision(playerBlocY, playerBlocX): boolean {
-    this.playerBlocY = Math.round(this.gameService.playerY / 32)
-    this.playerBlocX = Math.round(this.gameService.playerX / 32)
-    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX + 1]
-    //console.log(this.mapTheme.blocs[this.cell])
-    if (this.mapTheme.blocs[this.mapService.map[this.playerBlocY + 1][this.playerBlocX + 1]].canGoThrough === false) {
-
-      return false
-    }
-    else {
-      return true
-    }
-  }
-
-
 
   loop() {
 
