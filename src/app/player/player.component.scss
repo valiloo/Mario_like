@@ -4,7 +4,7 @@
     width: 53px;  
     background: url('/assets/textures/sprite_course.png/');
     animation: movement 0.7s steps(6) infinite; 
-    transform : scaleX(-1)
+    transform : scaleX(-1);
 }
 .player {
     position: absolute;
