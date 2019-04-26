@@ -37,11 +37,22 @@ export class GameloopService {
   public endTime : number
   public canStopTime : boolean = true
   public jumpNumber: number = 2
+  public jumpSound
+  public gameMusic
+  public gunSound
+  
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route: Router) { }
 
-
+  playGameMusic() {
+    this.gameMusic = new Audio();
+    this.gameMusic.src = "assets/audio/songMap.mp3"
+    this.gameMusic.load()
+    this.gameMusic.play()   
+   // this.gameMusic.pause() 
+   // this.gameMusic.currentTime = 0
+  }
 
 
   // fonction globale encadrant tout les types de deplacements //
@@ -110,7 +121,10 @@ export class GameloopService {
       if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
         this.jump = 45 // gere l'animation de saut //
         this.jumpNumber -= 1 // retire un du nombre de saut disponible //
-        console.log("OK")
+        this.jumpSound = new Audio()
+        this.jumpSound.src = "assets/audio/jump.mp3"
+        this.jumpSound.load()
+        this.jumpSound.play()
         
   
   
@@ -222,6 +236,10 @@ export class GameloopService {
       let fireBall = new Tir(this.gameService.playerX, this.gameService.playerY);
       this.gameService.fireBalls.push(fireBall)
       this.lastFireballDate = new Date();
+      this.gunSound = new Audio();
+      this.gunSound.src = "assets/audio/gun.mp3"
+      this.gunSound.load()
+      this.gunSound.play()
     }
 
 
@@ -337,6 +355,7 @@ export class GameloopService {
     this.reInit()
     this.loop() // lance le loop au lancement du jeu //
     this.startTime = Date.now()
+    this.playGameMusic()
 
 
 
@@ -344,6 +363,7 @@ export class GameloopService {
   gameOver() {
     this.stop = true
     this.route.navigate(['/Over'])
+    
     
 
 
@@ -359,7 +379,6 @@ export class GameloopService {
     this.gameService.playerWidth = 53
     this.gameService.playerHeight = 60
     this.gameService.pause = false
-
     this.gameService.isOnFire = 0
     this.gameService.fireBalls = []
     this.gameService.fireBallX = this.gameService.playerX
