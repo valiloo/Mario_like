@@ -2,8 +2,8 @@
         'player' : gameService.move === 0 && loop.jump !== 1 && gameService.isOnFire === 0,
         'playerMovement' : (gameService.move === 1 || gameService.move === 2) && loop.jump === 0 && gameService.isOnFire === 0,
         'playerJump' : loop.jump > 0 && gameService.isOnFire === 0 ,
-        'onFire' : gameService.isOnFire === 7,
-        'finTir': gameService.isOnFire === 8
+        'onFire' : gameService.isOnFire === 7
+      
      }" [ngStyle]="{'transform': 'translateX(' + gameService.playerX + 'px) translateY('+gameService.playerY +'px) scaleX('+ gameService.playerScaleX + ')','top': gameService.playerY }"
        ></div>
 

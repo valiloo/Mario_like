@@ -36,6 +36,7 @@ export class GameloopService {
   public startTime : number
   public endTime : number
   public canStopTime : boolean = true
+  public jumpNumber: number = 2
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route: Router) { }
@@ -65,10 +66,11 @@ export class GameloopService {
 
     if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === false) { // si le joueur touche le sol il peut ressauter //
       this.canJump = true
+      this.jumpNumber = 2
     }
 
     // gere la gravité, fait redescendre le personnage jusqu'au bas de la carte ou qu'il rencontre un bloc avec collision //
-    if (this.gameService.playerY < 657 && this.getBottomCollision(this.playerBlocX, this.playerBlocY)) {
+    if (this.getBottomCollision(this.playerBlocX, this.playerBlocY)) {
       this.gameService.playerY += 4
     }
 
@@ -102,25 +104,29 @@ export class GameloopService {
     this.gameService.playerY = 0
       this.gameOver()
 
+    }
 
 
-
-    // gere le saut : verifie que la touche espace est enfoncee, que le joueur ne sort pas de la carte, appelle la fonction qui verifie la collision avec le bloc au dessus de lui//
-    if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
-      this.jump = 45 // gere l'animation de saut //
-
-      for (let i = 0; i <= 6; i++) { // boucle for decoupant le saut en 6 partie //
-        this.canJump = false // ne peux plus sauter avant de toucher le sol //
-        if (this.getTopCollision(this.playerBlocX, this.playerBlocY)) { // check tout les 32px / tout les blocs si le bloc du dessus est traversable //
-          this.gameService.playerY -= 32 // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
-          this.gameService.yVelocity = 0 // indication saut //
-
-      }
-
-
-        }
-
-      }
+      if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
+        this.jump = 45 // gere l'animation de saut //
+        this.jumpNumber -= 1 // retire un du nombre de saut disponible //
+        console.log("OK")
+        
+  
+  
+        for (let i = 0; i <= 6; i++) { // boucle for decoupant le saut en 6 partie //
+          if (this.jumpNumber === 0) { // si plus de saut disponible //
+            this.canJump = false // ne peux plus sauter avant de toucher le sol //
+  
+          } 
+          
+          if (this.getTopCollision(this.playerBlocX, this.playerBlocY)) { // check tout les 32px / tout les blocs si le bloc du dessus est traversable //
+              this.gameService.playerY -= 20 // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
+              this.gameService.yVelocity = 0 // indication saut //
+            }
+          
+          }
+      
     }
 
 
@@ -131,7 +137,7 @@ export class GameloopService {
 
     }
 
-  }
+    }
 
 
   // fonction bloquant la camera sur le personnage //
@@ -170,8 +176,8 @@ export class GameloopService {
       }
     }
 
+  
   }
-
   // fonction faisant se deplacer les monstres //
   moveOgr() {
     for (let index in this.mapService.ogrs) {
@@ -190,7 +196,7 @@ export class GameloopService {
         }
       }
     }
-    this.stop = false
+   
 
   }
   getMonsterCollision() {
@@ -313,37 +319,9 @@ export class GameloopService {
     }
   }
 
-  getTopRightCollision(playerBlocY, playerBlocX): boolean {
-    this.playerBlocY = Math.round(this.gameService.playerY / 32)
-    this.playerBlocX = Math.round(this.gameService.playerX / 32)
-    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX + 1]
-    //console.log(this.mapTheme.blocs[this.cell])
-    if (this.mapTheme.blocs[this.mapService.map[this.playerBlocY + 1][this.playerBlocX + 1]].canGoThrough === false) {
-
-      return false
-    }
-    else {
-      return true
-    }
-  }
-
-
-
   loop() {
 
-    this.canMove() // appelle de fonction explique au dessus //
-
-
-    this.getMonsterCollision()
-    // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
-    this.isTheEnd(this.playerBlocX, this.playerBlocY)
-
-    if(!this.stop){
-    requestAnimationFrame(() => this.loop())
-
-} 
-
-
+    this.canMove() // appelle de fonction explique au dessus / 
     this.isOnFire()
     this.pause() // Vérifie si la loop doit être arrếté
     this.moveMonster() // appelle de fonction explique au dessus //
@@ -353,11 +331,10 @@ export class GameloopService {
     // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
 
-
   }
 
   start() {
-    this.gameService.reinit()    
+    this.reInit()
     this.loop() // lance le loop au lancement du jeu //
     this.startTime = Date.now()
 
@@ -372,12 +349,34 @@ export class GameloopService {
 
   }
 
+  reInit() {
+    this.gameService.move = 0
+    this.gameService.xVelocity = 0
+    this.gameService.yVelocity = 0
+    this.gameService.playerX = 20
+    this.gameService.playerY = 500
+    this.gameService.playerScaleX = 0
+    this.gameService.playerWidth = 53
+    this.gameService.playerHeight = 60
+    this.gameService.pause = false
 
-    if (!this.stop)
-    {
-      this.stop = true
-    } 
-}
+    this.gameService.isOnFire = 0
+    this.gameService.fireBalls = []
+    this.gameService.fireBallX = this.gameService.playerX
+    this.gameService.fireBallY = this.gameService.playerY
+  }
+
+
+
+  pause() {
+    if (!this.stop) {
+      requestAnimationFrame(() => this.loop())
+      this.stop = true;
+    } else if (this.stop) {
+      this.stop = false;
+
+    }
+  }
 
 
 }

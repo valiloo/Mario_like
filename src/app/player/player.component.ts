@@ -72,14 +72,14 @@ export class PlayerComponent implements OnInit{
 
      if(event.keyCode === KEY_CODE.EPOWER){
 
-       this.gameService.isOnFire = FINTIR
+       this.gameService.isOnFire = 0
      }
 
   }
 
 ngOnInit(){
   this.loop.start()
-  this.gameService.playerX -= this.gameService.playerX
+  
 }
 
 
