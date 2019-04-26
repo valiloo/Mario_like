@@ -29,9 +29,7 @@ import { MechantComponent } from './mechant/mechant.component';
     PlayersnameComponent,
     SettingsComponent,
     MenuComponent,
-
     GameOverComponent,
-
     MechantComponent,
 
 
