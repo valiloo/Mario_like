@@ -37,4 +37,18 @@ public fireBallY = this.playerY
 
   constructor(mapService: MapService) { }
 
+  public reinit(){
+    this.move  = 0
+    this.xVelocity = 0
+    this.yVelocity = 0
+    this.playerX = 20
+    this.playerY = 500
+    this.playerScaleX = 0
+    this.playerWidth = 53
+    this.playerHeight = 60
+    this.pause = false
+  
+
+  }
+
 }
