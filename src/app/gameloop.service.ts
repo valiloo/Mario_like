@@ -32,6 +32,9 @@ export class GameloopService {
   public stop = false
   public fireBall
   public lastFireballDate = new Date();
+  public startTime : number
+  public endTime : number
+  public canStopTime : boolean = true
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route: Router) { }
@@ -132,6 +135,14 @@ export class GameloopService {
     window.scroll(this.gameService.playerX - ((this.innerWidth / 2) - 27), this.gameService.playerY) // bloque le scroll de page sur la position X du joueur - la moitie de l'ecran //
   }
 
+  getTimePlayed() {
+    if (this.canStopTime === true) {
+    this.endTime = Math.floor((Date.now() - this.startTime) / 1000)
+    console.log(this.endTime)
+    this.canStopTime = false
+    console.log(this.canStopTime)
+    }
+  }
 
   // fonction faisant se deplacer les monstres //
   moveMonster() {
@@ -199,9 +210,22 @@ export class GameloopService {
       this.lastFireballDate = new Date();
     }
 
+
     for (let i = 0; i < this.gameService.fireBalls.length; i++) {
       this.gameService.fireBalls[i].posX += 10
     }
+
+isTheEnd(playerBlocX, playerBlocY){
+  this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
+  this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel vers une valeur de l'array de la carte  //
+  this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
+  
+  if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
+    this.getTimePlayed()
+    return true
+  }
+  else if(this.mapTheme.blocs[this.cell].isEnd === false) {
+    return false
   }
 
 
@@ -309,6 +333,7 @@ export class GameloopService {
 
   start() {
     this.loop() // lance le loop au lancement du jeu //
+    this.startTime = Date.now()
 
 
 
