@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MapService } from './map.service';
+import { Tir } from './models/tir';
 
 export const MOVE_RIGHT = 1
 export const MOVE_LEFT = 2
@@ -25,7 +26,7 @@ public playerWidth : number = 53
 public playerHeight : number = 60
 public pause: boolean = false
 public isOnFire : any = 0
-public fireBalls = []
+public fireBalls: Tir[]= []
 public fireBallX = this.playerX
 public fireBallY = this.playerY
  
