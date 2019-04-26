@@ -101,7 +101,7 @@ export class GameloopService {
       this.jump = 45 // gere l'animation de saut //
       this.jumpNumber -= 1 // retire un du nombre de saut disponible //
       this.jumpHeight = 60
-      this.stop = true
+      
 
 
       for (let i = 0; i <= 6; i++) { // boucle for decoupant le saut en 6 partie //
@@ -112,7 +112,6 @@ export class GameloopService {
         if (this.getTopCollision(this.playerBlocX, this.playerBlocY)) { // check tout les 32px / tout les blocs si le bloc du dessus est traversable //
           while (this.jumpHeight !== 0) {
             this.jumpHeight -= 10
-            console.log(this.jumpHeight)
             this.gameService.playerY -= this.jumpHeight // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
             this.gameService.yVelocity = 0 // indication saut //
           }
