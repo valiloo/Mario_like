@@ -22,16 +22,18 @@ export class GameloopService {
   public innerWidth;
   public playerBlocY
   public playerBlocX
-  public cell : any
+  public cell: any
+  public ennemiPosX: any 
+  public ennemiPosY: any 
   
- 
-  
+
+
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService) { }
 
-  
-  
+
+
 
   public canMove() {
 
@@ -47,13 +49,13 @@ export class GameloopService {
     }
 
 
-    if ((this.gameService.move === MOVE_RIGHT)  && this.gameService.xVelocity === MOVE_FORWARD && this.getTopRightCollision(this.playerBlocX, this.playerBlocY)) {
-     
+    if ((this.gameService.move === MOVE_RIGHT) && this.gameService.xVelocity === MOVE_FORWARD && this.getTopRightCollision(this.playerBlocX, this.playerBlocY)) {
+
       this.gameService.playerScaleX = -1
       this.gameService.playerX += 3
       this.move = 1
-      
-  
+
+
 
 
 
@@ -66,7 +68,7 @@ export class GameloopService {
       this.gameService.playerX -= 3
 
       this.move = 1
-      
+
     }
 
     if (this.gameService.yVelocity === MOVE_UPWARD) {
@@ -78,12 +80,12 @@ export class GameloopService {
 
     }
 
-   if(this.gameService.playerX < 0){
+    if (this.gameService.playerX < 0) {
 
       this.gameService.playerX = 0
     }
-  
-  
+
+
 
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
 
@@ -102,16 +104,17 @@ export class GameloopService {
 
   moveMonster() {
     for (let index in this.mapService.monsters) {
-      const monster = this.mapService.monsters[index]
+      const monster = this.mapService.monsters[index] 
 
       if (monster.direction == MOVE_RIGHT) {
         monster.posX += 0.1;
         if (monster.initPosX + monster.amplitude < monster.posX) {
-          monster.direction = MOVE_LEFT
+          monster.direction = MOVE_LEFT;
         }
       }
       else if (monster.direction == MOVE_LEFT) {
         monster.posX -= 0.1;
+
         if (monster.initPosX - monster.amplitude > monster.posX) {
           monster.direction = MOVE_RIGHT
         }
@@ -138,23 +141,37 @@ export class GameloopService {
     }
 
   }
-  
- 
-  
-  getTopRightCollision(playerBlocX, playerBlocY) : boolean {
-    this.playerBlocY = Math.round((this.gameService.playerY+this.gameService.playerHeight) / 32)
-    this.playerBlocX = Math.round((this.gameService.playerX+this.gameService.playerWidth) / 32)
-    this.cell = this.mapService.map[this.playerBlocY + 1][this.playerBlocX + 1 ]
-    console.log(this.mapTheme.blocs[this.cell])
-  if (this.mapTheme.blocs[this.mapService.map[this.playerBlocY + 1][this.playerBlocX + 1 ]].canGoThrough === false) {
-    
-    return false
+    getMonsterCollision(){
+    this.playerBlocY = Math.round(this.gameService.playerY / 32)
+    this.playerBlocX = Math.round(this.gameService.playerX / 32)
+    for (let i = 0; i < this.mapService.monsters.length; i++){
+      let posX = this.mapService.monsters[i].posX;
+      let posY = this.mapService.monsters[i].posY;
+      let differanceX = Math.abs(this.playerBlocX - posX);
+      let differanceY = Math.abs(this.playerBlocY - posY)
+      if (differanceY && differanceX < 0.3 ){
+        console.log("toucher")      
+      }
+    }
+
   }
-  else if (this.mapTheme.blocs[this.cell].canGoThrough === true) {
-    return true
-  }
-}
+
   
+
+  getTopRightCollision(playerBlocY, playerBlocX): boolean {
+    this.playerBlocY = Math.round(this.gameService.playerY / 32)
+    this.playerBlocX = Math.round(this.gameService.playerX / 32)
+    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX + 1]
+    //console.log(this.mapTheme.blocs[this.cell])
+    if (this.mapTheme.blocs[this.mapService.map[this.playerBlocY + 1][this.playerBlocX + 1]].canGoThrough === false) {
+
+      return false
+    }
+    else  {
+      return true
+    }
+  }
+
 
 
   loop() {
@@ -162,13 +179,15 @@ export class GameloopService {
     this.moveMonster()
     this.moveOgr()
     this.cameraLock()
+    this.getMonsterCollision()
+
     requestAnimationFrame(() => this.loop())
   }
 
   start() {
     this.loop()
     this.gameService.playerY += 568
-    
+
   }
 
   pause() {

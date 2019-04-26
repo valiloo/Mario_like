@@ -40,6 +40,7 @@ import { MechantComponent } from './mechant/mechant.component';
     AppRoutingModule,
     RouterModule.forRoot(ROUTES),
     BrowserAnimationsModule
+    
 
 
   ],
