@@ -34,16 +34,18 @@ import { MechantComponent } from './mechant/mechant.component';
 
     MechantComponent,
 
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(ROUTES),
+    RouterModule.forRoot(ROUTES, {enableTracing:true}),
     BrowserAnimationsModule
+    
 
 
   ],
-  providers: [MapService, GamestateService, GameloopService],
+  providers: [MapService, GamestateService, GameloopService, GameOverComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
