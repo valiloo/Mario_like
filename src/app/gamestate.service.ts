@@ -7,6 +7,7 @@ export const MOVE_FORWARD = 3
 export const MOVE_BACKWARD = 4
 export const MOVE_UPWARD = 5
 export const FALL = 6
+export const ISONFIRE = 7
 
 
 @Injectable({
@@ -23,7 +24,11 @@ public playerScaleX : any = 0
 public playerWidth : number = 53
 public playerHeight : number = 60
 public pause: boolean = false
-  
+public isOnFire : any = 0
+public fireBalls = []
+public fireBallX = this.playerX
+public fireBallY = this.playerY
+ 
 
 
 

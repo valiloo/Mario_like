@@ -24,6 +24,27 @@
     animation : jump 0.9s steps(9);
 }
 
+.onFire{
+    position: absolute;
+    height:63px;
+    width:68px;
+    transform: scaleX(1);
+    background: url('/assets/textures/spriteTir.png/');
+    animation : fire 1.0s steps(10);
+}
+
+.fireball{
+    position:fixed;
+    height:7px;
+    width:6px;
+    background: url('/assets/textures/bullet.png/');
+}
+
+@keyframes fire {
+    from {background-position : 0px;}
+    to{background-position : -680px;}
+}
+
 @keyframes movement {
 
 from {background-position : 0px;}

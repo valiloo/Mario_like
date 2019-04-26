@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from './gamestate.service';
-
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE } from './gamestate.service';
 import { MapTheme, MapService, } from './map.service';
 import { MapComponent } from './map/map.component';
-
+import {Tir} from './models/tir'
 import { ActivatedRoute, Router } from '@angular/router';
 import { ROUTES } from './map/app-routes'
 
@@ -31,7 +30,8 @@ export class GameloopService {
   public ennemiPosY: any 
   public canJump : boolean 
   public stop = false
-
+  public fireBall
+  
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route : Router) { }
 
@@ -42,10 +42,14 @@ export class GameloopService {
   public canMove() { 
 
     
-this.stop = false
+   
   
 
     this.stop = false
+
+
+    this.getMonsterCollision()
+
 
     if (this.jump > 0) {
 
@@ -89,8 +93,10 @@ this.stop = false
     
     if (this.gameService.playerY > 650){
      this.gameService.playerY = 0
-      this.gameOver()
+      this.stop = true
     }
+
+
 // gere le saut : verifie que la touche espace est enfoncee, que le joueur ne sort pas de la carte, appelle la fonction qui verifie la collision avec le bloc au dessus de lui//
     if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
       this.jump = 45 // gere l'animation de saut //
@@ -166,7 +172,7 @@ this.stop = false
         }
       }
     }
-
+    this.stop = false
 
   }
     getMonsterCollision(){
@@ -178,13 +184,23 @@ this.stop = false
       let differanceX = Math.abs(this.playerBlocX - posX);
       let differanceY = Math.abs(this.playerBlocY - posY)
       if (differanceY && differanceX < 0.3 ){
-        console.log("toucher")      
+        this.gameOver()    
       }
     }
 
   }
 
-    
+   isOnFire(){
+    this.gameService.fireBallX += 10
+    if(this.gameService.isOnFire === ISONFIRE){
+      this.fireBall = new Tir(this.gameService.fireBallX,this.gameService.fireBallY);
+      this.gameService.fireBalls.push(this.fireBall)
+
+    }
+    else{
+      this.gameService.fireBalls = []
+    }
+   } 
   
 
 
@@ -278,11 +294,11 @@ isTheEnd(playerBlocX, playerBlocY){
   loop() {
 
     this.canMove() // appelle de fonction explique au dessus //
-    this.pause()
+    this.isOnFire()
+    this.pause() // Vérifie si la loop doit être arrếté
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
     this.cameraLock() // appelle de fonction explique au dessus //
-    this.getMonsterCollision()
 
      // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
