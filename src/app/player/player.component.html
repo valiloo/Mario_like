@@ -7,11 +7,10 @@
        ></div>
 
 
-<div *ngIf="gameService.isOnFire === 7">
-  <div *ngFor="let tirs of gameService.fireBalls">
+
+  <div *ngFor="let tir of gameService.fireBalls">
     <div class="fireball"
-        [ngStyle]="{'transform': 'translateX(' + gameService.fireBallX + 'px) translateY('+gameService.fireBallY +'px)'}"
+        [ngStyle]="{'transform': 'translateX(' + tir.posX + 'px) translateY('+tir.posY +'px)'}"
     >
   </div>
   </div>
-</div>
