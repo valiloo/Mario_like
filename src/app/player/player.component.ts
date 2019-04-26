@@ -1,5 +1,5 @@
 
-import { Component, OnInit, HostListener, HostBinding, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, HostBinding, ElementRef, AfterViewInit, AfterContentChecked, AfterContentInit, DoCheck } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from '../gamestate.service';
 import { GameloopService } from '../gameloop.service';
 import { MapService } from '../map.service';
@@ -7,7 +7,8 @@ import { MapService } from '../map.service';
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
   LEFT_ARROW = 37,
-  SPACE = 32
+  SPACE = 32,
+  PAUSE = 13
 }
 
 @Component({
@@ -17,7 +18,7 @@ export enum KEY_CODE {
 
 })
 
-export class PlayerComponent implements OnInit {
+export class PlayerComponent implements OnInit{
 
   public refresh: any
   public move: any
@@ -32,6 +33,7 @@ export class PlayerComponent implements OnInit {
   @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
 
     event.preventDefault()
+
 
     if (event.keyCode === KEY_CODE.RIGHT_ARROW) {
       this.gameService.xVelocity = MOVE_FORWARD
@@ -48,6 +50,14 @@ export class PlayerComponent implements OnInit {
       this.gameService.yVelocity = MOVE_UPWARD
     }
 
+    if(event.keyCode === KEY_CODE.PAUSE && this.gameService.pause === false) {
+
+      this.gameService.pause = true
+    }
+    if(event.keyCode === KEY_CODE.PAUSE && this.gameService.pause ===  true){
+
+      this.gameService.pause  = false
+    }
   }
 
   @HostListener('window:keyup', [('$event')]) stopMovement(event: KeyboardEvent) {
@@ -62,11 +72,12 @@ export class PlayerComponent implements OnInit {
 
   }
 
+ngOnInit(){
+  this.loop.start()
+  this.gameService.playerX -= this.gameService.playerX
+}
 
-  ngOnInit() {
 
-    this.loop.start()
-  }
 
 }
 

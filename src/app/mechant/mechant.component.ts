@@ -16,8 +16,8 @@ export class MechantComponent implements OnInit {
   constructor(public gameService: GamestateService, public loop: GameloopService) { }
 
   ngOnInit() {
-this.loop.start()
 
+   
   }
 
 }
