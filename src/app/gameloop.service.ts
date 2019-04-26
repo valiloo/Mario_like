@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from './gamestate.service';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE } from './gamestate.service';
 import { MapTheme, MapService, } from './map.service';
+import { MapComponent } from './map/map.component';
+import { Tir } from './models/tir'
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -29,6 +31,8 @@ export class GameloopService {
   public canStopTime: boolean = true
   public jumpNumber: number = 2
   public jumpHeight: number = 60
+  public fireBall
+  public lastFireballDate = new Date();
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route: Router) { }
@@ -39,11 +43,11 @@ export class GameloopService {
   // fonction globale encadrant tout les types de deplacements //
   public canMove() {
 
-
     this.stop = false
 
 
-    this.stop = false
+    this.getMonsterCollision()
+
 
     if (this.jump > 0) {
 
@@ -90,11 +94,14 @@ export class GameloopService {
       this.gameService.playerY = 0
       this.gameOver()
     }
+
+
     // gere le saut : verifie que la touche espace est enfoncee, que le joueur ne sort pas de la carte, appelle la fonction qui verifie la collision avec le bloc au dessus de lui//
-    if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true) && this.jumpNumber > 0) {
+    if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
       this.jump = 45 // gere l'animation de saut //
       this.jumpNumber -= 1 // retire un du nombre de saut disponible //
       this.jumpHeight = 60
+      this.stop = true
 
 
       for (let i = 0; i <= 6; i++) { // boucle for decoupant le saut en 6 partie //
@@ -182,10 +189,9 @@ export class GameloopService {
         }
       }
     }
-
+    this.stop = false
 
   }
-
   getMonsterCollision() {
     this.playerBlocY = Math.round(this.gameService.playerY / 32)
     this.playerBlocX = Math.round(this.gameService.playerX / 32)
@@ -195,13 +201,25 @@ export class GameloopService {
       let differanceX = Math.abs(this.playerBlocX - posX);
       let differanceY = Math.abs(this.playerBlocY - posY)
       if (differanceY && differanceX < 0.3) {
-        console.log("toucher")
+        this.gameOver()
       }
     }
 
   }
 
+  isOnFire() {
 
+    if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 500) {
+      let fireBall = new Tir(this.gameService.playerX, this.gameService.playerY);
+      this.gameService.fireBalls.push(fireBall)
+      this.lastFireballDate = new Date();
+    }
+
+
+    for (let i = 0; i < this.gameService.fireBalls.length; i++) {
+      this.gameService.fireBalls[i].posX += 10
+    }
+  }
 
 
 
@@ -278,17 +296,14 @@ export class GameloopService {
   }
 
 
-
-
-
   loop() {
 
     this.canMove() // appelle de fonction explique au dessus //
-    this.pause()
+    this.isOnFire()
+    this.pause() // Vérifie si la loop doit être arrếté
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
     this.cameraLock() // appelle de fonction explique au dessus //
-    this.getMonsterCollision()
 
     // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
