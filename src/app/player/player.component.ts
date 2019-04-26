@@ -1,6 +1,6 @@
 
 import { Component, OnInit, HostListener, HostBinding, ElementRef, AfterViewInit, AfterContentChecked, AfterContentInit, DoCheck } from '@angular/core';
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE } from '../gamestate.service';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR } from '../gamestate.service';
 import { GameloopService } from '../gameloop.service';
 import { MapService } from '../map.service';
 
@@ -72,7 +72,7 @@ export class PlayerComponent implements OnInit{
 
      if(event.keyCode === KEY_CODE.EPOWER){
 
-       this.gameService.isOnFire = 0
+       this.gameService.isOnFire = FINTIR
      }
 
   }

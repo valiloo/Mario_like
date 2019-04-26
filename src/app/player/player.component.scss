@@ -29,8 +29,15 @@
     height:63px;
     width:68px;
     transform: scaleX(1);
-    background: url('/assets/textures/spriteTir.png/');
-    animation : fire 1.0s steps(10);
+    background: url('/assets/textures/Tir.png/');
+    animation : fire 0.5s steps(9) infinite;
+}
+.finTir{
+    position:absolute;
+    height:63px;
+    width:68px;
+    transform:scaleX(1);
+    background: url('/assets/textures/finTir.png/');
 }
 
 .fireball{
@@ -42,7 +49,7 @@
 
 @keyframes fire {
     from {background-position : 0px;}
-    to{background-position : -680px;}
+    to{background-position : -612px;}
 }
 
 @keyframes movement {

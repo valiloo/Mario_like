@@ -5,6 +5,7 @@ import { MapComponent } from './map/map.component';
 import { Tir } from './models/tir'
 import { ActivatedRoute, Router } from '@angular/router';
 import { ROUTES } from './map/app-routes'
+import { GameOverComponent } from './game-over/game-over.component';
 
 
 
@@ -31,7 +32,10 @@ export class GameloopService {
   public canJump: boolean
   public stop = false
   public fireBall
-  public lastFiredBall = new Date()
+  public lastFireballDate = new Date();
+  public startTime : number
+  public endTime : number
+  public canStopTime : boolean = true
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route: Router) { }
@@ -45,8 +49,9 @@ export class GameloopService {
 
 
 
-
+   
     this.stop = false
+
 
 
     this.getMonsterCollision()
@@ -92,10 +97,12 @@ export class GameloopService {
 
     }
 
-    if (this.gameService.playerY > 650) {
-      this.gameService.playerY = 0
-      this.stop = true
-    }
+    
+    if (this.gameService.playerY > 650){
+    this.gameService.playerY = 0
+      this.gameOver()
+
+
 
 
     // gere le saut : verifie que la touche espace est enfoncee, que le joueur ne sort pas de la carte, appelle la fonction qui verifie la collision avec le bloc au dessus de lui//
@@ -108,7 +115,10 @@ export class GameloopService {
           this.gameService.playerY -= 32 // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
           this.gameService.yVelocity = 0 // indication saut //
 
-        }
+      }
+
+
+        
 
       }
     }
@@ -121,8 +131,7 @@ export class GameloopService {
 
     }
 
-
-  }
+    }}
 
 
   // fonction bloquant la camera sur le personnage //
@@ -132,6 +141,14 @@ export class GameloopService {
     window.scroll(this.gameService.playerX - ((this.innerWidth / 2) - 27), this.gameService.playerY) // bloque le scroll de page sur la position X du joueur - la moitie de l'ecran //
   }
 
+  getTimePlayed() {
+    if (this.canStopTime === true) {
+    this.endTime = Math.floor((Date.now() - this.startTime) / 1000)
+    console.log(this.endTime)
+    this.canStopTime = false
+    console.log(this.canStopTime)
+    }
+  }
 
   // fonction faisant se deplacer les monstres //
   moveMonster() {
@@ -153,8 +170,8 @@ export class GameloopService {
       }
     }
 
+  
   }
-
   // fonction faisant se deplacer les monstres //
   moveOgr() {
     for (let index in this.mapService.ogrs) {
@@ -184,8 +201,10 @@ export class GameloopService {
       let posY = this.mapService.monsters[i].posY;
       let differanceX = Math.abs(this.playerBlocX - posX);
       let differanceY = Math.abs(this.playerBlocY - posY)
-      if (differanceY && differanceX < 0.3) {
-        this.gameOver()
+
+      if (differanceY && differanceX < 0.3 ){
+      this.gameOver()     
+
       }
     }
 
@@ -193,16 +212,32 @@ export class GameloopService {
 
   isOnFire() {
 
-    if (this.gameService.isOnFire === ISONFIRE) {
-      this.fireBall = new Tir(this.gameService.playerX, this.gameService.playerY);
-      this.gameService.fireBalls.push(this.fireBall)
+    if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 500) {
+      let fireBall = new Tir(this.gameService.playerX, this.gameService.playerY);
+      this.gameService.fireBalls.push(fireBall)
+      this.lastFireballDate = new Date();
+    }
 
+
+
+    if(this.gameService.playerScaleX === -1 && this.gameService.isOnFire === ISONFIRE){
+     for (let i = 0; i < this.gameService.fireBalls.length; i++) {
+
+      
+      this.gameService.fireBalls[i].posX+= 10
+      
+     
+     }
     }
-    if (this.gameService.isOnFire === ISONFIRE && this.gameService.playerY === -1) {
-      for (let i = 0; i < this.gameService.fireBalls.length; i++) {
-        
+    if(this.gameService.playerScaleX === 1 && this.gameService.isOnFire === ISONFIRE)
+      for (let i = 0; i < this.gameService.fireBalls.length;i++){
+        this.gameService.fireBalls[i].posX -= 10
       }
+    if(this.gameService.isOnFire !== ISONFIRE){
+      this.gameService.fireBalls = []
     }
+    
+    
   }
 
 
@@ -296,7 +331,7 @@ export class GameloopService {
 
   loop() {
 
-    this.canMove() // appelle de fonction explique au dessus //
+    this.canMove() // appelle de fonction explique au dessus / 
     this.isOnFire()
     this.pause() // Vérifie si la loop doit être arrếté
     this.moveMonster() // appelle de fonction explique au dessus //
@@ -311,6 +346,7 @@ export class GameloopService {
   start() {
     this.reInit()
     this.loop() // lance le loop au lancement du jeu //
+    this.startTime = Date.now()
 
 
 
@@ -318,6 +354,8 @@ export class GameloopService {
   gameOver() {
     this.stop = true
     this.route.navigate(['/Over'])
+    
+
 
   }
 
@@ -349,5 +387,6 @@ export class GameloopService {
 
     }
   }
+
 
 }

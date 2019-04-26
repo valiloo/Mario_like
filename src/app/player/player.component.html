@@ -3,9 +3,9 @@
         'playerMovement' : (gameService.move === 1 || gameService.move === 2) && loop.jump === 0 && gameService.isOnFire === 0,
         'playerJump' : loop.jump > 0 && gameService.isOnFire === 0 ,
         'onFire' : gameService.isOnFire === 7
+      
      }" [ngStyle]="{'transform': 'translateX(' + gameService.playerX + 'px) translateY('+gameService.playerY +'px) scaleX('+ gameService.playerScaleX + ')','top': gameService.playerY }"
        ></div>
-
 
 
   <div *ngFor="let tir of gameService.fireBalls">
