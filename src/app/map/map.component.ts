@@ -36,10 +36,7 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.initMap();
-<<<<<<< HEAD
     this.onAudioPlay();
-=======
->>>>>>> eaf30cf5f9726e61d62f1b7e7bacd4780d0f0e5f
   }
 
 

@@ -143,16 +143,10 @@ export class MapTheme {
 })
 export class MapService {
 
-<<<<<<< HEAD
   public monsters: OsMonster[] = [new OsMonster(19, 19),]
   public ogrs: OgrMonster[] =  [new OgrMonster(15, 19),]
   public x : number
   public y : number
-=======
-  public monsters: OsMonster[] = [new OsMonster(19, 18),]
-  public ogrs: OgrMonster[] =  [new OgrMonster(40, 18),]
-
->>>>>>> 796aab34756d12c77e83802a5ac34553e702424e
   public map = [
 
     [T5, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7, T7],

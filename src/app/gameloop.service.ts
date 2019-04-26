@@ -27,6 +27,7 @@ export class GameloopService {
   public playerBlocY
   public playerBlocX
   public cell: any
+  public stop = false
 
 
 
@@ -39,6 +40,8 @@ export class GameloopService {
 
   public canMove() {
 
+    this.stop = false
+
     if (this.jump > 0) {
 
       this.jump -= 1
@@ -49,6 +52,7 @@ export class GameloopService {
 
       this.gameService.playerY += 4
     }
+
 
 
     if ((this.gameService.move === MOVE_RIGHT) && this.gameService.xVelocity === MOVE_FORWARD && this.getRightCollision(this.playerBlocX, this.playerBlocY)) {
@@ -79,21 +83,6 @@ export class GameloopService {
       }
     }
   }
-
-
-
-
-    if (this.gameService.playerX < 0) {
-
-      this.gameService.playerX = 0
-    }
-
-    // }
-    // if(this.gameService.playerY - this.gameService.playerHeight === ){
-
-    //  this.gameService.playerY = case.y + this.gameService.playerHeight
-
-    // }
 
 
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
@@ -215,10 +204,12 @@ export class GameloopService {
     this.moveMonster()
     this.moveOgr()
     this.cameraLock()
+    this.pause()
+    if(!this.stop){
     requestAnimationFrame(() => this.loop())
     console.log(this.gameService.playerY)
   }
-
+  }
   start() {
     this.loop()
 
@@ -226,7 +217,7 @@ export class GameloopService {
   }
 
   pause() {
-    cancelAnimationFrame(0)
+   return this.stop = true
   }
 
 }
