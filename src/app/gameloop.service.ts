@@ -37,7 +37,7 @@ export class GameloopService {
   public endTime: number
   public canStopTime: boolean = true
   public jumpNumber: number = 2
-  public timerEndFire: number = 2
+  public timerEndFire: number = 10
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route: Router) { }
 
@@ -55,16 +55,13 @@ export class GameloopService {
 
 
 
-    this.getMonsterCollision()
-
-
     if (this.jump > 0) {
 
       this.jump -= 1
 
     }
 
-    if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === false) { // si le joueur touche le sol il peut ressauter //
+    if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === false && this.gameService.isOnFire === 0) { // si le joueur touche le sol il peut ressauter //
       this.canJump = true
       this.jumpNumber = 2
     }
@@ -77,7 +74,7 @@ export class GameloopService {
 
 
     // gère le deplacement vers la droite : verifie que la touche fleche droite est enfoncé et appelle la fonction gérant la collision sur la droite du personnage//
-    if ((this.gameService.move === MOVE_RIGHT) && this.gameService.xVelocity === MOVE_FORWARD && this.getRightCollision(this.playerBlocX, this.playerBlocY)) {
+    if ((this.gameService.move === MOVE_RIGHT) && this.gameService.xVelocity === MOVE_FORWARD && this.getRightCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0) {
 
       this.gameService.playerScaleX = -1 // gere le reverse d'animation du personnage //
       this.gameService.playerX += 8 // deplace le personnage de 8px sur la droite //
@@ -88,7 +85,7 @@ export class GameloopService {
 
     }
     // gère le deplacement vers la gauche : verifie que la touche fleche gauche est enfoncee et appelle la fonction qui verifie la collision sur la gauche du personnage //
-    if ((this.gameService.move === MOVE_LEFT) && this.gameService.playerX > 12 && this.gameService.xVelocity === MOVE_BACKWARD && this.getLeftCollision(this.playerBlocX, this.playerBlocY)) {
+    if ((this.gameService.move === MOVE_LEFT) && this.gameService.playerX > 12 && this.gameService.xVelocity === MOVE_BACKWARD && this.getLeftCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0) {
 
       this.gameService.playerScaleX = 1 // gere le reverse d'animation du personnage //
 
@@ -99,7 +96,7 @@ export class GameloopService {
 
     }
 
-
+    
 
     if (this.gameService.playerY > 650) {
       this.gameService.playerY = 0
@@ -108,10 +105,10 @@ export class GameloopService {
     }
 
 
-    if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
+    if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true) && this.gameService.isOnFire === 0) {
       this.jump = 45 // gere l'animation de saut //
       this.jumpNumber -= 1 // retire un du nombre de saut disponible //
-      console.log("OK")
+      
 
 
 
@@ -129,7 +126,6 @@ export class GameloopService {
       }
 
     }
-
 
     // si aucune touche enfonce, le perso sera immobile //
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
@@ -151,9 +147,9 @@ export class GameloopService {
   getTimePlayed() {
     if (this.canStopTime === true) {
       this.endTime = Math.floor((Date.now() - this.startTime) / 1000)
-      console.log(this.endTime)
+      
       this.canStopTime = false
-      console.log(this.canStopTime)
+      
     }
   }
 
@@ -219,23 +215,10 @@ export class GameloopService {
 
   isOnFire() {
 
-        if (this.gameService.isOnFire !== ISONFIRE) {
-      this.gameService.fireBalls = []
-    }
-    if (this.gameService.isOnFire === FINTIR && this.timerEndFire === 0) {
-
-      this.gameService.isOnFire = 0
-
-    }
-
-    this.timerEndFire -= 1
-
-    if (this.timerEndFire < 0) {
-      this.timerEndFire = 2
-    }
+    this.innerWidth = window.innerWidth
 
     if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === -1) {
-      let fireBall = new Tir(this.gameService.playerX+ 80, this.gameService.playerY + this.gameService.playerHeight /2);
+      let fireBall = new Tir(this.gameService.playerX + 70, this.gameService.playerY + this.gameService.playerHeight / 2);
       this.gameService.fireBalls.push(fireBall)
       this.lastFireballDate = new Date();
     }
@@ -246,41 +229,46 @@ export class GameloopService {
       this.lastFireballDate = new Date();
     }
 
-    if (this.gameService.playerScaleX === -1 && this.gameService.isOnFire === ISONFIRE) {
+    if (this.gameService.playerScaleX === -1 ) {
       for (let i = 0; i < this.gameService.fireBalls.length; i++) {
-          
-        if (this.gameService.fireBalls[i].posX < window.innerWidth) {
+
+        if (this.gameService.fireBalls[i].posX < this.innerWidth-this.innerWidth / 4) {
           this.gameService.fireBalls[i].posX += 10
         }
         else {
-          this.gameService.fireBalls.slice(i, 1)
+         this.gameService.fireBalls = this.gameService.fireBalls.slice(i+1, 1)
+          
         }
 
       }
     }
-   else if (this.gameService.playerScaleX === 1 && this.gameService.isOnFire === ISONFIRE)
+    else if (this.gameService.playerScaleX === 1 ){
+
+      for (let i = 0; i < this.gameService.fireBalls.length; i++) {
+
+        if (this.gameService.fireBalls[i].posX >= -1) {
+          this.gameService.fireBalls[i].posX -= 10
+        }
+        else {
+          this.gameService.fireBalls = this.gameService.fireBalls.slice(i+1, 1)
+         
+      }
+      }
+    }
       
-     for (let i = 0; i < this.gameService.fireBalls.length; i++) {
-       if(this.gameService.fireBalls[i].posX > (-(window.innerWidth))){
-       this.gameService.fireBalls[i].posX -= 10
-       }
-       else{
-         this.gameService.fireBalls.slice(i, 1)
-       }
-     }
-    if (this.gameService.isOnFire !== ISONFIRE) {
-      this.gameService.fireBalls = []
-    }
     if (this.gameService.isOnFire === FINTIR && this.timerEndFire === 0) {
-
+     
       this.gameService.isOnFire = 0
+     
 
     }
 
-    this.timerEndFire -= 1
+    if (this.timerEndFire <= 0) {
+      this.timerEndFire = 10
+    }
 
-    if (this.timerEndFire < 0) {
-      this.timerEndFire = 2
+    if(this.gameService.isOnFire !== ISONFIRE && this.gameService.isOnFire === FINTIR){
+    this.timerEndFire -= 1
     }
   }
 
@@ -360,15 +348,13 @@ export class GameloopService {
   loop() {
 
     this.canMove() // appelle de fonction explique au dessus / 
-    this.isOnFire()
-    this.pause() // Vérifie si la loop doit être arrếté
+    this.isOnFire() // 
+    this.getMonsterCollision()
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
     this.cameraLock() // appelle de fonction explique au dessus //
-
-    // boucle le jeu , rappelera les fonctions toutes les X millisecondes //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
-
+    this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
   }
 
   start() {
@@ -396,12 +382,8 @@ export class GameloopService {
     this.gameService.playerScaleX = 0
     this.gameService.playerWidth = 53
     this.gameService.playerHeight = 60
-    this.gameService.pause = false
-
     this.gameService.isOnFire = 0
     this.gameService.fireBalls = []
-    this.gameService.fireBallX = this.gameService.playerX
-    this.gameService.fireBallY = this.gameService.playerY
   }
 
 

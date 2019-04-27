@@ -21,15 +21,14 @@ public move : any = 0
 public xVelocity : any = 0
 public yVelocity : any = 0
 public playerX : any = 20
-public playerY : any = 500
+public playerY : any = this.playerY
 public playerScaleX : any = 0
 public playerWidth : number = 53
 public playerHeight : number = 60
-public pause: boolean = false
 public isOnFire : any = 0
 public fireBalls : Tir[] = []
-public fireBallX = this.playerX
-public fireBallY = this.playerY
+public fireScreen : Tir[] = []
+
 
 
 
@@ -47,7 +46,7 @@ public fireBallY = this.playerY
     this.playerScaleX = 0
     this.playerWidth = 53
     this.playerHeight = 60
-    this.pause = false
+ 
   
 
   }
