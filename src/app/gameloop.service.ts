@@ -22,6 +22,7 @@ export class GameloopService {
   public y: number = 0
   public scaleX: number
   public innerWidth;
+  public outerWidth;
   public playerBlocY
   public playerBlocX
   public cell: any
@@ -38,6 +39,8 @@ export class GameloopService {
   public jumpNumber: number = 2
   public timerEndFire: number = 5
   public lastFireBall
+  public fireBlocX:number = this.gameService.playerX
+  public fireBlocY = this.gameService.playerY
 
 
 
@@ -102,6 +105,7 @@ export class GameloopService {
 
     if (this.gameService.playerY > 650) {
       this.gameService.playerY = 0
+      this.stop = true
       this.gameOver()
 
     }
@@ -207,12 +211,12 @@ export class GameloopService {
       let differanceX = Math.abs(this.playerBlocX - posX);
       let differanceY = Math.abs(this.playerBlocY - posY)
 
-      if (differanceY  && differanceX < 0.3) {
+      if (differanceY< 0.3  && differanceX < 0.3) {
         this.gameService.death = ISDEAD
         this.isDead = new Date()
       }
-        if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 800) {
-          
+        if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
+          this.stop = true
           this.gameOver()
         
       }
@@ -220,29 +224,21 @@ export class GameloopService {
 
   }
   monsterDeath() {
-    this.playerBlocY = Math.round(this.gameService.playerY / 32)
-    this.playerBlocX = Math.round(this.gameService.playerX / 32)
+
+    for (let j = 0; j < this.gameService.fireBalls.length; j++){
+      this.fireBlocX = Math.round(this.gameService.fireBalls[j].posX / 32)
+      this.fireBlocY = Math.round(this.gameService.fireBalls[j].posY / 32)
+
     for (let i = 0; i < this.mapService.monsters.length; i++) {
       let posX = this.mapService.monsters[i].posX;
       let posY = this.mapService.monsters[i].posY;
-      let differenceX = Math.abs(this.playerBlocX - posX);
-      let differenceY = Math.abs(this.playerBlocY - posY)
-
-      if (differenceY  && differenceX < 0.3) {
-        this.gameService.death = ISDEAD
-        this.isDead = new Date()
-      }
-        if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 800) {
+      let diffX = Math.abs(this.fireBlocX - posX)
+      let diffY = Math.abs(this.fireBlocY - posY)
+         
           
-          this.gameOver()
+          if(diffX && diffY < 0.8){
         
-      }
-      for (let j = 0; j < this.gameService.fireBalls.length; j++){
-          let diffX = Math.abs(this.gameService.fireBalls[j].posX - posX)
-          let diffY = Math.abs(this.gameService.fireBalls[j].posY - posY)
-
-          if(diffX && diffY < 0.1){
-            this.mapService.monsters = this.mapService.monsters.splice(i,1)
+            this.mapService.monsters = this.mapService.monsters.slice(i,1)
 
           }
 
@@ -254,7 +250,7 @@ export class GameloopService {
 
   isOnFire() {
 
-    this.innerWidth = window.innerWidth
+    this.outerWidth = window.outerWidth
 
     if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === -1) {
       let fireBall = new Tir(this.gameService.playerX + 70, this.gameService.playerY + this.gameService.playerHeight / 2);
@@ -271,7 +267,7 @@ export class GameloopService {
     if (this.gameService.playerScaleX === -1) {
       for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
-        if (this.gameService.fireBalls[i].posX < this.innerWidth && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
+        if (this.outerWidth<= this.gameService.fireBalls[i].posX <= this.outerWidth  && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
           this.gameService.fireBalls[i].posX += 10
         }
         else {
@@ -389,6 +385,7 @@ export class GameloopService {
     this.canMove() // appelle de fonction explique au dessus / 
     this.isOnFire() // 
     this.getMonsterCollision()
+    this.monsterDeath()
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
     this.cameraLock() // appelle de fonction explique au dessus //

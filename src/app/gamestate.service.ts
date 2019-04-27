@@ -21,7 +21,7 @@ export class GamestateService {
 public move : any = 0
 public xVelocity : any = 0
 public yVelocity : any = 0
-public playerX : any = 20
+public playerX : any 
 public playerY : any = this.playerY
 public playerScaleX : any = 0
 public playerWidth : number = 53
@@ -36,20 +36,8 @@ public death : number = 0
 
 
 
-  constructor(mapService: MapService) { }
+  constructor() { }
 
-  public reinit(){
-    this.move  = 0
-    this.xVelocity = 0
-    this.yVelocity = 0
-    this.playerX = 20
-    this.playerY = 500
-    this.playerScaleX = 0
-    this.playerWidth = 53
-    this.playerHeight = 60
- 
-  
 
-  }
 
 }
