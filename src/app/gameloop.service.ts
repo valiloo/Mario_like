@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR } from './gamestate.service';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, ISDEAD } from './gamestate.service';
 import { MapTheme, MapService, } from './map.service';
-import { MapComponent } from './map/map.component';
 import { Tir } from './models/tir'
-import { ActivatedRoute, Router } from '@angular/router';
-import { ROUTES } from './map/app-routes'
-import { GameOverComponent } from './game-over/game-over.component';
+import { Router } from '@angular/router';
+
 
 
 
@@ -33,6 +31,7 @@ export class GameloopService {
   public stop = false
   public fireBall
   public lastFireballDate = new Date();
+  public isDead = new Date();
   public startTime: number
   public endTime: number
   public canStopTime: boolean = true
@@ -96,7 +95,7 @@ export class GameloopService {
 
     }
 
-    
+
 
     if (this.gameService.playerY > 650) {
       this.gameService.playerY = 0
@@ -108,7 +107,7 @@ export class GameloopService {
     if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true) && this.gameService.isOnFire === 0) {
       this.jump = 45 // gere l'animation de saut //
       this.jumpNumber -= 1 // retire un du nombre de saut disponible //
-      
+
 
 
 
@@ -147,9 +146,9 @@ export class GameloopService {
   getTimePlayed() {
     if (this.canStopTime === true) {
       this.endTime = Math.floor((Date.now() - this.startTime) / 1000)
-      
+
       this.canStopTime = false
-      
+
     }
   }
 
@@ -205,9 +204,12 @@ export class GameloopService {
       let differanceX = Math.abs(this.playerBlocX - posX);
       let differanceY = Math.abs(this.playerBlocY - posY)
 
-      if (differanceY && differanceX < 0.3) {
-        this.gameOver()
-
+      if (differanceY < 0.3 && differanceX < 0.3) {
+        this.gameService.death = ISDEAD
+        this.isDead = new Date()
+        if (new Date().getTime() - this.isDead.getTime() > 2000) {
+          this.gameOver()
+        }
       }
     }
 
@@ -229,20 +231,20 @@ export class GameloopService {
       this.lastFireballDate = new Date();
     }
 
-    if (this.gameService.playerScaleX === -1 ) {
+    if (this.gameService.playerScaleX === -1) {
       for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
-        if (this.gameService.fireBalls[i].posX < this.innerWidth-this.innerWidth / 4) {
+        if (this.gameService.fireBalls[i].posX < this.innerWidth) {
           this.gameService.fireBalls[i].posX += 10
         }
         else {
-         this.gameService.fireBalls = this.gameService.fireBalls.slice(i+1, 1)
-          
+          this.gameService.fireBalls = this.gameService.fireBalls.slice(i + 1, 1)
+
         }
 
       }
     }
-    else if (this.gameService.playerScaleX === 1 ){
+    else if (this.gameService.playerScaleX === 1) {
 
       for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
@@ -250,16 +252,16 @@ export class GameloopService {
           this.gameService.fireBalls[i].posX -= 10
         }
         else {
-          this.gameService.fireBalls = this.gameService.fireBalls.slice(i+1, 1)
-         
-      }
+          this.gameService.fireBalls = this.gameService.fireBalls.slice(i + 1, 1)
+
+        }
       }
     }
-      
+
     if (this.gameService.isOnFire === FINTIR && this.timerEndFire === 0) {
-     
+
       this.gameService.isOnFire = 0
-     
+
 
     }
 
@@ -267,8 +269,8 @@ export class GameloopService {
       this.timerEndFire = 10
     }
 
-    if(this.gameService.isOnFire !== ISONFIRE && this.gameService.isOnFire === FINTIR){
-    this.timerEndFire -= 1
+    if (this.gameService.isOnFire !== ISONFIRE && this.gameService.isOnFire === FINTIR) {
+      this.timerEndFire -= 1
     }
   }
 
@@ -384,6 +386,7 @@ export class GameloopService {
     this.gameService.playerHeight = 60
     this.gameService.isOnFire = 0
     this.gameService.fireBalls = []
+    this.gameService.death = 0
   }
 
 

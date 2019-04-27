@@ -29,8 +29,8 @@
     height:63px;
     width:68px;
     transform: scaleX(-1);
-    background: url('/assets/textures/Tir.png/') no-repeat;
-    animation : fire 0.3s steps(8) forwards;
+    background: url('/assets/textures/spriteTir.png/') no-repeat;
+    animation : fire 0.5s steps(9) forwards;
 }
 .finTir{
     position:absolute;
@@ -47,9 +47,23 @@
     background: url('/assets/textures/bullet.png/');
 }
 
+// .isDead {
+//     position:absolute;
+//     height:;
+//     width:;
+//     background: url('/assets/textures/.png/')
+
+// }
+
+// @keyframes death {
+
+//     from{background-position : 0px;}
+//     to{background-position : }
+// }
+
 @keyframes fire {
     from {background-position : 0px;}
-    to{background-position : -544px;}
+    to{background-position : -612px;}
 }
 
 @keyframes movement {

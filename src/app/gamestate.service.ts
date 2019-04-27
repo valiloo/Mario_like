@@ -10,6 +10,7 @@ export const MOVE_UPWARD = 5
 export const FALL = 6
 export const ISONFIRE = 7
 export const FINTIR = 8
+export const ISDEAD = 9
 
 
 @Injectable({
@@ -28,6 +29,7 @@ public playerHeight : number = 60
 public isOnFire : any = 0
 public fireBalls : Tir[] = []
 public fireScreen : Tir[] = []
+public death : number = 0
 
 
 
