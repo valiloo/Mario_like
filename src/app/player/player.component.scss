@@ -47,19 +47,20 @@
     background: url('/assets/textures/bullet.png/');
 }
 
-// .isDead {
-//     position:absolute;
-//     height:;
-//     width:;
-//     background: url('/assets/textures/.png/')
+.isDead {
+     position:absolute;
+     height:63px;
+     width:63px;
+     background: url('/assets/textures/spriteDeath.png/') no-repeat;
+     transform: scaleX(-1);
+     animation : death 0.9s steps(8) forwards ;
+ }
 
-// }
+ @keyframes death {
 
-// @keyframes death {
-
-//     from{background-position : 0px;}
-//     to{background-position : }
-// }
+     from{background-position : 0px;}
+     to{background-position : -504px;}
+ }
 
 @keyframes fire {
     from {background-position : 0px;}

@@ -38,6 +38,8 @@ export class GameloopService {
   public jumpNumber: number = 2
   public timerEndFire: number = 10
 
+
+
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route: Router) { }
 
 
@@ -60,7 +62,7 @@ export class GameloopService {
 
     }
 
-    if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === false && this.gameService.isOnFire === 0) { // si le joueur touche le sol il peut ressauter //
+    if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === false && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) { // si le joueur touche le sol il peut ressauter //
       this.canJump = true
       this.jumpNumber = 2
     }
@@ -73,7 +75,7 @@ export class GameloopService {
 
 
     // gère le deplacement vers la droite : verifie que la touche fleche droite est enfoncé et appelle la fonction gérant la collision sur la droite du personnage//
-    if ((this.gameService.move === MOVE_RIGHT) && this.gameService.xVelocity === MOVE_FORWARD && this.getRightCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0) {
+    if ((this.gameService.move === MOVE_RIGHT) && this.gameService.xVelocity === MOVE_FORWARD && this.getRightCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0  && this.gameService.death !== ISDEAD) {
 
       this.gameService.playerScaleX = -1 // gere le reverse d'animation du personnage //
       this.gameService.playerX += 8 // deplace le personnage de 8px sur la droite //
@@ -84,7 +86,7 @@ export class GameloopService {
 
     }
     // gère le deplacement vers la gauche : verifie que la touche fleche gauche est enfoncee et appelle la fonction qui verifie la collision sur la gauche du personnage //
-    if ((this.gameService.move === MOVE_LEFT) && this.gameService.playerX > 12 && this.gameService.xVelocity === MOVE_BACKWARD && this.getLeftCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0) {
+    if ((this.gameService.move === MOVE_LEFT) && this.gameService.playerX > 12 && this.gameService.xVelocity === MOVE_BACKWARD && this.getLeftCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0  && this.gameService.death !== ISDEAD) {
 
       this.gameService.playerScaleX = 1 // gere le reverse d'animation du personnage //
 
@@ -104,7 +106,7 @@ export class GameloopService {
     }
 
 
-    if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true) && this.gameService.isOnFire === 0) {
+    if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true) && this.gameService.isOnFire === 0  && this.gameService.death !== ISDEAD) {
       this.jump = 45 // gere l'animation de saut //
       this.jumpNumber -= 1 // retire un du nombre de saut disponible //
 
@@ -204,12 +206,14 @@ export class GameloopService {
       let differanceX = Math.abs(this.playerBlocX - posX);
       let differanceY = Math.abs(this.playerBlocY - posY)
 
-      if (differanceY < 0.3 && differanceX < 0.3) {
+      if (differanceY  && differanceX < 0.3) {
         this.gameService.death = ISDEAD
         this.isDead = new Date()
-        if (new Date().getTime() - this.isDead.getTime() > 2000) {
+      }
+        if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 900) {
+          
           this.gameOver()
-        }
+        
       }
     }
 
