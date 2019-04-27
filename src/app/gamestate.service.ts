@@ -28,7 +28,6 @@ public playerWidth : number = 53
 public playerHeight : number = 60
 public isOnFire : any = 0
 public fireBalls : Tir[] = []
-public fireScreen : Tir[] = []
 public death : number = 0
 
 

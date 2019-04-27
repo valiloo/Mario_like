@@ -53,7 +53,7 @@
      width:63px;
      background: url('/assets/textures/spriteDeath.png/') no-repeat;
      transform: scaleX(-1);
-     animation : death 0.9s steps(8) forwards ;
+     animation : death 1s steps(8) forwards ;
  }
 
  @keyframes death {

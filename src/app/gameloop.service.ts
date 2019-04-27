@@ -36,7 +36,8 @@ export class GameloopService {
   public endTime: number
   public canStopTime: boolean = true
   public jumpNumber: number = 2
-  public timerEndFire: number = 10
+  public timerEndFire: number = 5
+  public lastFireBall
 
 
 
@@ -210,10 +211,42 @@ export class GameloopService {
         this.gameService.death = ISDEAD
         this.isDead = new Date()
       }
-        if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 900) {
+        if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 800) {
           
           this.gameOver()
         
+      }
+    }
+
+  }
+  monsterDeath() {
+    this.playerBlocY = Math.round(this.gameService.playerY / 32)
+    this.playerBlocX = Math.round(this.gameService.playerX / 32)
+    for (let i = 0; i < this.mapService.monsters.length; i++) {
+      let posX = this.mapService.monsters[i].posX;
+      let posY = this.mapService.monsters[i].posY;
+      let differenceX = Math.abs(this.playerBlocX - posX);
+      let differenceY = Math.abs(this.playerBlocY - posY)
+
+      if (differenceY  && differenceX < 0.3) {
+        this.gameService.death = ISDEAD
+        this.isDead = new Date()
+      }
+        if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 800) {
+          
+          this.gameOver()
+        
+      }
+      for (let j = 0; j < this.gameService.fireBalls.length; j++){
+          let diffX = Math.abs(this.gameService.fireBalls[j].posX - posX)
+          let diffY = Math.abs(this.gameService.fireBalls[j].posY - posY)
+
+          if(diffX && diffY < 0.1){
+            this.mapService.monsters = this.mapService.monsters.splice(i,1)
+
+          }
+
+
       }
     }
 
@@ -238,11 +271,11 @@ export class GameloopService {
     if (this.gameService.playerScaleX === -1) {
       for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
-        if (this.gameService.fireBalls[i].posX < this.innerWidth) {
+        if (this.gameService.fireBalls[i].posX < this.innerWidth && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
           this.gameService.fireBalls[i].posX += 10
         }
         else {
-          this.gameService.fireBalls = this.gameService.fireBalls.slice(i + 1, 1)
+          this.gameService.fireBalls = this.gameService.fireBalls.slice(i+1, 1)
 
         }
 
@@ -252,11 +285,11 @@ export class GameloopService {
 
       for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
-        if (this.gameService.fireBalls[i].posX >= -1) {
+        if (this.gameService.fireBalls[i].posX >= (-(this.innerWidth)) && this.gameService.fireBalls[i].posX <= this.gameService.playerX) {
           this.gameService.fireBalls[i].posX -= 10
         }
-        else {
-          this.gameService.fireBalls = this.gameService.fireBalls.slice(i + 1, 1)
+        else  {
+          this.gameService.fireBalls = this.gameService.fireBalls.slice(i+1, 1)
 
         }
       }
@@ -270,7 +303,7 @@ export class GameloopService {
     }
 
     if (this.timerEndFire <= 0) {
-      this.timerEndFire = 10
+      this.timerEndFire = 5
     }
 
     if (this.gameService.isOnFire !== ISONFIRE && this.gameService.isOnFire === FINTIR) {
