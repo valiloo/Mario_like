@@ -29,8 +29,8 @@
     height:63px;
     width:68px;
     transform: scaleX(-1);
-    background: url('/assets/textures/Tir.png/');
-    animation : fire 0.5s steps(9) infinite;
+    background: url('/assets/textures/Tir.png/') no-repeat;
+    animation : fire 0.5s steps(8) forwards;
 }
 .finTir{
     position:absolute;
@@ -41,7 +41,7 @@
 }
 
 .fireball{
-    position:fixed;
+    position:absolute;
     height:7px;
     width:6px;
     background: url('/assets/textures/bullet.png/');
@@ -49,7 +49,7 @@
 
 @keyframes fire {
     from {background-position : 0px;}
-    to{background-position : -612px;}
+    to{background-position : -544px;}
 }
 
 @keyframes movement {

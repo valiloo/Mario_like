@@ -72,7 +72,7 @@ export class PlayerComponent implements OnInit{
 
      if(event.keyCode === KEY_CODE.EPOWER){
 
-       this.gameService.isOnFire = 0
+       this.gameService.isOnFire = FINTIR
      }
 
   }
