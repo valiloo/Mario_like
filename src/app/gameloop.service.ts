@@ -211,7 +211,8 @@ export class GameloopService {
       let differanceX = Math.abs(this.playerBlocX - posX);
       let differanceY = Math.abs(this.playerBlocY - posY)
 
-      if (differanceY  && differanceX < 0.3) {
+      if (differanceX < 1 && differanceY < 1) {
+        console.log("touché")
         this.gameService.death = ISDEAD
         this.isDead = new Date()
       }
