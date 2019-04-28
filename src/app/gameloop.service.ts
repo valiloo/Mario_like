@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE } from './gamestate.service';
 import { MapTheme, MapService, } from './map.service';
-import { MapComponent } from './map/map.component';
 import { Tir } from './models/tir'
-import { ActivatedRoute, Router } from '@angular/router';
-import { ROUTES } from './map/app-routes'
-import { GameOverComponent } from './game-over/game-over.component';
+import { Router } from '@angular/router';
 
 
 
@@ -50,8 +47,6 @@ export class GameloopService {
     this.gameMusic.src = "assets/audio/songMap.mp3"
     this.gameMusic.load()
     this.gameMusic.play()   
-   // this.gameMusic.pause() 
-   // this.gameMusic.currentTime = 0
   }
 
 
@@ -114,6 +109,8 @@ export class GameloopService {
     if (this.gameService.playerY > 650){
     this.gameService.playerY = 0
       this.gameOver()
+      this.gameMusic.pause() 
+      this.gameMusic.currentTime = 0
 
     }
 
@@ -224,6 +221,8 @@ export class GameloopService {
 
       if (differanceY && differanceX < 0.3 ){
       this.gameOver()     
+      this.gameMusic.pause() 
+      this.gameMusic.currentTime = 0
 
       }
     }
