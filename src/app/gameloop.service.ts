@@ -212,7 +212,6 @@ export class GameloopService {
       let differanceY = Math.abs(this.playerBlocY - posY)
 
       if (differanceX < 1 && differanceY < 1) {
-        console.log("touché")
         this.gameService.death = ISDEAD
         this.isDead = new Date()
       }
@@ -237,9 +236,11 @@ export class GameloopService {
       let diffY = Math.abs(this.fireBlocY - posY)
          
           
-          if(diffX && diffY < 0.8){
-        
-            this.mapService.monsters = this.mapService.monsters.slice(i,1)
+          if(diffX < 0.1){
+            console.log("touché")
+            this.mapService.monsters.splice(i,1)
+             this.gameService.fireBalls.splice(j,1)
+
 
           }
 
@@ -272,7 +273,7 @@ export class GameloopService {
           this.gameService.fireBalls[i].posX += 10
         }
         else {
-          this.gameService.fireBalls = this.gameService.fireBalls.slice(i+1, 1)
+         this.gameService.fireBalls.splice(i, 1)
 
         }
 
@@ -286,7 +287,7 @@ export class GameloopService {
           this.gameService.fireBalls[i].posX -= 10
         }
         else  {
-          this.gameService.fireBalls = this.gameService.fireBalls.slice(i+1, 1)
+         this.gameService.fireBalls.splice(i, 1)
 
         }
       }
