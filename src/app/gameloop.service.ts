@@ -211,7 +211,7 @@ export class GameloopService {
       let differanceX = Math.abs(this.playerBlocX - posX);
       let differanceY = Math.abs(this.playerBlocY - posY)
 
-      if (differanceY< 0.3  && differanceX < 0.3) {
+      if (differanceY  && differanceX < 0.3) {
         this.gameService.death = ISDEAD
         this.isDead = new Date()
       }
@@ -250,15 +250,15 @@ export class GameloopService {
 
   isOnFire() {
 
-    this.outerWidth = window.outerWidth
+    this.innerWidth = window.innerWidth
 
-    if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === -1) {
+    if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 500 && this.gameService.playerScaleX === -1) {
       let fireBall = new Tir(this.gameService.playerX + 70, this.gameService.playerY + this.gameService.playerHeight / 2);
       this.gameService.fireBalls.push(fireBall)
       this.lastFireballDate = new Date();
     }
 
-    if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === 1) {
+    if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 500 && this.gameService.playerScaleX === 1) {
       let fireBall = new Tir(this.gameService.playerX, this.gameService.playerY + this.gameService.playerHeight / 2);
       this.gameService.fireBalls.push(fireBall)
       this.lastFireballDate = new Date();
@@ -267,7 +267,7 @@ export class GameloopService {
     if (this.gameService.playerScaleX === -1) {
       for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
-        if (this.outerWidth<= this.gameService.fireBalls[i].posX <= this.outerWidth  && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
+        if (this.gameService.fireBalls[i].posX <= this.gameService.playerX + (this.innerWidth / 2)  && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
           this.gameService.fireBalls[i].posX += 10
         }
         else {
@@ -281,7 +281,7 @@ export class GameloopService {
 
       for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
-        if (this.gameService.fireBalls[i].posX >= (-(this.innerWidth)) && this.gameService.fireBalls[i].posX <= this.gameService.playerX) {
+        if (this.gameService.fireBalls[i].posX >= this.gameService.playerX - (this.innerWidth / 2) && this.gameService.fireBalls[i].posX <= this.gameService.playerX) {
           this.gameService.fireBalls[i].posX -= 10
         }
         else  {
