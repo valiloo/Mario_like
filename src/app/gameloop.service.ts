@@ -39,7 +39,7 @@ export class GameloopService {
   public jumpNumber: number = 2
   public timerEndFire: number = 5
   public lastFireBall
-  public fireBlocX:number = this.gameService.playerX
+  public fireBlocX: number = this.gameService.playerX
   public fireBlocY = this.gameService.playerY
 
 
@@ -79,7 +79,7 @@ export class GameloopService {
 
 
     // gère le deplacement vers la droite : verifie que la touche fleche droite est enfoncé et appelle la fonction gérant la collision sur la droite du personnage//
-    if ((this.gameService.move === MOVE_RIGHT) && this.gameService.xVelocity === MOVE_FORWARD && this.getRightCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0  && this.gameService.death !== ISDEAD) {
+    if ((this.gameService.move === MOVE_RIGHT) && this.gameService.xVelocity === MOVE_FORWARD && this.getRightCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) {
 
       this.gameService.playerScaleX = -1 // gere le reverse d'animation du personnage //
       this.gameService.playerX += 8 // deplace le personnage de 8px sur la droite //
@@ -90,7 +90,7 @@ export class GameloopService {
 
     }
     // gère le deplacement vers la gauche : verifie que la touche fleche gauche est enfoncee et appelle la fonction qui verifie la collision sur la gauche du personnage //
-    if ((this.gameService.move === MOVE_LEFT) && this.gameService.playerX > 12 && this.gameService.xVelocity === MOVE_BACKWARD && this.getLeftCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0  && this.gameService.death !== ISDEAD) {
+    if ((this.gameService.move === MOVE_LEFT) && this.gameService.playerX > 12 && this.gameService.xVelocity === MOVE_BACKWARD && this.getLeftCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) {
 
       this.gameService.playerScaleX = 1 // gere le reverse d'animation du personnage //
 
@@ -111,7 +111,7 @@ export class GameloopService {
     }
 
 
-    if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true) && this.gameService.isOnFire === 0  && this.gameService.death !== ISDEAD) {
+    if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true) && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) {
       this.jump = 45 // gere l'animation de saut //
       this.jumpNumber -= 1 // retire un du nombre de saut disponible //
 
@@ -215,34 +215,35 @@ export class GameloopService {
         this.gameService.death = ISDEAD
         this.isDead = new Date()
       }
-        if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
-          this.stop = true
-          this.gameOver()
-        
+      if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
+        this.stop = true
+        this.gameOver()
+
+
       }
     }
 
   }
   monsterDeath() {
 
-    for (let j = 0; j < this.gameService.fireBalls.length; j++){
+    for (let j = 0; j < this.gameService.fireBalls.length; j++) {
       this.fireBlocX = Math.round(this.gameService.fireBalls[j].posX / 32)
       this.fireBlocY = Math.round(this.gameService.fireBalls[j].posY / 32)
 
-    for (let i = 0; i < this.mapService.monsters.length; i++) {
-      let posX = this.mapService.monsters[i].posX;
-      let posY = this.mapService.monsters[i].posY;
-      let diffX = Math.abs(this.fireBlocX - posX)
-      let diffY = Math.abs(this.fireBlocY - posY)
-         
-          
-          if(diffX < 0.1){
-            console.log("touché")
-            this.mapService.monsters.splice(i,1)
-             this.gameService.fireBalls.splice(j,1)
+      for (let i = 0; i < this.mapService.monsters.length; i++) {
+        let posX = this.mapService.monsters[i].posX;
+        let posY = this.mapService.monsters[i].posY;
+        let diffX = Math.abs(this.fireBlocX - posX)
+        let diffY = Math.abs(this.fireBlocY - posY)
 
 
-          }
+        if (diffX < 0.15 && diffY < 1) {
+            //need death animation with date method here voir getMonsterCollision
+          this.mapService.monsters.splice(i, 1)
+          this.gameService.fireBalls.splice(j, 1)
+
+
+        }
 
 
       }
@@ -254,13 +255,13 @@ export class GameloopService {
 
     this.innerWidth = window.innerWidth
 
-    if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 500 && this.gameService.playerScaleX === -1) {
+    if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === -1) {
       let fireBall = new Tir(this.gameService.playerX + 70, this.gameService.playerY + this.gameService.playerHeight / 2);
       this.gameService.fireBalls.push(fireBall)
       this.lastFireballDate = new Date();
     }
 
-    if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 500 && this.gameService.playerScaleX === 1) {
+    if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === 1) {
       let fireBall = new Tir(this.gameService.playerX, this.gameService.playerY + this.gameService.playerHeight / 2);
       this.gameService.fireBalls.push(fireBall)
       this.lastFireballDate = new Date();
@@ -269,11 +270,11 @@ export class GameloopService {
     if (this.gameService.playerScaleX === -1) {
       for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
-        if (this.gameService.fireBalls[i].posX <= this.gameService.playerX + (this.innerWidth / 2)  && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
+        if (this.gameService.fireBalls[i].posX <= this.gameService.playerX + (this.innerWidth / 2) && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
           this.gameService.fireBalls[i].posX += 10
         }
         else {
-         this.gameService.fireBalls.splice(i, 1)
+          this.gameService.fireBalls.splice(i, 1)
 
         }
 
@@ -286,8 +287,8 @@ export class GameloopService {
         if (this.gameService.fireBalls[i].posX >= this.gameService.playerX - (this.innerWidth / 2) && this.gameService.fireBalls[i].posX <= this.gameService.playerX) {
           this.gameService.fireBalls[i].posX -= 10
         }
-        else  {
-         this.gameService.fireBalls.splice(i, 1)
+        else {
+          this.gameService.fireBalls.splice(i, 1)
 
         }
       }
