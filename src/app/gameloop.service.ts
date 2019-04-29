@@ -4,6 +4,7 @@ import { MapTheme, MapService, } from './map.service';
 import { Tir } from './models/tir'
 import { Router } from '@angular/router';
 import { OsMonster } from './models/monster';
+import { OgrMonster} from './models/ogr';
 
 
 
@@ -312,6 +313,35 @@ export class GameloopService {
     }
 
   }
+
+  getOgrCollision() {
+    this.playerBlocY = Math.round(this.gameService.playerY / 32)
+    this.playerBlocX = Math.round(this.gameService.playerX / 32)
+    for (let i = 0; i < this.mapService.ogrs.length; i++) {
+      let posX = this.mapService.ogrs[i].posX;
+      let posY = this.mapService.ogrs[i].posY;
+      let differanceX = Math.abs(this.playerBlocX - posX);
+      let differanceY = Math.abs(this.playerBlocY - posY)
+
+
+      if (differanceX < 1 && differanceY < 1) {
+        this.gameService.death = ISDEAD
+        this.isDead = new Date()
+      }
+      if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
+       
+        this.stop = true
+        this.gameOver()    
+        this.gameMusic.pause() 
+        this.gameMusic.currentTime = 0
+
+
+      }
+    }
+
+  }
+
+
   monsterDeath() {
 
     for (let j = 0; j < this.gameService.fireBalls.length; j++) {
@@ -340,6 +370,34 @@ export class GameloopService {
       }
       }
     }
+    monsterDeathOgr() {
+
+      for (let j = 0; j < this.gameService.fireBalls.length; j++) {
+        this.fireBlocX = Math.round(this.gameService.fireBalls[j].posX / 32)
+        this.fireBlocY = Math.round(this.gameService.fireBalls[j].posY / 32)
+  
+        for (let i = 0; i < this.mapService.ogrs.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
+          let posX = this.mapService.ogrs[i].posX;
+          let posY = this.mapService.ogrs[i].posY;
+          let diffX = Math.abs(this.fireBlocX - posX)
+          let diffY = Math.abs(this.fireBlocY - posY)
+  
+  
+          if (diffX < 0.3 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+            //need death animation with date method here voir getMonsterCollision
+            this.mapService.ogrs.splice(i, 1)
+            this.gameService.fireBalls.splice(j, 1)
+            this.osDie = new Audio()
+            this.osDie.src = "assets/audio/osMonsterDie.mp3"
+            this.osDie.load()
+            this.osDie.play()
+  
+  
+          }
+  
+        }
+        }
+      }
 
 isTheEnd(playerBlocX, playerBlocY){
   this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
@@ -430,9 +488,7 @@ isOnFire(){
     if (this.gameService.isOnFire !== ISONFIRE && this.gameService.isOnFire === FINTIR) {
       this.timerEndFire -= 1
     }
-  }
-
-
+}
 
 
 
@@ -498,7 +554,9 @@ isOnFire(){
     this.canMove() // appelle de fonction explique au dessus /  // 
     this.isOnFire()
     this.getMonsterCollision()
+    this.getOgrCollision()
     this.monsterDeath()
+    this.monsterDeathOgr()
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
     this.cameraLock() // appelle de fonction explique au dessus //
@@ -539,8 +597,16 @@ isOnFire(){
     this.gameService.fireBalls = []
     this.gameService.death = 0
     this.mapService.monsters =  [
-      new OsMonster(29, 18.2),
+      new OsMonster(24, 18.2),
       new OsMonster(39, 18.2),
+      new OsMonster(70, 18.2),
+      new OsMonster(120, 18.2),
+    ]
+    this.mapService.ogrs = [
+      new OgrMonster(110, 8),
+      new OgrMonster(45, 6),
+      new OgrMonster(140, 18.2),
+      new OgrMonster(10, 11),
     ]
   }
 
