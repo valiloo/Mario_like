@@ -10,6 +10,7 @@ export const MOVE_UPWARD = 5
 export const FALL = 6
 export const ISONFIRE = 7
 export const FINTIR = 8
+export const ISDEAD = 9
 
 
 @Injectable({
@@ -20,36 +21,23 @@ export class GamestateService {
 public move : any = 0
 public xVelocity : any = 0
 public yVelocity : any = 0
-public playerX : any = 20
-public playerY : any = 500
+public playerX : any 
+public playerY : any = this.playerY
 public playerScaleX : any = 0
 public playerWidth : number = 53
 public playerHeight : number = 60
-public pause: boolean = false
 public isOnFire : any = 0
 public fireBalls : Tir[] = []
-public fireBallX = this.playerX
-public fireBallY = this.playerY
+public death : number = 0
 
 
 
 
 
 
-  constructor(mapService: MapService) { }
 
-  public reinit(){
-    this.move  = 0
-    this.xVelocity = 0
-    this.yVelocity = 0
-    this.playerX = 20
-    this.playerY = 500
-    this.playerScaleX = 0
-    this.playerWidth = 53
-    this.playerHeight = 60
-    this.pause = false
-  
+  constructor() { }
 
-  }
+
 
 }
