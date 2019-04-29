@@ -9,7 +9,7 @@ import { GameloopService } from '../gameloop.service';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
-  time: number = 0;
+ 
   map = []
 
 
@@ -27,33 +27,22 @@ export class MapComponent implements OnInit {
 
   }
 
-  
-  public startChrono() {
-    if (this.gameLoop.isTheEnd(this.gameLoop.playerBlocX, this.gameLoop.playerBlocY) === false) {
-    setInterval(() => { if (this.time >= 0) this.time++; }, 1000);
-    } else if (this.gameLoop.isTheEnd(this.gameLoop.playerBlocX, this.gameLoop.playerBlocY) === true){
-      setInterval(() => this.time, 0 )
-    }
 
-  }
 
-  
-  
+
 
 
 
   ngOnInit() {
 
-    this.startChrono();
 
     this.initMap();
-
   }
 
 
- 
 
-  /* startTimer() {
+/* 
+  startTimer() {
     this.interval = setInterval(() => {
       if(this.timeLeft <1000) {
         this.timeLeft++;
@@ -61,9 +50,9 @@ export class MapComponent implements OnInit {
         this.timeLeft = 0;
       }
     },1000)
-  } */
+  }  */
 
-  
+
 
 
 }

@@ -29,9 +29,7 @@ import { MechantComponent } from './mechant/mechant.component';
     PlayersnameComponent,
     SettingsComponent,
     MenuComponent,
-
     GameOverComponent,
-
     MechantComponent,
 
 
@@ -41,6 +39,7 @@ import { MechantComponent } from './mechant/mechant.component';
     AppRoutingModule,
     RouterModule.forRoot(ROUTES, {enableTracing:true}),
     BrowserAnimationsModule
+    
 
 
   ],

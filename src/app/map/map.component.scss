@@ -30,7 +30,7 @@ div {
     position:absolute;
     top:0;
     left:0;
-    animation: moveX 3s steps(9) infinite, 
+    animation: moveX 3s steps(9) infinite,
     moveY 3s steps(4) infinite; 
     transform : scaleX(-1)
 
@@ -44,16 +44,17 @@ div {
     to {background-position-y: -256px;} 
                         } 
 
-     .OgrMonster {
-     width: 64px;
+    .OgrMonster {
+    width: 64px;
     height: 64px;
     background:url('/assets/Sprites/ogr.png');
-     position:absolute;
+    position:absolute;
     top:O;
     left:20px;
     animation: moveX 3s steps(9) infinite, 
     moveY 3s steps(4) infinite; 
     transform : scaleX(-1)
+
  }
 /* .time{
     margin-left: 200px;
@@ -61,7 +62,7 @@ div {
    */
    .stopwatch{
     position: fixed;
-    width: 3%;
+    width: 50px;
     height: auto;
     margin-left: 35px;
   }
@@ -72,4 +73,5 @@ div {
     padding-right: 30px;
     font-family: 'timer';
     font-size: 30px;
+
 }
