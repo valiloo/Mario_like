@@ -18,6 +18,7 @@ import { GamestateService } from './gamestate.service';
 import { GameloopService } from './gameloop.service';
 import { GameOverComponent } from './game-over/game-over.component';
 import { MechantComponent } from './mechant/mechant.component';
+import { WinPageComponent } from './win-page/win-page.component';
 
 
 
@@ -31,6 +32,7 @@ import { MechantComponent } from './mechant/mechant.component';
     MenuComponent,
     GameOverComponent,
     MechantComponent,
+    WinPageComponent,
 
 
   ],
