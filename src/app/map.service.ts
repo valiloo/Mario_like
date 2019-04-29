@@ -148,7 +148,7 @@ export class MapService {
     new OsMonster(29, 18.2),
     new OsMonster(39, 18.2),
   ]
-  public ogrs: OgrMonster[] = [new OgrMonster(40, 18),]
+  public ogrs: OgrMonster[] = [new OgrMonster(40, 18), new OgrMonster(45, 6)]
 
   
     
