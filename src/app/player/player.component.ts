@@ -3,6 +3,7 @@ import { Component, OnInit, HostListener, HostBinding, ElementRef, AfterViewInit
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR } from '../gamestate.service';
 import { GameloopService } from '../gameloop.service';
 import { MapService } from '../map.service';
+import { MenuComponent } from '../menu/menu.component';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -28,9 +29,8 @@ export class PlayerComponent implements OnInit{
   @HostBinding('style.position') myPosition: any
 
   constructor(public gameService: GamestateService, public element: ElementRef, public loop: GameloopService, public mapService: MapService) {
-
   }
-
+  
   @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
 
     event.preventDefault()
@@ -75,13 +75,15 @@ export class PlayerComponent implements OnInit{
        this.gameService.isOnFire = FINTIR
      }
 
+
   }
+
+  
 
 ngOnInit(){
   this.loop.start()
   
 }
-
 
 
 }
