@@ -15,14 +15,6 @@
     transform: scaleX(-1); 
 }
 
-.playerJump{
-    position : absolute;
-    height:66px;
-    width: 79px;
-    transform: scaleX(-1);
-    background: url('/assets/textures/saut.png/');
-    animation : jump 0.9s steps(9);
-}
 
 .onFire{
     position: absolute;
@@ -56,6 +48,22 @@
      animation : death 1s steps(8) forwards ;
  }
 
+ .jumpUp {
+     position: absolute;
+     height : 65px;
+     width : 48px;
+     background: url('/assets/Sprites/jumpUp.png');
+     transform: scaleX(-1);
+ }
+
+ .jumpDown {
+    position: absolute;
+    height : 65px;
+    width : 48px;
+    background: url('/assets/Sprites/jumpDown.png');
+    transform: scaleX(-1);
+}
+
  @keyframes death {
 
      from{background-position : 0px;}
@@ -74,9 +82,4 @@ to {background-position: -318px;}
 
 }
 
-@keyframes jump {
-
-    from{background-position : 0px;}
-    to{background-position: -710px}
-}
 

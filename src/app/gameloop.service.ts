@@ -45,7 +45,16 @@ export class GameloopService {
   public lastFireBall
   public fireBlocX: number = this.gameService.playerX
   public fireBlocY = this.gameService.playerY
+
+  public osDie
+  public jumpDown
+  public deathSound
+  // this.deathSound = new Audio()
+  //this.deathSound.src = "assets/audio/death.ogg"
+  //this.deathSound.load()
+  //this.deathSound.play()
   public lastPosX 
+
 
 
 
@@ -79,11 +88,13 @@ export class GameloopService {
     if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === false && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) { // si le joueur touche le sol il peut ressauter //
       this.canJump = true
       this.jumpNumber = 2
+      this.jumpDown = 1
     }
 
     // gere la gravité, fait redescendre le personnage jusqu'au bas de la carte ou qu'il rencontre un bloc avec collision //
     if (this.getBottomCollision(this.playerBlocX, this.playerBlocY)) {
       this.gameService.playerY += 4
+      this.jumpDown = 0
     }
 
 
@@ -94,7 +105,8 @@ export class GameloopService {
       this.gameService.playerScaleX = -1 // gere le reverse d'animation du personnage //
       this.gameService.playerX += 6 // deplace le personnage de 8px sur la droite //
       this.move = 1 // indique le mouvement en cours //
-
+      this.jumpDown = 3
+    
 
 
 
@@ -107,7 +119,7 @@ export class GameloopService {
       this.gameService.playerX -= 6 // deplace le personnage de 8px sur la gauche//
 
       this.move = 1 // indique le mouvement en cours //
-
+      this.jumpDown = 3
 
     }
 
@@ -129,6 +141,7 @@ export class GameloopService {
         this.jumpSound.src = "assets/audio/jump.mp3"
         this.jumpSound.load()
         this.jumpSound.play()
+        this.jumpDown = 0
         
   
   
@@ -150,8 +163,12 @@ export class GameloopService {
 
     // si aucune touche enfonce, le perso sera immobile //
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
-
+      if (this.getBottomCollision(this.playerBlocX,this.playerBlocY) === true){
       this.move = 0
+      }
+      else if (this.getBottomCollision(this.playerBlocX, this.playerBlocY)=== false) {
+      this.jumpDown = 3
+      }
 
     }
 
@@ -232,7 +249,7 @@ export class GameloopService {
         this.isDead = new Date()
       }
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
-        
+       
         this.stop = true
         this.gameOver()    
         this.gameMusic.pause() 
@@ -260,6 +277,10 @@ export class GameloopService {
           //need death animation with date method here voir getMonsterCollision
           this.mapService.monsters.splice(i, 1)
           this.gameService.fireBalls.splice(j, 1)
+          this.osDie = new Audio()
+          this.osDie.src = "assets/audio/osMonsterDie.mp3"
+          this.osDie.load()
+          this.osDie.play()
 
 
         }
@@ -431,6 +452,7 @@ isOnFire(){
     this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
     this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
+    console.log(this.jumpDown)
   }
 
   start() {
