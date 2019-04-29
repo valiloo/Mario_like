@@ -46,6 +46,11 @@ export class GameloopService {
   public fireBlocY = this.gameService.playerY
   public osDie
   public jumpDown
+  public deathSound
+  // this.deathSound = new Audio()
+  //this.deathSound.src = "assets/audio/death.ogg"
+  //this.deathSound.load()
+  //this.deathSound.play()
 
 
 
@@ -241,7 +246,7 @@ export class GameloopService {
         this.isDead = new Date()
       }
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
-        
+       
         this.stop = true
         this.gameOver()    
         this.gameMusic.pause() 
