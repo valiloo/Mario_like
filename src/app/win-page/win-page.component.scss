@@ -58,7 +58,7 @@ button:hover {
 .dragon {
   margin-left: 48%;
   position: absolute;
-  top: 30%;
+  top: 25%;
   width: 50px;
   height: 72px;
   background-image: url(http://i.imgur.com/xtk0SCC.png);
@@ -75,19 +75,29 @@ button:hover {
 }
 
 @font-face {
-    font-family: "timer";
-    src: url("/assets/Police/joystix.ttf");
-  }
-  
-.stopwatch {
-  position: fixed;
-  width: 50px;
-  height: auto;
-  margin-left: 10px;
+  font-family: "timer";
+  src: url("/assets/Police/joystix.ttf");
 }
 
-.endTime{
-  font-family: 'timer';
+.stopwatch {
+  position: absolute;
+  width: 50px;
+  height: auto;
+  display: block;
+  margin-left: 700px;
+  margin-right: auto;
+}
+
+.endTime {
+  font-family: "timer";
   font-size: 40px;
   margin-left: 80px;
+  text-align: center;
+}
+
+.yourTime {
+  font-family: "timer";
+  text-align: center;
+  font-size: 30px;
+  top: 10%;
 }
