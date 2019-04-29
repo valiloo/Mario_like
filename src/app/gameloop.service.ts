@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, ISDEAD } from './gamestate.service';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, ISDEAD ,DASH } from './gamestate.service';
 import { MapTheme, MapService, } from './map.service';
 import { Tir } from './models/tir'
 import { Router } from '@angular/router';
@@ -44,6 +44,9 @@ export class GameloopService {
   public lastFireBall
   public fireBlocX: number = this.gameService.playerX
   public fireBlocY = this.gameService.playerY
+  public dashCount = 2
+  public dash = new Date()
+
 
 
 
@@ -109,6 +112,29 @@ export class GameloopService {
 
     }
 
+    if ((this.gameService.dash === DASH)  && this.gameService.playerScaleX === 1 && this.dashCount >0) {
+
+  
+      this.gameService.xVelocity = 0
+      this.gameService.playerX -= 40 // deplace le personnage de 8px sur la gauche//
+      this.dashCount -= 1
+      this.dash = new Date()
+
+    }
+
+    if ((this.gameService.dash === DASH) && this.gameService.playerScaleX === -1  && this.dashCount >0)  {
+
+      this.gameService.xVelocity = 0
+      this.gameService.playerX += 40 // deplace le personnage de 8px sur la droite //
+      this.dashCount -= 1
+      this.dash = new Date()
+  
+
+    }
+    else if( this.gameService.dash !== DASH && this.dashCount === 0 && new Date().getTime() - this.dash.getTime() > 500){
+      this.gameService.xVelocity = MOVE_FORWARD
+      this.dashCount = 2
+    }
 
 
     if (this.gameService.playerY > 650) {
@@ -145,7 +171,7 @@ export class GameloopService {
           }
 
       }
-
+    
 
     // si aucune touche enfonce, le perso sera immobile //
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
@@ -215,6 +241,27 @@ export class GameloopService {
     }
 
 
+  }
+  canDash(){
+
+    if ((this.gameService.dash === DASH)  && this.gameService.playerScaleX === 1 && new Date().getTime() - this.dash.getTime() > 50 ){
+
+  
+
+      this.gameService.playerX -= 20 // deplace le personnage de 8px sur la gauche//
+      this.dash= new Date();
+    
+
+    }
+
+    if ((this.gameService.dash === DASH) && this.gameService.playerScaleX === -1 && new Date().getTime() - this.dash.getTime() > 50){
+
+  
+      this.gameService.playerX += 20 // deplace le personnage de 8px sur la droite //
+      this.dash= new Date();
+  
+
+    }
   }
   getMonsterCollision() {
     this.playerBlocY = Math.round(this.gameService.playerY / 32)
