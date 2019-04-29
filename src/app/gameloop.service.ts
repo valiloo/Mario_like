@@ -146,9 +146,10 @@ export class GameloopService {
       this.jumpDown = 3
 
     }
-    else if( this.gameService.dash !== DASH && this.dashCount === 0 && new Date().getTime() - this.dash.getTime() > 500){
+    else if( this.gameService.dash !== DASH && this.dashCount === 0 && new Date().getTime() - this.dash.getTime() > 3000){
       this.gameService.xVelocity = MOVE_FORWARD
       this.dashCount = 2
+      
     }
 
 
@@ -168,7 +169,7 @@ export class GameloopService {
         this.jumpSound.src = "assets/audio/jump.mp3"
         this.jumpSound.load()
         this.jumpSound.play()
-        this.jumpDown = 0
+        this.jumpDown = 1
         
   
   
@@ -261,6 +262,7 @@ export class GameloopService {
 
 
   }
+
   canDash(){
 
     if ((this.gameService.dash === DASH)  && this.gameService.playerScaleX === 1 && new Date().getTime() - this.dash.getTime() > 50 ){
@@ -268,7 +270,7 @@ export class GameloopService {
   
 
       this.gameService.playerX -= 20 // deplace le personnage de 8px sur la gauche//
-      this.dash= new Date();
+      this.dash = new Date();
       this.jumpDown = 3
     
 
@@ -502,7 +504,8 @@ isOnFire(){
     this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
     this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
-    console.log(this.jumpDown)
+    console.log(this.dashCount)
+    
   }
 
   start() {
