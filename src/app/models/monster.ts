@@ -14,4 +14,6 @@ export class OsMonster extends Monster {
 
         super('/assets/Sprites/os3.png', initPosX, initPosY)
     }
+
 }
+

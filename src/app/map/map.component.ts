@@ -9,7 +9,7 @@ import { GameloopService } from '../gameloop.service';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
- 
+
   map = []
 
 
@@ -26,8 +26,7 @@ export class MapComponent implements OnInit {
     this.map = this.mapService.getMap();
 
   }
-
-
+  
 
 
 

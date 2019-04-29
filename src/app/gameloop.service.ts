@@ -44,6 +44,7 @@ export class GameloopService {
   public lastFireBall
   public fireBlocX: number = this.gameService.playerX
   public fireBlocY = this.gameService.playerY
+  public compt: number = 0
 
 
 
@@ -81,7 +82,7 @@ export class GameloopService {
 
     // gere la gravité, fait redescendre le personnage jusqu'au bas de la carte ou qu'il rencontre un bloc avec collision //
     if (this.getBottomCollision(this.playerBlocX, this.playerBlocY)) {
-      this.gameService.playerY += 4
+      this.gameService.playerY +=4
     }
 
 
@@ -270,8 +271,9 @@ export class GameloopService {
   }
 
   isOnFire() {
+    
 
-    this.innerWidth = window.innerWidth
+    this.innerWidth = window.innerWidth 
 
     if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === -1) {
       let fireBall = new Tir(this.gameService.playerX + 70, this.gameService.playerY + this.gameService.playerHeight / 2);
@@ -405,9 +407,30 @@ export class GameloopService {
     }
   }
 
-  loop() {
 
-    this.canMove() // appelle de fonction explique au dessus / 
+
+getPosPiece(){
+  this.playerBlocY = Math.round(this.gameService.playerY / 32)
+    this.playerBlocX = Math.round(this.gameService.playerX / 32)
+    for (let i = 0; i < this.mapService.pieces.length; i++) {
+      let posX = this.mapService.pieces[i].posX;
+      let posY = this.mapService.pieces[i].posY;
+      let differanceX = Math.abs(this.playerBlocX - posX);
+      let differanceY = Math.abs(this.playerBlocY - posY)
+
+      if (differanceX < 2 && differanceY < 2){
+        this.mapService.pieces.splice(i,1);
+        this.compt++
+}
+
+  }
+    }
+
+
+  loop() {
+  
+    this.getPosPiece()
+    this.canMove()
     this.isOnFire() // 
     this.getMonsterCollision()
     this.monsterDeath()
@@ -418,6 +441,7 @@ export class GameloopService {
     this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
   }
 
+  
   start() {
     this.reInit()
     this.loop() // lance le loop au lancement du jeu //
@@ -428,8 +452,11 @@ export class GameloopService {
 
   }
   gameOver() {
-    this.stop = true
-    this.route.navigate(['/Over'])
+    this.stop = true;
+    this.route.navigate(['/Over']);
+    
+
+    
 
 
   }
@@ -446,7 +473,10 @@ export class GameloopService {
     this.gameService.isOnFire = 0
     this.gameService.fireBalls = []
     this.gameService.death = 0
+    this.compt = 0
   }
+
+
 
 
 

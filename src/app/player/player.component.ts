@@ -70,10 +70,10 @@ export class PlayerComponent implements OnInit{
       this.gameService.yVelocity = 0
     }
 
-     if(event.keyCode === KEY_CODE.EPOWER){
+    if(event.keyCode === KEY_CODE.EPOWER){
 
-       this.gameService.isOnFire = FINTIR
-     }
+      this.gameService.isOnFire = FINTIR
+    }
 
 
   }
