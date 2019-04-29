@@ -91,7 +91,7 @@ export class GameloopService {
     if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === false && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) { // si le joueur touche le sol il peut ressauter //
       this.canJump = true
       this.jumpNumber = 2
-      this.jumpDown = 1
+      this.jumpDown = 0
     }
 
     // gere la gravité, fait redescendre le personnage jusqu'au bas de la carte ou qu'il rencontre un bloc avec collision //
@@ -133,6 +133,7 @@ export class GameloopService {
       this.gameService.playerX -= 40 // deplace le personnage de 8px sur la gauche//
       this.dashCount -= 1
       this.dash = new Date()
+      this.jumpDown = 3
 
     }
 
@@ -142,7 +143,7 @@ export class GameloopService {
       this.gameService.playerX += 40 // deplace le personnage de 8px sur la droite //
       this.dashCount -= 1
       this.dash = new Date()
-  
+      this.jumpDown = 3
 
     }
     else if( this.gameService.dash !== DASH && this.dashCount === 0 && new Date().getTime() - this.dash.getTime() > 500){
@@ -268,6 +269,7 @@ export class GameloopService {
 
       this.gameService.playerX -= 20 // deplace le personnage de 8px sur la gauche//
       this.dash= new Date();
+      this.jumpDown = 3
     
 
     }
@@ -277,6 +279,7 @@ export class GameloopService {
   
       this.gameService.playerX += 20 // deplace le personnage de 8px sur la droite //
       this.dash= new Date();
+      this.jumpDown = 3
   
 
     }
