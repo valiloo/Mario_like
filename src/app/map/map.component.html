@@ -2,7 +2,7 @@
 <body>
 
   <app-player></app-player>
-  <div class="game-view" [ngStyle]="{'background': 'url(assets/textures/test_fond.jpg) no-repeat fixed 100%'}">
+  <div class="game-view">
     <div class="map">
       <div class="row" *ngFor="let row of mapService.map">
         <div class="col" *ngFor="let case of row">
@@ -14,10 +14,9 @@
 
     <div *ngFor="let monster of mapService.monsters" class="OsMonster" [ngStyle]="{top: '' + monster.posY * 32 + 'px', left: '' + monster.posX * 32 + 'px'}"></div> 
     <div *ngFor="let ogr of mapService.ogrs" class="OgrMonster" [ngStyle]="{top: '' + ogr.posY * 32 + 'px', left: '' + ogr.posX * 32 + 'px'}"></div> 
-<!--     <button class ="A" (click)='startTimer()'>Start Timer</button>
- -->    
-  <img src="/assets/textures/stopwatch.png" class="stopwatch">
-  <h4><span class="time">{{ (time>=0) ? time: "Go !" }} </span></h4>
+  
+<!--   <img src="/assets/textures/stopwatch.png" class="stopwatch">
+  <h4><span class="time">{{ (time>=0) ? time: "Go !" }} </span></h4> -->
 
   </div>
 
