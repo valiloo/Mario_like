@@ -62,24 +62,3 @@ button:hover
     background-color: #072b6d;
 }
 
-
-
-#monPersonnage{
-
-    position: absolute;
-    top: 50%;
-    height: 46px;
-    width: 56px;
-    background: url('/assets/sad.png') top center;
-    animation: sprite 3s steps(6) infinite;
-    animation-name: animer;
-}
-
-
-
-
-@keyframes animer{
-    from { background-position: 0px; }
-    to { background-position: -318px }
-    
-}
