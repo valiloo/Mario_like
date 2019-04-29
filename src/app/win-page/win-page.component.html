@@ -5,10 +5,18 @@
   <div class="dragon"></div>
   <h3 class="yourTime">Your time</h3>
   <img src="/assets/textures/stopwatch.png" class="stopwatch">
-<p class="endTime">{{ endTime }}"</p>
+
+  <p class="endTime">{{ endTime }} seconds</p>
+
+
 
   <button [routerLink]="['/player']">PLAY AGAIN</button>
   <button [routerLink]="['/menu']">MENU</button>
 
 
+
+
+  <audio #audioOption>
+    <source src='/assets/audio/winSong.mp3' type="audio/mp3">
+  </audio>
 </div>

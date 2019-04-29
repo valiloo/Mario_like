@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { GameloopService } from '../gameloop.service';
 
 @Component({
@@ -8,14 +8,23 @@ import { GameloopService } from '../gameloop.service';
 })
 export class WinPageComponent implements OnInit {
 
+
+
   endTime = this.gameloop.endTime
-  constructor(private gameloop: GameloopService) {}
-    
-   
+
+  constructor(private gameloop: GameloopService) { }
+
+  @ViewChild('audioOption') audioPlayerRef: ElementRef;
+
+  onAudioPlay() {
+    this.audioPlayerRef.nativeElement.play();
+  }
+
 
 
 
   ngOnInit() {
+    this.onAudioPlay();
   }
 
 }

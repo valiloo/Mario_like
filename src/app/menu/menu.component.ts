@@ -11,7 +11,7 @@ export class MenuComponent implements OnInit {
 
   counter = 10;
   intervalId = null;
-  menuMusic 
+  menuMusic
 
 
   /* onMouseOver(){
@@ -24,8 +24,8 @@ export class MenuComponent implements OnInit {
 
   constructor() {
 
-}
- 
+  }
+
 
   ngOnInit() {
     this.menuMusic = new Audio()
@@ -37,12 +37,12 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnDestroy() {
-   this.menuMusic.pause()
-   this.menuMusic = null
+    this.menuMusic.pause()
+    this.menuMusic = null
   }
 
 
 
-    
+
 
 }
