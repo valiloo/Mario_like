@@ -206,6 +206,7 @@ isTheEnd(playerBlocX, playerBlocY){
   
   if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
     this.getTimePlayed()
+    this.youWin()
     return true
   }
   else if(this.mapTheme.blocs[this.cell].isEnd === false) {
@@ -311,7 +312,10 @@ isTheEnd(playerBlocX, playerBlocY){
   gameOver(){
     this.stop = true
     this.route.navigate(['/Over'])
+  }
 
+  youWin(){
+    this.route.navigate(['/win'])
   }
 
   pause() {
