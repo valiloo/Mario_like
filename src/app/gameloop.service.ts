@@ -37,6 +37,9 @@ export class GameloopService {
   public endTime: number
   public canStopTime: boolean = true
   public jumpNumber: number = 2
+  public jumpSound
+  public gameMusic
+  public gunSound
   public timerEndFire: number = 5
   public lastFireBall
   public fireBlocX: number = this.gameService.playerX
@@ -46,7 +49,12 @@ export class GameloopService {
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route: Router) { }
 
-
+  playGameMusic() {
+    this.gameMusic = new Audio();
+    this.gameMusic.src = "assets/audio/songMap.mp3"
+    this.gameMusic.load()
+    this.gameMusic.play()   
+  }
 
 
   // fonction globale encadrant tout les types de deplacements //
@@ -107,31 +115,37 @@ export class GameloopService {
       this.gameService.playerY = 0
       this.stop = true
       this.gameOver()
+      this.gameMusic.pause() 
+      this.gameMusic.currentTime = 0
 
     }
 
 
-    if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true) && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) {
-      this.jump = 45 // gere l'animation de saut //
-      this.jumpNumber -= 1 // retire un du nombre de saut disponible //
-
-
-
-
-      for (let i = 0; i <= 6; i++) { // boucle for decoupant le saut en 6 partie //
-        if (this.jumpNumber === 0) { // si plus de saut disponible //
-          this.canJump = false // ne peux plus sauter avant de toucher le sol //
-
-        }
-
-        if (this.getTopCollision(this.playerBlocX, this.playerBlocY)) { // check tout les 32px / tout les blocs si le bloc du dessus est traversable //
-          this.gameService.playerY -= 20 // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
-          this.gameService.yVelocity = 0 // indication saut //
-        }
+      if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
+        this.jump = 45 // gere l'animation de saut //
+        this.jumpNumber -= 1 // retire un du nombre de saut disponible //
+        this.jumpSound = new Audio()
+        this.jumpSound.src = "assets/audio/jump.mp3"
+        this.jumpSound.load()
+        this.jumpSound.play()
+        
+  
+  
+        for (let i = 0; i <= 6; i++) { // boucle for decoupant le saut en 6 partie //
+          if (this.jumpNumber === 0) { // si plus de saut disponible //
+            this.canJump = false // ne peux plus sauter avant de toucher le sol //
+  
+          } 
+          
+          if (this.getTopCollision(this.playerBlocX, this.playerBlocY)) { // check tout les 32px / tout les blocs si le bloc du dessus est traversable //
+              this.gameService.playerY -= 20 // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
+              this.gameService.yVelocity = 0 // indication saut //
+            }
+          
+          }
 
       }
 
-    }
 
     // si aucune touche enfonce, le perso sera immobile //
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
@@ -211,13 +225,17 @@ export class GameloopService {
       let differanceX = Math.abs(this.playerBlocX - posX);
       let differanceY = Math.abs(this.playerBlocY - posY)
 
+
       if (differanceX < 1 && differanceY < 1) {
         this.gameService.death = ISDEAD
         this.isDead = new Date()
       }
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
+        
         this.stop = true
-        this.gameOver()
+        this.gameOver()    
+        this.gameMusic.pause() 
+        this.gameMusic.currentTime = 0
 
 
       }
@@ -249,9 +267,15 @@ export class GameloopService {
       }
     }
 
+  this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
+  this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel vers une valeur de l'array de la carte  //
+  this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
+  
+  if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
+    this.getTimePlayed()
+    this.youWin()
+    return true
   }
-
-  isOnFire() {
 
     this.innerWidth = window.innerWidth
 
@@ -259,6 +283,10 @@ export class GameloopService {
       let fireBall = new Tir(this.gameService.playerX + 70, this.gameService.playerY + this.gameService.playerHeight / 2);
       this.gameService.fireBalls.push(fireBall)
       this.lastFireballDate = new Date();
+      this.gunSound = new Audio();
+      this.gunSound.src = "assets/audio/gun.mp3"
+      this.gunSound.load()
+      this.gunSound.play()
     }
 
     if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === 1) {
@@ -324,6 +352,11 @@ export class GameloopService {
       return false
     }
 
+
+
+
+
+
   }
 
   // fonction gerant la collision a droite //
@@ -385,8 +418,7 @@ export class GameloopService {
 
   loop() {
 
-    this.canMove() // appelle de fonction explique au dessus / 
-    this.isOnFire() // 
+    this.canMove() // appelle de fonction explique au dessus /  // 
     this.getMonsterCollision()
     this.monsterDeath()
     this.moveMonster() // appelle de fonction explique au dessus //
@@ -400,6 +432,7 @@ export class GameloopService {
     this.reInit()
     this.loop() // lance le loop au lancement du jeu //
     this.startTime = Date.now()
+    this.playGameMusic()
 
 
 
@@ -407,9 +440,10 @@ export class GameloopService {
   gameOver() {
     this.stop = true
     this.route.navigate(['/Over'])
+  }
 
-
-
+  youWin(){
+    this.route.navigate(['/win'])
   }
 
   reInit() {
