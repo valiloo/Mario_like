@@ -226,6 +226,7 @@ export class GameloopService {
       const monster = this.mapService.monsters[index]
 
       if (monster.direction == MOVE_RIGHT) {
+        monster.scaleX = -1
         monster.posX += 0.1;
         if (monster.initPosX + monster.amplitude < monster.posX) {
           monster.direction = MOVE_LEFT;
@@ -233,7 +234,7 @@ export class GameloopService {
       }
       else if (monster.direction == MOVE_LEFT) {
         monster.posX -= 0.1;
-
+        monster.scaleX = 1
         if (monster.initPosX - monster.amplitude > monster.posX) {
           monster.direction = MOVE_RIGHT
         }
@@ -248,12 +249,14 @@ export class GameloopService {
       const ogr = this.mapService.ogrs[index]
 
       if (ogr.direction == MOVE_RIGHT) {
+        ogr.scaleX = -1
         ogr.posX += 0.02;
         if (ogr.initPosX + ogr.amplitude < ogr.posX) {
           ogr.direction = MOVE_LEFT
         }
       }
       else if (ogr.direction == MOVE_LEFT) {
+        ogr.scaleX = 1;
         ogr.posX -= 0.02;
         if (ogr.initPosX - ogr.amplitude > ogr.posX) {
           ogr.direction = MOVE_RIGHT
@@ -603,10 +606,10 @@ isOnFire(){
       new OsMonster(120, 18.2),
     ]
     this.mapService.ogrs = [
-      new OgrMonster(110, 8),
-      new OgrMonster(45, 6),
+      new OgrMonster(110, 8.2),
+      new OgrMonster(45, 6.2),
       new OgrMonster(140, 18.2),
-      new OgrMonster(10, 11),
+      new OgrMonster(10, 11.2),
     ]
   }
 
