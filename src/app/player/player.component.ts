@@ -1,14 +1,16 @@
 
 import { Component, OnInit, HostListener, HostBinding, ElementRef, AfterViewInit, AfterContentChecked, AfterContentInit, DoCheck } from '@angular/core';
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD } from '../gamestate.service';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR } from '../gamestate.service';
 import { GameloopService } from '../gameloop.service';
 import { MapService } from '../map.service';
+import { MenuComponent } from '../menu/menu.component';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
   LEFT_ARROW = 37,
   SPACE = 32,
-  PAUSE = 13
+  PAUSE = 13,
+  EPOWER = 69
 }
 
 @Component({
@@ -27,9 +29,8 @@ export class PlayerComponent implements OnInit{
   @HostBinding('style.position') myPosition: any
 
   constructor(public gameService: GamestateService, public element: ElementRef, public loop: GameloopService, public mapService: MapService) {
-
   }
-
+  
   @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
 
     event.preventDefault()
@@ -50,13 +51,12 @@ export class PlayerComponent implements OnInit{
       this.gameService.yVelocity = MOVE_UPWARD
     }
 
-    if(event.keyCode === KEY_CODE.PAUSE && this.gameService.pause === false) {
+    if(event.keyCode === KEY_CODE.EPOWER) {
 
-      this.gameService.pause = true
-    }
-    if(event.keyCode === KEY_CODE.PAUSE && this.gameService.pause ===  true){
+      this.gameService.isOnFire = ISONFIRE
+      this.gameService.xVelocity = 0
+      this.gameService.yVelocity = 0
 
-      this.gameService.pause  = false
     }
   }
 
@@ -70,13 +70,20 @@ export class PlayerComponent implements OnInit{
       this.gameService.yVelocity = 0
     }
 
+     if(event.keyCode === KEY_CODE.EPOWER){
+
+       this.gameService.isOnFire = FINTIR
+     }
+
+
   }
+
+  
 
 ngOnInit(){
   this.loop.start()
-  this.gameService.playerX -= this.gameService.playerX
+  
 }
-
 
 
 }
