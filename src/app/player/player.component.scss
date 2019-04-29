@@ -47,6 +47,18 @@
      transform: scaleX(-1);
      animation : death 1s steps(8) forwards ;
  }
+ .dash{
+     position: absolute;
+     height:47px;
+     width: 84.5px;
+     background : url('/assets/Sprites/dash.png/');
+     transform: scaleX(-1);
+     animation : dash .01s steps(2) infinite;
+ }
+@keyframes dash{
+    from{background-position : 0px;}
+    to{background-position: -169px;}
+}
 
  .jumpUp {
      position: absolute;

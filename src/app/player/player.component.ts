@@ -1,16 +1,18 @@
 
-import { Component, OnInit, HostListener, HostBinding, ElementRef, AfterViewInit, AfterContentChecked, AfterContentInit, DoCheck } from '@angular/core';
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR } from '../gamestate.service';
+import { Component, OnInit, HostListener, HostBinding, ElementRef, AfterContentChecked, AfterContentInit, DoCheck } from '@angular/core';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, DASH } from '../gamestate.service';
 import { GameloopService } from '../gameloop.service';
 import { MapService } from '../map.service';
 import { MenuComponent } from '../menu/menu.component';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
   LEFT_ARROW = 37,
   SPACE = 32,
   PAUSE = 13,
-  EPOWER = 69
+  EPOWER = 69,
+  DASH = 82
 }
 
 @Component({
@@ -58,6 +60,10 @@ export class PlayerComponent implements OnInit{
       this.gameService.yVelocity = 0
 
     }
+    if (event.keyCode === KEY_CODE.DASH){
+      this.gameService.dash = DASH
+  
+    }
   }
 
   @HostListener('window:keyup', [('$event')]) stopMovement(event: KeyboardEvent) {
@@ -73,6 +79,11 @@ export class PlayerComponent implements OnInit{
      if(event.keyCode === KEY_CODE.EPOWER){
 
        this.gameService.isOnFire = FINTIR
+     }
+
+     if (event.keyCode === KEY_CODE.DASH){
+      this.gameService.dash = 0
+      
      }
 
 
