@@ -84,7 +84,7 @@ export class GameloopService {
     if ((this.gameService.move === MOVE_RIGHT) && this.gameService.xVelocity === MOVE_FORWARD && this.getRightCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) {
 
       this.gameService.playerScaleX = -1 // gere le reverse d'animation du personnage //
-      this.gameService.playerX += 8 // deplace le personnage de 8px sur la droite //
+      this.gameService.playerX += 6 // deplace le personnage de 8px sur la droite //
       this.move = 1 // indique le mouvement en cours //
 
 
@@ -96,7 +96,7 @@ export class GameloopService {
 
       this.gameService.playerScaleX = 1 // gere le reverse d'animation du personnage //
 
-      this.gameService.playerX -= 8 // deplace le personnage de 8px sur la gauche//
+      this.gameService.playerX -= 6 // deplace le personnage de 8px sur la gauche//
 
       this.move = 1 // indique le mouvement en cours //
 
