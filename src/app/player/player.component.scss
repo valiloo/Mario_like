@@ -29,8 +29,8 @@
     height:63px;
     width:68px;
     transform: scaleX(-1);
-    background: url('/assets/textures/Tir.png/');
-    animation : fire 0.5s steps(9) infinite;
+    background: url('/assets/textures/spriteTir.png/') no-repeat;
+    animation : fire 0.5s steps(9) forwards;
 }
 .finTir{
     position:absolute;
@@ -41,11 +41,26 @@
 }
 
 .fireball{
-    position:fixed;
+    position:absolute;
     height:7px;
     width:6px;
     background: url('/assets/textures/bullet.png/');
 }
+
+.isDead {
+     position:absolute;
+     height:63px;
+     width:63px;
+     background: url('/assets/textures/spriteDeath.png/') no-repeat;
+     transform: scaleX(-1);
+     animation : death 1s steps(8) forwards ;
+ }
+
+ @keyframes death {
+
+     from{background-position : 0px;}
+     to{background-position : -504px;}
+ }
 
 @keyframes fire {
     from {background-position : 0px;}
