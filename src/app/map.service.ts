@@ -148,18 +148,14 @@ export class MapService {
     new OsMonster(29, 18.2),
     new OsMonster(39, 18.2),
   ]
-<<<<<<< HEAD
-=======
 
   public ogrs: OgrMonster[] = [new OgrMonster(40, 18),] 
->>>>>>> 54dd9277e72e987810c679a00c9233743b2d00cd
 
 
 
 
 
 
-  public ogrs: OgrMonster[] = [new OgrMonster(40, 18),]
 
 
 
@@ -192,26 +188,9 @@ export class MapService {
 
 
 
-<<<<<<< HEAD
-  constructor() { }
-
-
-
-
-
-
-
-
-
-
-
-
-  getMap(): number[][] {
-=======
   constructor() {}
   
   getMap(): number [] [] {
->>>>>>> 54dd9277e72e987810c679a00c9233743b2d00cd
     return this.map
   }
 
