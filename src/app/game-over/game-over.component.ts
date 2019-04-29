@@ -10,7 +10,7 @@ import { ROUTES } from '../map/app-routes'
   styleUrls: ['./game-over.component.scss']
 })
 export class GameOverComponent implements OnInit {
-
+public gameOver
   constructor(public gameState: GamestateService, public gameLoopService : GameloopService, public route : Router,) { }
   marche: string = "menu"
 
@@ -18,14 +18,19 @@ export class GameOverComponent implements OnInit {
     alert(this.marche)
   }
 
-  @ViewChild('audioOption') audioPlayerRef: ElementRef;
+  playGameOverSound() {
+    this.gameOver = new Audio()
+    this.gameOver.src = "assets/audio/gameOver.mp3"
+    this.gameOver.load()
+    this.gameOver.play()
+  }
 
   
 
 
   ngOnInit() {
   
-   
+   this.playGameOverSound()
   }
 
 }

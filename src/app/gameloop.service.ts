@@ -3,6 +3,7 @@ import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, M
 import { MapTheme, MapService, } from './map.service';
 import { Tir } from './models/tir'
 import { Router } from '@angular/router';
+import { OsMonster } from './models/monster';
 
 
 
@@ -48,6 +49,16 @@ export class GameloopService {
   public dash = new Date()
 
 
+  public osDie
+  public jumpDown
+  public deathSound
+  // this.deathSound = new Audio()
+  //this.deathSound.src = "assets/audio/death.ogg"
+  //this.deathSound.load()
+  //this.deathSound.play()
+  public lastPosX 
+
+
 
 
   constructor(public gameService: GamestateService, public mapTheme: MapTheme, public mapService: MapService, public route: Router) { }
@@ -80,11 +91,13 @@ export class GameloopService {
     if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === false && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) { // si le joueur touche le sol il peut ressauter //
       this.canJump = true
       this.jumpNumber = 2
+      this.jumpDown = 1
     }
 
     // gere la gravité, fait redescendre le personnage jusqu'au bas de la carte ou qu'il rencontre un bloc avec collision //
     if (this.getBottomCollision(this.playerBlocX, this.playerBlocY)) {
       this.gameService.playerY += 4
+      this.jumpDown = 0
     }
 
 
@@ -93,9 +106,10 @@ export class GameloopService {
     if ((this.gameService.move === MOVE_RIGHT) && this.gameService.xVelocity === MOVE_FORWARD && this.getRightCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) {
 
       this.gameService.playerScaleX = -1 // gere le reverse d'animation du personnage //
-      this.gameService.playerX += 8 // deplace le personnage de 8px sur la droite //
+      this.gameService.playerX += 6 // deplace le personnage de 8px sur la droite //
       this.move = 1 // indique le mouvement en cours //
-
+      this.jumpDown = 3
+    
 
 
 
@@ -105,10 +119,10 @@ export class GameloopService {
 
       this.gameService.playerScaleX = 1 // gere le reverse d'animation du personnage //
 
-      this.gameService.playerX -= 8 // deplace le personnage de 8px sur la gauche//
+      this.gameService.playerX -= 6 // deplace le personnage de 8px sur la gauche//
 
       this.move = 1 // indique le mouvement en cours //
-
+      this.jumpDown = 3
 
     }
 
@@ -139,7 +153,6 @@ export class GameloopService {
 
     if (this.gameService.playerY > 650) {
       this.gameService.playerY = 0
-      this.stop = true
       this.gameOver()
       this.gameMusic.pause() 
       this.gameMusic.currentTime = 0
@@ -154,6 +167,7 @@ export class GameloopService {
         this.jumpSound.src = "assets/audio/jump.mp3"
         this.jumpSound.load()
         this.jumpSound.play()
+        this.jumpDown = 0
         
   
   
@@ -175,8 +189,12 @@ export class GameloopService {
 
     // si aucune touche enfonce, le perso sera immobile //
     else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
-
+      if (this.getBottomCollision(this.playerBlocX,this.playerBlocY) === true){
       this.move = 0
+      }
+      else if (this.getBottomCollision(this.playerBlocX, this.playerBlocY)=== false) {
+      this.jumpDown = 3
+      }
 
     }
 
@@ -278,7 +296,7 @@ export class GameloopService {
         this.isDead = new Date()
       }
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
-        
+       
         this.stop = true
         this.gameOver()    
         this.gameMusic.pause() 
@@ -295,25 +313,30 @@ export class GameloopService {
       this.fireBlocX = Math.round(this.gameService.fireBalls[j].posX / 32)
       this.fireBlocY = Math.round(this.gameService.fireBalls[j].posY / 32)
 
-      for (let i = 0; i < this.mapService.monsters.length; i++) {
+      for (let i = 0; i < this.mapService.monsters.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
         let posX = this.mapService.monsters[i].posX;
         let posY = this.mapService.monsters[i].posY;
         let diffX = Math.abs(this.fireBlocX - posX)
         let diffY = Math.abs(this.fireBlocY - posY)
 
 
-        if (diffX < 0.15 && diffY < 1) {
-            //need death animation with date method here voir getMonsterCollision
+        if (diffX < 0.2 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+          //need death animation with date method here voir getMonsterCollision
           this.mapService.monsters.splice(i, 1)
           this.gameService.fireBalls.splice(j, 1)
+          this.osDie = new Audio()
+          this.osDie.src = "assets/audio/osMonsterDie.mp3"
+          this.osDie.load()
+          this.osDie.play()
 
 
         }
 
-
+      }
       }
     }
 
+isTheEnd(playerBlocX, playerBlocY){
   this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
   this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel vers une valeur de l'array de la carte  //
   this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
@@ -323,10 +346,20 @@ export class GameloopService {
     this.youWin()
     return true
   }
-
+  else if (this.mapTheme.blocs[this.cell].isEnd === false) {
+    return false
+    }
+}
+isOnFire(){
+    this.lastPosX = this.gameService.playerX
     this.innerWidth = window.innerWidth
 
+
+    // Utile pour déterminer avec précision le sprite de la première balle selon l' orientation du personnage
+
+
     if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === -1) {
+      this.lastPosX = this.gameService.playerX
       let fireBall = new Tir(this.gameService.playerX + 70, this.gameService.playerY + this.gameService.playerHeight / 2);
       this.gameService.fireBalls.push(fireBall)
       this.lastFireballDate = new Date();
@@ -337,15 +370,22 @@ export class GameloopService {
     }
 
     if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === 1) {
+      this.lastPosX = this.gameService.playerX
       let fireBall = new Tir(this.gameService.playerX, this.gameService.playerY + this.gameService.playerHeight / 2);
       this.gameService.fireBalls.push(fireBall)
       this.lastFireballDate = new Date();
+      this.gunSound = new Audio();
+      this.gunSound.src = "assets/audio/gun.mp3"
+      this.gunSound.load()
+      this.gunSound.play()
     }
 
-    if (this.gameService.playerScaleX === -1) {
+
+
+    if (this.gameService.playerScaleX === -1) {  //Comportement des balles lorsque le personnage est orienté vers la droite
       for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
-        if (this.gameService.fireBalls[i].posX <= this.gameService.playerX + (this.innerWidth / 2) && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
+        if (this.gameService.fireBalls[i].posX <= this.lastPosX+ (this.innerWidth / 2) && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
           this.gameService.fireBalls[i].posX += 10
         }
         else {
@@ -355,12 +395,13 @@ export class GameloopService {
 
       }
     }
-    else if (this.gameService.playerScaleX === 1) {
+    else if (this.gameService.playerScaleX === 1) {  // Comportement des balles lorsque le personnage est orienté vers la gauche
 
       for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
         if (this.gameService.fireBalls[i].posX >= this.gameService.playerX - (this.innerWidth / 2) && this.gameService.fireBalls[i].posX <= this.gameService.playerX) {
-          this.gameService.fireBalls[i].posX -= 10
+          this.gameService.fireBalls[i].posX -= 10 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
+          // Dès que la balle sort de l' écran elle disparaît
         }
         else {
           this.gameService.fireBalls.splice(i, 1)
@@ -369,6 +410,7 @@ export class GameloopService {
       }
     }
 
+    //Permet de voir l'animation du personnage lorsqu' il rengaine
     if (this.gameService.isOnFire === FINTIR && this.timerEndFire === 0) {
 
       this.gameService.isOnFire = 0
@@ -387,24 +429,7 @@ export class GameloopService {
 
 
 
-  isTheEnd(playerBlocX, playerBlocY) {
-    this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
-    this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel vers une valeur de l'array de la carte  //
-    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
 
-    if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
-      return true
-    }
-    else if (this.mapTheme.blocs[this.cell].isEnd === false) {
-      return false
-    }
-
-
-
-
-
-
-  }
 
   // fonction gerant la collision a droite //
   getRightCollision(playerBlocX, playerBlocY): boolean { // prend deux options : playerBlocY et playerBlocX // 
@@ -466,6 +491,7 @@ export class GameloopService {
   loop() {
 
     this.canMove() // appelle de fonction explique au dessus /  // 
+    this.isOnFire()
     this.getMonsterCollision()
     this.monsterDeath()
     this.moveMonster() // appelle de fonction explique au dessus //
@@ -473,10 +499,11 @@ export class GameloopService {
     this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
     this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
+    console.log(this.jumpDown)
   }
 
   start() {
-    this.reInit()
+    this.reInit() // Reinitialise toutes les variables
     this.loop() // lance le loop au lancement du jeu //
     this.startTime = Date.now()
     this.playGameMusic()
@@ -505,6 +532,10 @@ export class GameloopService {
     this.gameService.isOnFire = 0
     this.gameService.fireBalls = []
     this.gameService.death = 0
+    this.mapService.monsters =  [
+      new OsMonster(29, 18.2),
+      new OsMonster(39, 18.2),
+    ]
   }
 
 
