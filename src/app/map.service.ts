@@ -146,7 +146,7 @@ export class MapService {
 
   public monsters : OsMonster[] = [
     new OsMonster(29, 18.2),
-    new OsMonster(9, 18.2),
+    new OsMonster(39, 18.2),
   ]
   public ogrs: OgrMonster[] = [new OgrMonster(40, 18),]
 
@@ -185,17 +185,6 @@ export class MapService {
 
 
   constructor() {}
-
-
-  
-
-
-
-  
-
-
-
-
   
   getMap(): number [] [] {
     return this.map

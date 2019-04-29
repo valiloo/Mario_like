@@ -24,6 +24,34 @@
     animation : jump 0.9s steps(9);
 }
 
+.onFire{
+    position: absolute;
+    height:63px;
+    width:68px;
+    transform: scaleX(-1);
+    background: url('/assets/textures/Tir.png/');
+    animation : fire 0.5s steps(9) infinite;
+}
+.finTir{
+    position:absolute;
+    height:63px;
+    width:68px;
+    transform:scaleX(-1);
+    background: url('/assets/textures/finTir.png/');
+}
+
+.fireball{
+    position:fixed;
+    height:7px;
+    width:6px;
+    background: url('/assets/textures/bullet.png/');
+}
+
+@keyframes fire {
+    from {background-position : 0px;}
+    to{background-position : -612px;}
+}
+
 @keyframes movement {
 
 from {background-position : 0px;}
