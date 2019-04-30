@@ -64,7 +64,7 @@ export class GameloopService {
 
   playGameMusic() {
     this.gameMusic = new Audio();
-    this.gameMusic.src = "assets/audio/songMap.mp3"
+    this.gameMusic.src = "assets/audio/map2.mp3"
     this.gameMusic.load()
     this.gameMusic.play()   
   }
@@ -179,7 +179,7 @@ export class GameloopService {
           } 
           
           if (this.getTopCollision(this.playerBlocX, this.playerBlocY)) { // check tout les 32px / tout les blocs si le bloc du dessus est traversable //
-              this.gameService.playerY -= 20 // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
+              this.gameService.playerY -= 25 // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
               this.gameService.yVelocity = 0 // indication saut //
             }
           
@@ -225,13 +225,13 @@ export class GameloopService {
 
       if (monster.direction == MOVE_RIGHT) {
         monster.scaleX = -1
-        monster.posX += 0.1;
+        monster.posX += 0.05;
         if (monster.initPosX + monster.amplitude < monster.posX) {
           monster.direction = MOVE_LEFT;
         }
       }
       else if (monster.direction == MOVE_LEFT) {
-        monster.posX -= 0.1;
+        monster.posX -= 0.05;
         monster.scaleX = 1
         if (monster.initPosX - monster.amplitude > monster.posX) {
           monster.direction = MOVE_RIGHT
@@ -304,7 +304,6 @@ export class GameloopService {
       }
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
        
-        this.stop = true
         this.gameOver()    
         this.gameMusic.pause() 
         this.gameMusic.currentTime = 0
@@ -331,7 +330,6 @@ export class GameloopService {
       }
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
        
-        this.stop = true
         this.gameOver()    
         this.gameMusic.pause() 
         this.gameMusic.currentTime = 0
@@ -356,7 +354,7 @@ export class GameloopService {
         let diffY = Math.abs(this.fireBlocY - posY)
 
 
-        if (diffX < 0.2 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.3 && diffY < 2.5) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.monsters.splice(i, 1)
           this.gameService.fireBalls.splice(j, 1)
@@ -384,7 +382,7 @@ export class GameloopService {
           let diffY = Math.abs(this.fireBlocY - posY)
   
   
-          if (diffX < 0.3 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+          if (diffX < 0.3 && diffY < 2.5) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
             //need death animation with date method here voir getMonsterCollision
             this.mapService.ogrs.splice(i, 1)
             this.gameService.fireBalls.splice(j, 1)
