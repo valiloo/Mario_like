@@ -12,7 +12,7 @@ export class OgrMonster extends Ogr {
         public direction = 1,/* MOVE_RIGHT */
         public scaleX = -1,
         public isFlying = false,
-        public isRotating = false
+        public isRotating = 0
         )
          {
 

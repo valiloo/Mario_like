@@ -10,7 +10,9 @@ export class DruidMonster extends Druid {
         public initPosX: number, initPosY: number, 
         public amplitude: number = 3, 
         public direction = 1,/* MOVE_RIGHT */
-        public scaleX = -1
+        public scaleX = -1,
+        public isFlying = false,
+        public isRotating = 0
         )
          {
 

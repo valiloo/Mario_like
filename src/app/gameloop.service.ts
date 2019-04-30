@@ -361,12 +361,18 @@ export class GameloopService {
       }
 
       if (differanceX < 2 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
-        this.gameService.xVelocity = 0
+    
         this.gameService.kick = SHOOTTHEMALL
         this.lastKick = new Date()
-        this.mapService.monsters[i].posX += 10
-        this.mapService.monsters[i].posY -= 10
+        this.mapService.monsters[i].isFlying = true
+        
 
+      }
+      if(this.mapService.monsters[i].isFlying === true){
+
+        this.mapService.monsters[i].posX += 0.5
+        this.mapService.monsters[i].posY -= 0.2
+        this.mapService.monsters[i].isRotating += 10
       }
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
 
@@ -398,17 +404,17 @@ export class GameloopService {
       }
 
       if (differanceX < 2 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
-        this.gameService.xVelocity = 0
+     
         this.gameService.kick = SHOOTTHEMALL
         this.lastKick = new Date()
         this.mapService.ogrs[i].isFlying = true
-        this.mapService.ogrs[i].isRotating = true
-
+        
       }
       if(this.mapService.ogrs[i].isFlying === true){
 
-        this.mapService.ogrs[i].posX += 1
+        this.mapService.ogrs[i].posX += 0.5
         this.mapService.ogrs[i].posY -= 0.2
+        this.mapService.ogrs[i].isRotating += 10
       }
 
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
@@ -439,12 +445,17 @@ export class GameloopService {
       }
 
       if (differanceX < 2 && differanceY < 1 && this.gameService.playerStat === ISANINJA) {
-        this.gameService.xVelocity = 0
+
         this.gameService.kick = SHOOTTHEMALL
         this.lastKick = new Date()
-        this.mapService.slims[i].posX += 10
-        this.mapService.slims[i].posY -= 10
+        this.mapService.slims[i].isFlying = true
 
+      }
+      if(this.mapService.slims[i].isFlying === true){
+
+        this.mapService.slims[i].posX += 0.5
+        this.mapService.slims[i].posY -= 0.2
+        this.mapService.slims[i].isRotating += 10
       }
 
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
@@ -477,11 +488,15 @@ export class GameloopService {
       if (differanceX < 2 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
 
         this.gameService.kick = SHOOTTHEMALL
-
-        this.mapService.druids[i].posX += 10
-        this.mapService.druids[i].posY -= 10
         this.lastKick = new Date()
+        this.mapService.druids[i].isFlying = true
 
+      }
+      if(this.mapService.druids[i].isFlying === true){
+
+        this.mapService.druids[i].posX += 0.5
+        this.mapService.druids[i].posY -= 0.2
+        this.mapService.druids[i].isRotating += 10
       }
 
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
