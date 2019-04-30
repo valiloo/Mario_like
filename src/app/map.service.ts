@@ -4,6 +4,7 @@ import {  OsMonster, } from './models/monster';
 import {OgrMonster} from './models/ogr';
 import { SlimMonster} from './models/slim'
 import { mapChildrenIntoArray } from '@angular/router/src/url_tree';
+import { Piece } from './models/piece';
 
 
 const VI = 0
@@ -162,7 +163,18 @@ export class MapService {
   ]
 
   
-    
+  public pieces : Piece[] = [
+    new Piece(10, 8),
+    new Piece(25, 5),
+    new Piece(45, 3),
+    new Piece(45, 14),
+    new Piece(42, 3),
+    new Piece(62, 15),
+    new Piece(75, 8),
+    new Piece(98.5, 9),
+    new Piece(127.3, 8),
+    new Piece(145.5, 9),
+]  
 
   
 

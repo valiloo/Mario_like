@@ -14,10 +14,15 @@
 
     <div *ngFor="let monster of mapService.monsters" class="OsMonster" [ngStyle]="{top: '' + monster.posY * 32 + 'px', left: '' + monster.posX * 32 + 'px','transform': 'scaleX(' + monster.scaleX + ')'}"></div> 
     <div *ngFor="let ogr of mapService.ogrs" class="OgrMonster" [ngStyle]="{top: '' + ogr.posY * 32 + 'px', left: '' + ogr.posX * 32 + 'px', 'transform': 'scaleX(' + ogr.scaleX + ')'}"></div> 
+
     <div *ngFor="let slim of mapService.slims" class="SlimMonster" [ngStyle]="{top: '' + slim.posY * 32 + 'px', left: '' + slim.posX * 32 + 'px', 'transform': 'scaleX(' + slim.scaleX + ')'}"></div> 
+
+    <div *ngFor="let piece of mapService.pieces" class="piece"  [ngStyle]="{top: '' + piece.posY *  32 + 'px', left: '' + piece.posX * 32 + 'px'}"></div>
+
 
 <!--   <img src="/assets/textures/stopwatch.png" class="stopwatch">
   <h4><span class="time">{{ (time>=0) ? time: "Go !" }} </span></h4> -->
 
-  </div>
-
+  <div class="myCompt">{{ gameLoop.compt}} PTS</div>
+ 
+</div>

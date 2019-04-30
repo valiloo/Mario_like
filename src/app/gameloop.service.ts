@@ -18,7 +18,7 @@ import { SlimMonster} from './models/slim';
 })
 export class GameloopService {
 
-
+  public compt: number = 0
   public jump: number = 0
   public move: number
   public x: number = 0
@@ -49,8 +49,6 @@ export class GameloopService {
   public fireBlocY = this.gameService.playerY
   public dashCount = 2
   public dash = new Date()
-
-
   public osDie
   public jumpDown
   public deathSound
@@ -629,8 +627,26 @@ isOnFire(){
     }
   }
 
-  loop() {
+  getPosPiece(){
+    this.playerBlocY = Math.round(this.gameService.playerY / 32)
+      this.playerBlocX = Math.round(this.gameService.playerX / 32)
+      for (let i = 0; i < this.mapService.pieces.length; i++) {
+        let posX = this.mapService.pieces[i].posX;
+        let posY = this.mapService.pieces[i].posY;
+        let differanceX = Math.abs(this.playerBlocX - posX);
+        let differanceY = Math.abs(this.playerBlocY - posY)
+  
+        if (differanceX < 2 && differanceY < 2){
+          this.mapService.pieces.splice(i,1);
+          this.compt++
+  }
+  
+    }
+      }
 
+
+  loop() {
+    this.getPosPiece()
     this.canMove() // appelle de fonction explique au dessus /  // 
     this.isOnFire()
     this.getMonsterCollision()
@@ -645,7 +661,7 @@ isOnFire(){
     this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
     this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
-    console.log(this.dashCount)
+    
     
   }
 
@@ -668,6 +684,7 @@ isOnFire(){
   }
 
   reInit() {
+    this.compt = 0
     this.gameService.move = 0
     this.gameService.xVelocity = 0
     this.gameService.yVelocity = 0
