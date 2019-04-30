@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { MenuComponent } from './menu/menu.component'
-import {PlayersnameComponent } from './playersname/playersname.component'
+import { PlayersnameComponent } from './playersname/playersname.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -39,9 +39,9 @@ import { WinPageComponent } from './win-page/win-page.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(ROUTES, {enableTracing:true}),
+    RouterModule.forRoot(ROUTES),
     BrowserAnimationsModule
-    
+
 
 
   ],

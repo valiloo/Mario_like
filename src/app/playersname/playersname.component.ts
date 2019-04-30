@@ -9,14 +9,15 @@ import { MenuComponent } from '../menu/menu.component';
   styleUrls: ['./playersname.component.scss']
 })
 export class PlayersnameComponent implements OnInit {
-  
 
-  constructor(public gameState: GamestateService, public loop:GameloopService) { 
-  
+
+  constructor(public gameState: GamestateService, public loop: GameloopService) {
+
   }
 
   ngOnInit() {
-  
-}
+    this.loop.getSongMenu()
+
+  }
 
 }

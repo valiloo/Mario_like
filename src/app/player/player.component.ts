@@ -3,8 +3,6 @@ import { Component, OnInit, HostListener, HostBinding, ElementRef, AfterContentC
 import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, DASH } from '../gamestate.service';
 import { GameloopService } from '../gameloop.service';
 import { MapService } from '../map.service';
-import { MenuComponent } from '../menu/menu.component';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -22,17 +20,18 @@ export enum KEY_CODE {
 
 })
 
-export class PlayerComponent implements OnInit{
+export class PlayerComponent implements OnInit {
 
   public refresh: any
   public move: any
   public x: number
   public y: number
+  public menuMusic
   @HostBinding('style.position') myPosition: any
 
   constructor(public gameService: GamestateService, public element: ElementRef, public loop: GameloopService, public mapService: MapService) {
   }
-  
+
   @HostListener('window:keydown', [('$event')]) handleMovement(event: KeyboardEvent) {
 
     event.preventDefault()
@@ -53,16 +52,16 @@ export class PlayerComponent implements OnInit{
       this.gameService.yVelocity = MOVE_UPWARD
     }
 
-    if(event.keyCode === KEY_CODE.EPOWER) {
+    if (event.keyCode === KEY_CODE.EPOWER) {
 
       this.gameService.isOnFire = ISONFIRE
       this.gameService.xVelocity = 0
       this.gameService.yVelocity = 0
 
     }
-    if (event.keyCode === KEY_CODE.DASH){
+    if (event.keyCode === KEY_CODE.DASH) {
       this.gameService.dash = DASH
-  
+
     }
   }
 
@@ -76,33 +75,31 @@ export class PlayerComponent implements OnInit{
       this.gameService.yVelocity = 0
     }
 
-     if(event.keyCode === KEY_CODE.EPOWER){
+    if (event.keyCode === KEY_CODE.EPOWER) {
 
-       this.gameService.isOnFire = FINTIR
-     }
+      this.gameService.isOnFire = FINTIR
+    }
 
-     if (event.keyCode === KEY_CODE.DASH){
+    if (event.keyCode === KEY_CODE.DASH) {
       this.gameService.dash = 0
-      
-     }
+
+    }
 
 
   }
 
-  
 
-ngOnInit(){
-  this.loop.start()
-  
+
+  ngOnInit() {
+    this.loop.start()
+
+
+  }
+
+
+
+
+
+
+
 }
-
-
-}
-
-
-
-
-
-
-
-

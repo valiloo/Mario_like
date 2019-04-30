@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GameloopService } from '../gameloop.service';
+
 
 @Component({
   selector: 'app-settings',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public loop: GameloopService) { }
+
+
 
   ngOnInit() {
+
+    this.loop.getSongMenu()
   }
 
 }
