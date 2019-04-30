@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, ISDEAD ,DASH, THROWAXES, ISANINJA } from './gamestate.service';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, ISDEAD ,DASH, THROWAXES, ISANINJA, SHOOTTHEMALL } from './gamestate.service';
 import { MapTheme, MapService, } from './map.service';
 import { Tir } from './models/tir'
 import { Router } from '@angular/router';
@@ -352,9 +352,15 @@ export class GameloopService {
       let differanceY = Math.abs(this.playerBlocY - posY)
 
 
-      if (differanceX < 1 && differanceY < 1) {
+      if (differanceX < 1 && differanceY < 1 && this.gameService.playerStat !== ISANINJA) {
         this.gameService.death = ISDEAD
         this.isDead = new Date()
+      }
+
+      if(differanceX < 2 && differanceY < 1 && this.gameService.playerStat === ISANINJA){
+
+        this.gameService.kick = SHOOTTHEMALL
+        
       }
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
 
@@ -379,10 +385,18 @@ export class GameloopService {
       let differanceY = Math.abs(this.playerBlocY - posY)
 
 
-      if (differanceX < 1 && differanceY < 1) {
+      if (differanceX < 1 && differanceY < 1 && this.gameService.playerStat !== ISANINJA) {
+
         this.gameService.death = ISDEAD
         this.isDead = new Date()
       }
+
+      if(differanceX < 2 && differanceY < 1 && this.gameService.playerStat === ISANINJA){
+
+        this.gameService.kick = SHOOTTHEMALL
+        
+      }
+
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
        
         this.gameOver()    
@@ -405,10 +419,17 @@ export class GameloopService {
       let differanceY = Math.abs(this.playerBlocY - posY)
 
 
-      if (differanceX < 1 && differanceY < 1) {
+      if (differanceX < 1 && differanceY < 1 && this.gameService.playerStat !== ISANINJA) {
         this.gameService.death = ISDEAD
         this.isDead = new Date()
       }
+
+      if(differanceX < 2 && differanceY < 1 && this.gameService.playerStat === ISANINJA){
+
+        this.gameService.kick = SHOOTTHEMALL
+        
+      }
+
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
        
         this.stop = true
@@ -431,10 +452,18 @@ export class GameloopService {
       let differanceY = Math.abs(this.playerBlocY - posY)
 
 
-      if (differanceX < 1 && differanceY < 1) {
+      if (differanceX < 1 && differanceY < 1 && this.gameService.playerStat !== ISANINJA) {
         this.gameService.death = ISDEAD
         this.isDead = new Date()
       }
+
+      if(differanceX < 2 && differanceY < 1 && this.gameService.playerStat === ISANINJA){
+
+        this.gameService.kick = SHOOTTHEMALL
+        
+      }
+
+
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
        
         this.stop = true
@@ -815,7 +844,7 @@ isaNinja(){
     this.gameService.playerStat = ISANINJA
     this.compt = 0
   }
-      if(new Date().getTime() - this.goNinja.getTime() > 5000 && this.gameService.playerStat === ISANINJA){
+      if(new Date().getTime() - this.goNinja.getTime() > 10000 && this.gameService.playerStat === ISANINJA){
 
         this.gameService.playerStat = 0
       }
@@ -897,6 +926,36 @@ isaNinja(){
     }
       }
 
+  monsterDeathDruidAxes(){
+
+    for (let j = 0; j < this.gameService.axes.length; j++) {
+      this.fireBlocX = Math.round(this.gameService.axes[j].posX / 32)
+      this.fireBlocY = Math.round(this.gameService.axes[j].posY / 32)
+
+      for (let i = 0; i < this.mapService.druids.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
+        let posX = this.mapService.druids[i].posX;
+        let posY = this.mapService.druids[i].posY;
+        let diffX = Math.abs(this.fireBlocX - posX)
+        let diffY = Math.abs(this.fireBlocY - posY)
+
+
+        if (diffX < 0.3 && diffY < 2.5) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+          //need death animation with date method here voir getMonsterCollision
+          this.mapService.druids.splice(i, 1)
+          this.gameService.axes.splice(j, 1)
+          this.osDie = new Audio()
+          this.osDie.src = "assets/audio/osMonsterDie.mp3"
+          this.osDie.load()
+          this.osDie.play()
+
+
+        }
+
+      }
+      }
+
+  }
+
 
   loop() {
     this.isaNinja()
@@ -915,6 +974,7 @@ isaNinja(){
     this.monsterDeathOgrAxes()
     this.monsterDeathSlimAxes()
     this.monsterDeathDruid()
+    this.monsterDeathDruidAxes()
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
     this.moveSlim()

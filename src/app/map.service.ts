@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import {  OsMonster, } from './models/monster';
+import {  OsMonster, Monster, } from './models/monster';
 import {OgrMonster} from './models/ogr';
 import { SlimMonster} from './models/slim'
 import { DruidMonster} from './models/druid'
