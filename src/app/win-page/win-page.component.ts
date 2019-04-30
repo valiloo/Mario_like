@@ -25,6 +25,8 @@ export class WinPageComponent implements OnInit {
 
   ngOnInit() {
     this.onAudioPlay();
+    this.gameloop.pause()
+    this.gameloop.reInit()
   }
 
 }

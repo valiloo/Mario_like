@@ -35,7 +35,7 @@
 .fireball{
     position:absolute;
     height:7px;
-    width:6px;
+    width:10px;
     background: url('/assets/textures/bullet.png/');
 }
 
@@ -62,10 +62,11 @@
 
  .jumpUp {
      position: absolute;
-     height : 65px;
-     width : 48px;
-     background: url('/assets/Sprites/jumpUp.png');
+     height : 70px;
+     width : 76px;
+     background: url('/assets/textures/saut.png');
      transform: scaleX(-1);
+     animation : doubleJump 1s steps(9) infinite;
  }
 
  .jumpDown {
@@ -92,6 +93,11 @@
 from {background-position : 0px;}
 to {background-position: -318px;}
 
+}
+@keyframes doubleJump {
+
+    from {background-position : 0px;}
+    to {background-position : -710px;}
 }
 
 
