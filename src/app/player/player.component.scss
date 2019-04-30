@@ -13,6 +13,7 @@
     left: 15px;
     background: url('/assets/Sprites/sprite_course_perso/perso_debout.png/');
     transform: scaleX(-1); 
+    top : -10px;
 }
 
 
@@ -23,6 +24,7 @@
     transform: scaleX(-1);
     background: url('/assets/textures/spriteTir.png/') no-repeat;
     animation : fire 0.5s steps(9) forwards;
+    top : -10px;
 }
 .finTir{
     position:absolute;
