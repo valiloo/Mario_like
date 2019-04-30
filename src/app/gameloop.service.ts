@@ -57,11 +57,15 @@ export class GameloopService {
   public osDie
   public jumpDown
   public deathSound
+  public lockScale
+  public lastPosX
   // this.deathSound = new Audio()
   //this.deathSound.src = "assets/audio/death.ogg"
   //this.deathSound.load()
   //this.deathSound.play()
-  public lastPosX
+
+  
+
 
 
 
@@ -93,6 +97,8 @@ export class GameloopService {
 
     }
 
+   
+
     if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === false && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) { // si le joueur touche le sol il peut ressauter //
       this.canJump = true
       this.jumpNumber = 2
@@ -121,7 +127,7 @@ export class GameloopService {
     }
     // gère le deplacement vers la gauche : verifie que la touche fleche gauche est enfoncee et appelle la fonction qui verifie la collision sur la gauche du personnage //
     if ((this.gameService.move === MOVE_LEFT) && this.gameService.playerX > 12 && this.gameService.xVelocity === MOVE_BACKWARD && this.getLeftCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) {
-
+     
       this.gameService.playerScaleX = 1 // gere le reverse d'animation du personnage //
 
       this.gameService.playerX -= 6 // deplace le personnage de 8px sur la gauche//
@@ -633,8 +639,7 @@ monsterDeath() {
 
         }
       }
-    }
-  }
+    }}
 
  
 
@@ -653,9 +658,7 @@ monsterDeath() {
       }
     }
     isOnFire() {
-      this.lastPosX = this.gameService.playerX
-      this.innerWidth = window.innerWidth
-
+      
 
       // Utile pour déterminer avec précision le sprite de la première balle selon l' orientation du personnage
 
@@ -728,6 +731,8 @@ monsterDeath() {
         this.timerEndFire -= 1
       }
     }
+
+ 
 
 isThrowingAxes(){
   this.lastPosX = this.gameService.playerX
@@ -807,12 +812,11 @@ isaNinja(){
   }
 
 
-
-    // fonction gerant la collision a droite //
-    getRightCollision(playerBlocX, playerBlocY): boolean { // prend deux options : playerBlocY et playerBlocX // 
-      this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
-      this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel une valeur de l'array de la carte  //
-      this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX + 1] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et rajoute 1 a la coordone X pour checker le bloc a droite de la position du joueur//
+  // fonction gerant la collision a droite //
+  getRightCollision(playerBlocX, playerBlocY): boolean { // prend deux options : playerBlocY et playerBlocX // 
+    this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
+    this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel une valeur de l'array de la carte  //
+    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX + 1] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et rajoute 1 a la coordone X pour checker le bloc a droite de la position du joueur//
 
       if (this.mapTheme.blocs[this.cell].canGoThrough === false) { //check si la propriete canGoThrough de la donne de la carte est false//
 
@@ -838,12 +842,12 @@ isaNinja(){
       }
     }
 
-    getLeftCollision(playerBlocX, playerBlocY): boolean { // prend deux options : playerBlocY et playerBlocX // 
-      this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
-      this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel  vers une valeur de l'array de la carte  //
-      this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX - 1] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone X pour checker le bloc au gauche de la position du joueur//
-
-      if (this.mapTheme.blocs[this.cell].canGoThrough === false) { // cf dessus //
+  getLeftCollision(playerBlocX, playerBlocY): boolean { // prend deux options : playerBlocY et playerBlocX // 
+    this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
+    this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel  vers une valeur de l'array de la carte  //
+    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX - 1] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone X pour checker le bloc au gauche de la position du joueur//
+    if (this.gameService.playerX > 19) {
+    if (this.mapTheme.blocs[this.cell].canGoThrough === false) { // cf dessus //
 
         return false
       }
@@ -851,6 +855,8 @@ isaNinja(){
         return true
       }
     }
+  }
+
 
     getTopCollision(playerBlocX, playerBlocY) { // prend deux options : playerBlocY et playerBlocX // 
       this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
@@ -884,28 +890,36 @@ isaNinja(){
   
 
 
-    loop() {
-      this.getPosPiece()
-      this.canMove() // appelle de fonction explique au dessus /  // 
-      this.isOnFire()
-      this.getMonsterCollision()
-      this.getOgrCollision()
-      this.getSlimCollision()
-      this.getDruidCollision()
-      this.monsterDeath()
-      this.monsterDeathOgr()
-      this.monsterDeathSlim()
-      this.monsterDeathDruid()
-      this.moveMonster() // appelle de fonction explique au dessus //
-      this.moveOgr() // appelle de fonction explique au dessus //
-      this.moveSlim()
-      this.moveDruid()
-      this.cameraLock() // appelle de fonction explique au dessus //
-      this.isTheEnd(this.playerBlocX, this.playerBlocY)
-      this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
+  loop() {
+    this.isaNinja()
+    this.getPosPiece()
+    this.canMove() // appelle de fonction explique au dessus /  // 
+    this.isOnFire()
+    this.isThrowingAxes()
+    this.getMonsterCollision()
+    this.getOgrCollision()
+    this.getSlimCollision()
+    this.getDruidCollision()
+    this.monsterDeath()
+    this.monsterDeathOgr()
+    this.monsterDeathSlim()
+    this.monsterDeathAxes()
+    this.monsterDeathOgrAxes()
+    this.monsterDeathSlimAxes()
+    this.monsterDeathDruid()
+    this.moveMonster() // appelle de fonction explique au dessus //
+    this.moveOgr() // appelle de fonction explique au dessus //
+    this.moveSlim()
+    this.moveDruid()
+    this.cameraLock() // appelle de fonction explique au dessus //
+    this.isTheEnd(this.playerBlocX, this.playerBlocY)
+    this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
+    console.log(this.gameService.playerX)
+    
+  }
 
 
-    }
+    
 
     start() {
       this.gameService.startTime = new Date()
