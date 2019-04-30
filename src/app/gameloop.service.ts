@@ -9,7 +9,7 @@ import { OgrMonster} from './models/ogr';
 import { SlimMonster} from './models/slim';
 import { Axes } from './models/axes';
 import { DruidMonster} from './models/druid';
-
+import { BossMonster} from './models/boss';
 
 
 
@@ -314,6 +314,26 @@ moveDruid() {
     }
   }
 }
+moveBoss() {
+  for (let index in this.mapService.bosss) {
+    const boss = this.mapService.bosss[index]
+
+    if (boss.direction == MOVE_RIGHT) {
+      boss.scaleX = -1
+      boss.posX += 0.01;
+      if (boss.initPosX + boss.amplitude < boss.posX) {
+        boss.direction = MOVE_LEFT
+      }
+    }
+    else if (boss.direction == MOVE_LEFT) {
+      boss.scaleX = 1;
+      boss.posX -= 0.01;
+      if (boss.initPosX - boss.amplitude > boss.posX) {
+        boss.direction = MOVE_RIGHT
+      }
+    }
+  }
+}
 
 canDash() {
 
@@ -425,6 +445,32 @@ getDruidCollision() {
 
 
     if (differanceX < 1 && differanceY < 1) {
+      this.gameService.death = ISDEAD
+      this.isDead = new Date()
+    }
+    if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
+
+      this.stop = true
+      this.gameOver()
+      this.gameMusic.pause()
+      this.gameMusic.currentTime = 0
+
+
+    }
+  }
+}
+
+getBossCollision() {
+  this.playerBlocY = Math.round(this.gameService.playerY / 32)
+  this.playerBlocX = Math.round(this.gameService.playerX / 32)
+  for (let i = 0; i < this.mapService.bosss.length; i++) {
+    let posX = this.mapService.bosss[i].posX;
+    let posY = this.mapService.bosss[i].posY;
+    let differanceX = Math.abs(this.playerBlocX - posX);
+    let differanceY = Math.abs(this.playerBlocY - posY)
+
+
+    if (differanceX < 1 && differanceY < 1)  {
       this.gameService.death = ISDEAD
       this.isDead = new Date()
     }
@@ -638,7 +684,40 @@ monsterDeath() {
       }
     }
 
- 
+    monsterDeathBoss() {
+
+          
+      for (let j = 0; j < this.gameService.fireBalls.length; j++) {
+        this.fireBlocX = Math.round(this.gameService.fireBalls[j].posX / 32)
+        this.fireBlocY = Math.round(this.gameService.fireBalls[j].posY / 32)
+  
+        for (let i = 0; i < this.mapService.bosss.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
+          let posX = this.mapService.bosss[i].posX;
+          let posY = this.mapService.bosss[i].posY;
+          let diffX = Math.abs(this.fireBlocX - posX)
+          let diffY = Math.abs(this.fireBlocY - posY)
+          
+          if (diffX < 0.3 && diffY < 1.5 && this.mapService.bosss[i].pdv>0){
+
+            this.mapService.bosss[i].pdv -= 1
+
+          } 
+  
+          if (diffX < 0.3 && diffY < 1.5 && this.mapService.bosss[i].pdv===0) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+            //need death animation with date method here voir getMonsterCollision
+            this.mapService.bosss.splice(i, 1)
+            this.gameService.fireBalls.splice(j, 1)
+            this.osDie = new Audio()
+            this.osDie.src = "assets/audio/osMonsterDie.mp3"
+            this.osDie.load()
+            this.osDie.play()
+  
+  
+          }
+  
+        }
+        }
+      }
 
     isTheEnd(playerBlocX, playerBlocY) {
       this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
@@ -897,9 +976,11 @@ isaNinja(){
     this.getOgrCollision()
     this.getSlimCollision()
     this.getDruidCollision()
+    this.getBossCollision()
     this.monsterDeath()
     this.monsterDeathOgr()
     this.monsterDeathSlim()
+    this.monsterDeathBoss()
     this.monsterDeathAxes()
     this.monsterDeathOgrAxes()
     this.monsterDeathSlimAxes()
@@ -908,6 +989,7 @@ isaNinja(){
     this.moveOgr() // appelle de fonction explique au dessus //
     this.moveSlim()
     this.moveDruid()
+    this.moveBoss()
     this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
     this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
@@ -974,8 +1056,13 @@ isaNinja(){
       ]
       this.mapService.druids = [
         new DruidMonster(50, 18),
-        new DruidMonster(180, 4)
+        new DruidMonster(190, 4),
+        new DruidMonster(80, 7),
+        new DruidMonster(100, 7)
       ]
+      this.mapService.bosss = [
+      new BossMonster(205, 16),
+    ]
     }
 
 

@@ -4,6 +4,7 @@ import {  OsMonster, } from './models/monster';
 import {OgrMonster} from './models/ogr';
 import { SlimMonster} from './models/slim'
 import { DruidMonster} from './models/druid'
+import { BossMonster} from './models/boss'
 import { mapChildrenIntoArray } from '@angular/router/src/url_tree';
 import { Piece } from './models/piece';
 
@@ -169,7 +170,9 @@ export class MapService {
   ]
   public druids: DruidMonster[] = [
     new DruidMonster(50, 18),
-    new DruidMonster(180, 4)
+    new DruidMonster(190, 4),
+    new DruidMonster(80, 7),
+    new DruidMonster(100, 7)
   ]
   
   public pieces : Piece[] = [
@@ -196,6 +199,11 @@ export class MapService {
     new Piece(127.3, 8),
     new Piece(145.5, 9),
 ]  
+
+public bosss: BossMonster[] = [
+  new BossMonster(205, 16),
+
+]
 
   
 
