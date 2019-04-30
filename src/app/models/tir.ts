@@ -1,6 +1,10 @@
 export class Tir {
 
-constructor(public posX, public posY){}
+    initX: number;
+
+constructor(public posX, public posY){
+    this.initX = posX
+}
 
 
 
