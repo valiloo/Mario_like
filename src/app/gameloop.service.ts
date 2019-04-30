@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { OsMonster } from './models/monster';
 import { OgrMonster} from './models/ogr';
 import { SlimMonster} from './models/slim';
-
+import { DruidMonster} from './models/druid';
 
 
 
@@ -284,7 +284,27 @@ export class GameloopService {
       }
 
   }
-  
+  moveDruid() {
+    for (let index in this.mapService.druids) {
+      const druid = this.mapService.druids[index]
+
+      if (druid.direction == MOVE_RIGHT) {
+        druid.scaleX = -1
+        druid.posX += 0.01;
+        if (druid.initPosX + druid.amplitude < druid.posX) {
+          druid.direction = MOVE_LEFT
+        }
+      }
+      else if (druid.direction == MOVE_LEFT) {
+        druid.scaleX = 1;
+        druid.posX -= 0.01;
+        if (druid.initPosX - druid.amplitude > druid.posX) {
+          druid.direction = MOVE_RIGHT
+        }
+      }
+    }
+
+}
 
   canDash(){
 
@@ -387,7 +407,32 @@ export class GameloopService {
     }
 
   }
+  getDruidCollision() {
+    this.playerBlocY = Math.round(this.gameService.playerY / 32)
+    this.playerBlocX = Math.round(this.gameService.playerX / 32)
+    for (let i = 0; i < this.mapService.druids.length; i++) {
+      let posX = this.mapService.druids[i].posX;
+      let posY = this.mapService.druids[i].posY;
+      let differanceX = Math.abs(this.playerBlocX - posX);
+      let differanceY = Math.abs(this.playerBlocY - posY)
 
+
+      if (differanceX < 1 && differanceY < 1) {
+        this.gameService.death = ISDEAD
+        this.isDead = new Date()
+      }
+      if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
+       
+        this.stop = true
+        this.gameOver()    
+        this.gameMusic.pause() 
+        this.gameMusic.currentTime = 0
+
+
+      }
+    }
+
+  }
 
   monsterDeath() {
 
@@ -474,6 +519,35 @@ export class GameloopService {
           }
           }
         }
+
+        monsterDeathDruid() {
+
+          for (let j = 0; j < this.gameService.fireBalls.length; j++) {
+            this.fireBlocX = Math.round(this.gameService.fireBalls[j].posX / 32)
+            this.fireBlocY = Math.round(this.gameService.fireBalls[j].posY / 32)
+      
+            for (let i = 0; i < this.mapService.druids.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
+              let posX = this.mapService.druids[i].posX;
+              let posY = this.mapService.druids[i].posY;
+              let diffX = Math.abs(this.fireBlocX - posX)
+              let diffY = Math.abs(this.fireBlocY - posY)
+      
+      
+              if (diffX < 0.3 && diffY < 2.5) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+                //need death animation with date method here voir getMonsterCollision
+                this.mapService.druids.splice(i, 1)
+                this.gameService.fireBalls.splice(j, 1)
+                this.osDie = new Audio()
+                this.osDie.src = "assets/audio/osMonsterDie.mp3"
+                this.osDie.load()
+                this.osDie.play()
+      
+      
+              }
+      
+            }
+            }
+          }
 
 isTheEnd(playerBlocX, playerBlocY){
   this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
@@ -650,12 +724,15 @@ isOnFire(){
     this.getMonsterCollision()
     this.getOgrCollision()
     this.getSlimCollision()
+    this.getDruidCollision()
     this.monsterDeath()
     this.monsterDeathOgr()
     this.monsterDeathSlim()
+    this.monsterDeathDruid()
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
     this.moveSlim()
+    this.moveDruid()
     this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
     this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
@@ -708,6 +785,14 @@ isOnFire(){
     ]
     this.mapService.slims = [
       new SlimMonster(86, 18.8),
+      new SlimMonster(180, 7),
+      new SlimMonster(202, 3),
+      new SlimMonster(204, 3),
+      new SlimMonster(206, 3),
+
+    ]
+    this.mapService.druids = [
+    new DruidMonster(50, 18),
     ]
   }
 
