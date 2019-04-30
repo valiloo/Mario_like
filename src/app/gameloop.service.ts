@@ -119,7 +119,7 @@ export class GameloopService {
     }
     // gère le deplacement vers la gauche : verifie que la touche fleche gauche est enfoncee et appelle la fonction qui verifie la collision sur la gauche du personnage //
     if ((this.gameService.move === MOVE_LEFT) && this.gameService.playerX > 12 && this.gameService.xVelocity === MOVE_BACKWARD && this.getLeftCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) {
-
+     
       this.gameService.playerScaleX = 1 // gere le reverse d'animation du personnage //
 
       this.gameService.playerX -= 6 // deplace le personnage de 8px sur la gauche//
@@ -604,7 +604,7 @@ isOnFire(){
     this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
     this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel  vers une valeur de l'array de la carte  //
     this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX - 1] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone X pour checker le bloc au gauche de la position du joueur//
-
+    if (this.gameService.playerX > 19) {
     if (this.mapTheme.blocs[this.cell].canGoThrough === false) { // cf dessus //
 
       return false
@@ -612,6 +612,7 @@ isOnFire(){
     else if (this.mapTheme.blocs[this.cell].canGoThrough === true) { // cf dessus //
       return true
     }
+  }
   }
 
   getTopCollision(playerBlocX, playerBlocY) { // prend deux options : playerBlocY et playerBlocX // 
