@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, ISDEAD, DASH } from './gamestate.service';
+
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, ISDEAD ,DASH, THROWAXES, ISANINJA } from './gamestate.service';
 import { MapTheme, MapService, } from './map.service';
 import { Tir } from './models/tir'
 import { Router } from '@angular/router';
 import { OsMonster } from './models/monster';
 import { OgrMonster} from './models/ogr';
 import { SlimMonster} from './models/slim';
+import { Axes } from './models/axes';
 import { DruidMonster} from './models/druid';
+
 
 
 
@@ -18,6 +21,8 @@ import { DruidMonster} from './models/druid';
 })
 export class GameloopService {
 
+  public goNinja = new Date()
+  public lastAxesDate = new Date()
   public compt: number = 0
   public jump: number = 0
   public move: number
@@ -466,6 +471,34 @@ export class GameloopService {
       }
     }
   }
+    monsterDeathAxes() {
+
+      for (let j = 0; j < this.gameService.axes.length; j++) {
+        this.fireBlocX = Math.round(this.gameService.axes[j].posX / 32)
+        this.fireBlocY = Math.round(this.gameService.axes[j].posY / 32)
+  
+        for (let i = 0; i < this.mapService.monsters.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
+          let posX = this.mapService.monsters[i].posX;
+          let posY = this.mapService.monsters[i].posY;
+          let diffX = Math.abs(this.fireBlocX - posX)
+          let diffY = Math.abs(this.fireBlocY - posY)
+  
+  
+          if (diffX < 0.3 && diffY < 2.5) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+            //need death animation with date method here voir getMonsterCollision
+            this.mapService.monsters.splice(i, 1)
+            this.gameService.axes.splice(j, 1)
+            this.osDie = new Audio()
+            this.osDie.src = "assets/audio/osMonsterDie.mp3"
+            this.osDie.load()
+            this.osDie.play()
+  
+  
+          }
+  
+        }
+        }
+      }
     monsterDeathOgr() {
 
       for (let j = 0; j < this.gameService.fireBalls.length; j++) {
@@ -494,6 +527,34 @@ export class GameloopService {
         }
         }
       }
+      monsterDeathOgrAxes() {
+
+        for (let j = 0; j < this.gameService.axes.length; j++) {
+          this.fireBlocX = Math.round(this.gameService.axes[j].posX / 32)
+          this.fireBlocY = Math.round(this.gameService.axes[j].posY / 32)
+    
+          for (let i = 0; i < this.mapService.ogrs.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
+            let posX = this.mapService.ogrs[i].posX;
+            let posY = this.mapService.ogrs[i].posY;
+            let diffX = Math.abs(this.fireBlocX - posX)
+            let diffY = Math.abs(this.fireBlocY - posY)
+    
+    
+            if (diffX < 0.3 && diffY < 2.5) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+              //need death animation with date method here voir getMonsterCollision
+              this.mapService.ogrs.splice(i, 1)
+              this.gameService.axes.splice(j, 1)
+              this.osDie = new Audio()
+              this.osDie.src = "assets/audio/osMonsterDie.mp3"
+              this.osDie.load()
+              this.osDie.play()
+    
+    
+            }
+    
+          }
+          }
+        }
 
       monsterDeathSlim() {
 
@@ -523,6 +584,34 @@ export class GameloopService {
           }
           }
         }
+        monsterDeathSlimAxes() {
+
+          for (let j = 0; j < this.gameService.axes.length; j++) {
+            this.fireBlocX = Math.round(this.gameService.axes[j].posX / 32)
+            this.fireBlocY = Math.round(this.gameService.axes[j].posY / 32)
+      
+            for (let i = 0; i < this.mapService.slims.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
+              let posX = this.mapService.slims[i].posX;
+              let posY = this.mapService.slims[i].posY;
+              let diffX = Math.abs(this.fireBlocX - posX)
+              let diffY = Math.abs(this.fireBlocY - posY)
+      
+      
+              if (diffX < 0.3 && diffY < 2.5) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+                //need death animation with date method here voir getMonsterCollision
+                this.mapService.slims.splice(i, 1)
+                this.gameService.axes.splice(j, 1)
+                this.osDie = new Audio()
+                this.osDie.src = "assets/audio/osMonsterDie.mp3"
+                this.osDie.load()
+                this.osDie.play()
+      
+      
+              }
+      
+            }
+            }
+          }
 
         monsterDeathDruid() {
 
@@ -647,6 +736,83 @@ export class GameloopService {
     }
 }
 
+isThrowingAxes(){
+  this.lastPosX = this.gameService.playerX
+  this.innerWidth = window.innerWidth
+
+
+  // Utile pour déterminer avec précision le sprite de la première balle selon l' orientation du personnage
+
+
+  if (this.gameService.isOnFire === THROWAXES && new Date().getTime() - this.lastAxesDate.getTime() > 500 && this.gameService.playerScaleX === -1) {
+    this.lastPosX = this.gameService.playerX
+    let axe = new Axes(this.gameService.playerX + 70, this.gameService.playerY + this.gameService.playerHeight / 2);
+    this.gameService.axes.push(axe)
+    this.lastAxesDate = new Date();
+    this.gunSound = new Audio();
+    this.gunSound.src = "assets/audio/gun.mp3"
+    this.gunSound.load()
+    this.gunSound.play()
+  }
+
+  if (this.gameService.isOnFire === THROWAXES && new Date().getTime() - this.lastAxesDate.getTime() > 500 && this.gameService.playerScaleX === 1) {
+    this.lastPosX = this.gameService.playerX
+    let axe = new Axes(this.gameService.playerX, this.gameService.playerY + this.gameService.playerHeight / 2);
+    this.gameService.axes.push(axe)
+    this.lastAxesDate = new Date();
+    this.gunSound = new Audio();
+    this.gunSound.src = "assets/audio/gun.mp3"
+    this.gunSound.load()
+    this.gunSound.play()
+  }
+
+
+
+  if (this.gameService.playerScaleX === -1) {  //Comportement des balles lorsque le personnage est orienté vers la droite
+    for (let i = 0; i < this.gameService.axes.length; i++) {
+
+      if (this.gameService.axes[i].posX <= this.lastPosX+ (this.innerWidth / 2) && this.gameService.axes[i].posX >= this.gameService.playerX) {
+        this.gameService.axes[i].posX += 10
+      }
+      else {
+        this.gameService.axes.splice(i, 1)
+
+      }
+
+    }
+  }
+  else if (this.gameService.playerScaleX === 1) {  // Comportement des balles lorsque le personnage est orienté vers la gauche
+
+    for (let i = 0; i < this.gameService.axes.length; i++) {
+
+      if (this.gameService.axes[i].posX >= this.gameService.playerX - (this.innerWidth / 2) && this.gameService.axes[i].posX <= this.gameService.playerX) {
+        this.gameService.axes[i].posX -= 10 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
+        // Dès que la balle sort de l' écran elle disparaît
+      }
+      else {
+        this.gameService.axes.splice(i, 1)
+
+      }
+    }
+  }
+
+  //Permet de voir l'animation du personnage lorsqu' il rengaine
+
+}
+
+isaNinja(){
+
+  if(this.compt === 5){
+    this.goNinja = new Date()
+    this.gameService.playerStat = ISANINJA
+    this.compt = 0
+  }
+      if(new Date().getTime() - this.goNinja.getTime() > 5000 && this.gameService.playerStat === ISANINJA){
+
+        this.gameService.playerStat = 0
+      }
+  }
+
 
 
   // fonction gerant la collision a droite //
@@ -725,9 +891,11 @@ export class GameloopService {
 
 
   loop() {
+    this.isaNinja()
     this.getPosPiece()
     this.canMove() // appelle de fonction explique au dessus /  // 
     this.isOnFire()
+    this.isThrowingAxes()
     this.getMonsterCollision()
     this.getOgrCollision()
     this.getSlimCollision()
@@ -735,6 +903,9 @@ export class GameloopService {
     this.monsterDeath()
     this.monsterDeathOgr()
     this.monsterDeathSlim()
+    this.monsterDeathAxes()
+    this.monsterDeathOgrAxes()
+    this.monsterDeathSlimAxes()
     this.monsterDeathDruid()
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
