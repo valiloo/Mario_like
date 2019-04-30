@@ -82,6 +82,16 @@ div {
   }
 }
 
+.DruidMonster {
+  width: 99px;
+  height: 80px;
+  background: url("/assets/Sprites/druid.png");
+  position: absolute;
+  top: O;
+  left: 20px;
+  transform: scaleX(-1);
+}
+
 /* .stopwatch {
   position: fixed;
   width: 50px;
@@ -96,6 +106,12 @@ div {
   font-family: "timer";
   font-size: 30px;
 } */
+
+.endTime {
+  font-family: "timer";
+  font-size: 40px;
+  margin-left: 80px;
+  text-align: center;
 
 .piece{
   height: 37px;
@@ -123,5 +139,5 @@ div {
   color: rgb(103, 5, 122);
   position: fixed;
   left: 1300px;
-  
+
 }
