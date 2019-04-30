@@ -64,7 +64,6 @@ export class GameloopService {
   //this.deathSound.load()
   //this.deathSound.play()
 
-  
 
 
 
@@ -197,11 +196,9 @@ export class GameloopService {
         }
 
       }
-
     }
-
+    
   
-
 
     // si aucune touche enfonce, le perso sera immobile //
     else if((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
@@ -216,7 +213,7 @@ export class GameloopService {
 this.gameService.gameDuration = new Date().getTime() - this.gameService.startTime.getTime()
   }
 
-
+  
 
 // fonction bloquant la camera sur le personnage //
 cameraLock() {
@@ -497,8 +494,6 @@ monsterDeath() {
       }
     }
   }
-
- 
     monsterDeathAxes() {
 
       for (let j = 0; j < this.gameService.axes.length; j++) {
@@ -627,19 +622,13 @@ monsterDeath() {
         let diffY = Math.abs(this.fireBlocY - posY)
 
 
-        if (diffX < 0.3 && diffY < 2.5) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
-          //need death animation with date method here voir getMonsterCollision
-          this.mapService.druids.splice(i, 1)
-          this.gameService.fireBalls.splice(j, 1)
-          this.osDie = new Audio()
-          this.osDie.src = "assets/audio/osMonsterDie.mp3"
-          this.osDie.load()
-          this.osDie.play()
+
+  
 
 
         }
       }
-    }}
+    }
 
  
 
