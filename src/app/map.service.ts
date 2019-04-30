@@ -169,6 +169,7 @@ export class MapService {
   ]
   public druids: DruidMonster[] = [
     new DruidMonster(50, 18),
+    new DruidMonster(180, 4)
   ]
   
   public pieces : Piece[] = [
