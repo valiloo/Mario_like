@@ -9,6 +9,8 @@ import { GameloopService } from '../gameloop.service';
 export class WinPageComponent implements OnInit {
 
 
+  
+
 
   endTime = this.gameloop.endTime
 
@@ -19,6 +21,7 @@ export class WinPageComponent implements OnInit {
   onAudioPlay() {
     this.audioPlayerRef.nativeElement.play();
   }
+
 
 
 

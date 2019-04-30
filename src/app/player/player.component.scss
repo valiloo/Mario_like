@@ -57,6 +57,81 @@
      transform: scaleX(-1);
      animation : dash .01s steps(2) infinite;
  }
+
+ .ninjaWalk {
+
+    position: absolute;
+    height : 69px;
+    width: 33px;
+    background: url('/assets/Sprites/ninjaWalk.png/');
+    transform: scaleX(-1);
+    animation : ninjaWalk 0.5s steps(6) infinite ;
+
+ }
+ 
+ .ninjaKick {
+
+    position: absolute;
+    height: 64px;
+    width: 63px;
+    background: url('/assets/textures/ninjaKick.png/') no-repeat;
+    transform: scaleX(-1);
+    animation : ninjaKick 0.7s steps(8) forwards ;
+ }
+
+  .ninjaStatic {
+
+    position : absolute;
+    height: 67px;
+    width:36px;
+    background: url('/assets/textures/ninjaStatic.png/');
+    transform: scaleX(-1);
+  }
+
+  .ninjaAxe {
+
+    position : absolute;
+    height:68px;
+    width:50px;
+    background: url('/assets/Sprites/ninjaAxe.png/');
+    transform: scaleX(-1);
+    animation: ninjaAxe 0.45s steps(6) infinite;
+  }
+
+  .Axes {
+      position : absolute;
+      height : 33px;
+      width : 35px;
+      background: url('/assets/Sprites/Axes.png/');
+      animation: moveAxes 0.3s steps(3) infinite;
+  }
+
+  @keyframes moveAxes {
+
+    from {background-position : 0px;}
+    to {background-position : -105px;}
+  }
+
+ @keyframes ninjaAxe {
+
+    from {background-position: 0px};
+    to {background-position: - 300px}
+  }
+
+ 
+
+ @keyframes ninjaKick {
+
+    from{background-position : 0px;}
+    to {background-position : -504px;}
+ }
+
+ @keyframes ninjaWalk {
+
+    from {background-position : 0px;}
+    to {background-position : -205px;}
+ }
+
 @keyframes dash{
     from{background-position : 0px;}
     to{background-position: -169px;}
