@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MapService } from './map.service';
 import { Tir } from './models/tir';
 import { Piece } from './models/piece';
+import { Axes } from './models/axes';
 
 export const MOVE_RIGHT = 1
 export const MOVE_LEFT = 2
@@ -13,6 +14,8 @@ export const ISONFIRE = 7
 export const FINTIR = 8
 export const ISDEAD = 9
 export const DASH = 10
+export const ISANINJA = 11
+export const THROWAXES = 12
 
 
 @Injectable({
@@ -33,6 +36,9 @@ public fireBalls : Tir[] = []
 public death : number = 0
 public dash : any = 0
 public piecePos: Piece[] = []
+public playerStat = 0
+public axes : Axes[] = []
+
 
 
 
