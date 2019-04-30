@@ -40,9 +40,6 @@ public kick = 0
 public startTime: Date
 public gameDuration : number = 0;
 public endTime: Date;
-
-
-
 public piecePos: Piece[] = []
 public playerStat = 0
 public axes : Axes[] = []
