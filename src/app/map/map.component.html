@@ -12,6 +12,7 @@
       </div>
     </div>
 
+
     <div *ngFor="let monster of mapService.monsters" class="OsMonster" [ngStyle]="{top: '' + monster.posY * 32 + 'px', left: '' + monster.posX * 32 + 'px','transform': 'scaleX(' + monster.scaleX + ')'}"></div> 
     <div *ngFor="let ogr of mapService.ogrs" class="OgrMonster" [ngStyle]="{top: '' + ogr.posY * 32 + 'px', left: '' + ogr.posX * 32 + 'px', 'transform': 'scaleX(' + ogr.scaleX + ')'}"></div> 
 

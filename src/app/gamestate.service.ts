@@ -32,7 +32,15 @@ public isOnFire : any = 0
 public fireBalls : Tir[] = []
 public death : number = 0
 public dash : any = 0
+
+public startTime: Date
+public gameDuration : number = 0;
+public endTime: Date;
+
+
+
 public piecePos: Piece[] = []
+
 
 
 
