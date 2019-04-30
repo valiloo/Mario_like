@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import {  OsMonster, } from './models/monster';
 import {OgrMonster} from './models/ogr';
+import { SlimMonster} from './models/slim'
 import { mapChildrenIntoArray } from '@angular/router/src/url_tree';
 
 
@@ -155,6 +156,9 @@ export class MapService {
     new OgrMonster(45, 6.2), 
     new OgrMonster(140, 18.2),
     new OgrMonster(10, 11.2),
+  ]
+  public slims: SlimMonster[] = [
+    new SlimMonster(86, 18.8)
   ]
 
   
