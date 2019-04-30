@@ -5,6 +5,7 @@ import { Tir } from './models/tir'
 import { Router } from '@angular/router';
 import { OsMonster } from './models/monster';
 import { OgrMonster} from './models/ogr';
+import { SlimMonster} from './models/slim';
 
 
 
@@ -261,9 +262,29 @@ export class GameloopService {
         }
       }
     }
-
+  }
+    moveSlim() {
+      for (let index in this.mapService.slims) {
+        const slim = this.mapService.slims[index]
+  
+        if (slim.direction == MOVE_RIGHT) {
+          slim.scaleX = -1
+          slim.posX += 0.01;
+          if (slim.initPosX + slim.amplitude < slim.posX) {
+            slim.direction = MOVE_LEFT
+          }
+        }
+        else if (slim.direction == MOVE_LEFT) {
+          slim.scaleX = 1;
+          slim.posX -= 0.01;
+          if (slim.initPosX - slim.amplitude > slim.posX) {
+            slim.direction = MOVE_RIGHT
+          }
+        }
+      }
 
   }
+  
 
   canDash(){
 
@@ -340,6 +361,33 @@ export class GameloopService {
 
   }
 
+  getSlimCollision() {
+    this.playerBlocY = Math.round(this.gameService.playerY / 32)
+    this.playerBlocX = Math.round(this.gameService.playerX / 32)
+    for (let i = 0; i < this.mapService.slims.length; i++) {
+      let posX = this.mapService.slims[i].posX;
+      let posY = this.mapService.slims[i].posY;
+      let differanceX = Math.abs(this.playerBlocX - posX);
+      let differanceY = Math.abs(this.playerBlocY - posY)
+
+
+      if (differanceX < 1 && differanceY < 1) {
+        this.gameService.death = ISDEAD
+        this.isDead = new Date()
+      }
+      if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
+       
+        this.stop = true
+        this.gameOver()    
+        this.gameMusic.pause() 
+        this.gameMusic.currentTime = 0
+
+
+      }
+    }
+
+  }
+
 
   monsterDeath() {
 
@@ -397,6 +445,35 @@ export class GameloopService {
         }
         }
       }
+
+      monsterDeathSlim() {
+
+        for (let j = 0; j < this.gameService.fireBalls.length; j++) {
+          this.fireBlocX = Math.round(this.gameService.fireBalls[j].posX / 32)
+          this.fireBlocY = Math.round(this.gameService.fireBalls[j].posY / 32)
+    
+          for (let i = 0; i < this.mapService.slims.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
+            let posX = this.mapService.slims[i].posX;
+            let posY = this.mapService.slims[i].posY;
+            let diffX = Math.abs(this.fireBlocX - posX)
+            let diffY = Math.abs(this.fireBlocY - posY)
+    
+    
+            if (diffX < 0.3 && diffY < 2.5) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+              //need death animation with date method here voir getMonsterCollision
+              this.mapService.slims.splice(i, 1)
+              this.gameService.fireBalls.splice(j, 1)
+              this.osDie = new Audio()
+              this.osDie.src = "assets/audio/osMonsterDie.mp3"
+              this.osDie.load()
+              this.osDie.play()
+    
+    
+            }
+    
+          }
+          }
+        }
 
 isTheEnd(playerBlocX, playerBlocY){
   this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
@@ -572,10 +649,13 @@ isOnFire(){
     this.isOnFire()
     this.getMonsterCollision()
     this.getOgrCollision()
+    this.getSlimCollision()
     this.monsterDeath()
     this.monsterDeathOgr()
+    this.monsterDeathSlim()
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
+    this.moveSlim()
     this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
     this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
@@ -625,6 +705,9 @@ isOnFire(){
       new OgrMonster(45, 6.2),
       new OgrMonster(140, 18.2),
       new OgrMonster(10, 11.2),
+    ]
+    this.mapService.slims = [
+      new SlimMonster(86, 18.8),
     ]
   }
 
