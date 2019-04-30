@@ -10,7 +10,7 @@
         'ninjaStatic' : gameService.move === 0 && gameService.isOnFire === 0 && gameService.playerStat === 11 && gameService.kick !==13,
         'ninjaWalk' :  gameService.move !== 0  && gameService.isOnFire === 0 && gameService.playerStat === 11  ,
         'ninjaAxe' : gameService.isOnFire === 12 && gameService.playerStat === 11 && gameService.kick !==13 ,
-        'ninjaKick' : gameService.kick === 13 
+        'ninjaKick' : gameService.kick === 13 && gameService.playerStat === 11
 
      }"
   [ngStyle]="{'transform': 'translateX(' + gameService.playerX + 'px) translateY('+gameService.playerY +'px) scaleX('+ gameService.playerScaleX + ')'}">
