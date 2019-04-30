@@ -86,6 +86,7 @@
     width:36px;
     background: url('/assets/textures/ninjaStatic.png/');
     transform: scaleX(-1);
+    top : -20px;
   }
 
   .ninjaAxe {
@@ -96,6 +97,7 @@
     background: url('/assets/Sprites/ninjaAxe.png/');
     transform: scaleX(-1);
     animation: ninjaAxe 0.45s steps(6) infinite;
+    top: -20px;
   }
 
   .Axes {
