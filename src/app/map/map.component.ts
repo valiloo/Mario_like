@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { MapService, MapTheme } from '../map.service';
 import { GameloopService } from '../gameloop.service';
 
@@ -8,7 +8,8 @@ import { GameloopService } from '../gameloop.service';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit {
+
+export class MapComponent implements OnInit, OnDestroy {
 
   map = []
 
@@ -28,7 +29,10 @@ export class MapComponent implements OnInit {
   }
   
 
-
+  ngOnDestroy() {
+    this.gameLoop.gameMusic.pause()
+    this.gameLoop.gameMusic = null
+  }
 
 
 
@@ -40,16 +44,16 @@ export class MapComponent implements OnInit {
 
 
 
-/* 
-  startTimer() {
-    this.interval = setInterval(() => {
-      if(this.timeLeft <1000) {
-        this.timeLeft++;
-      } else {
-        this.timeLeft = 0;
-      }
-    },1000)
-  }  */
+  /* 
+    startTimer() {
+      this.interval = setInterval(() => {
+        if(this.timeLeft <1000) {
+          this.timeLeft++;
+        } else {
+          this.timeLeft = 0;
+        }
+      },1000)
+    }  */
 
 
 

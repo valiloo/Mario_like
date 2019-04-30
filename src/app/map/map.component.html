@@ -2,7 +2,7 @@
 <body>
 
   <app-player></app-player>
-  <div class="game-view" [ngStyle]="{'background': 'url(assets/textures/test_fond.jpg) no-repeat fixed 100%'}">
+  <div class="game-view">
     <div class="map">
       <div class="row" *ngFor="let row of mapService.map">
         <div class="col" *ngFor="let case of row">
@@ -12,16 +12,22 @@
       </div>
     </div>
 
-    <div *ngFor="let monster of mapService.monsters" class="OsMonster" [ngStyle]="{top: '' + monster.posY * 32 + 'px', left: '' + monster.posX * 32 + 'px'}"></div> 
-    <div *ngFor="let ogr of mapService.ogrs" class="OgrMonster" [ngStyle]="{top: '' + ogr.posY * 32 + 'px', left: '' + ogr.posX * 32 + 'px'}"></div> 
-   <div *ngFor="let piece of mapService.pieces" class="piece"  [ngStyle]="{top: '' + piece.posY *  32 + 'px', left: '' + piece.posX * 32 + 'px'}"></div>
 
-  <img src="/assets/textures/stopwatch.png" class="stopwatch">
-  
 
-  <h4><span class="time">{{ (time>=0) ? time: "Go !" }} </span></h4>
-  <div class="myCompt">{{ gameLoop.compt}} PTS</div>
-  
-  
-  </div>
+    <div *ngFor="let monster of mapService.monsters" class="OsMonster" [ngStyle]="{top: '' + monster.posY * 32 + 'px', left: '' + monster.posX * 32 + 'px','transform': 'scaleX(' + monster.scaleX + ')'}"></div> 
+    <div *ngFor="let ogr of mapService.ogrs" class="OgrMonster" [ngStyle]="{top: '' + ogr.posY * 32 + 'px', left: '' + ogr.posX * 32 + 'px', 'transform': 'scaleX(' + ogr.scaleX + ')'}"></div> 
 
+
+    <div *ngFor="let slim of mapService.slims" class="SlimMonster" [ngStyle]="{top: '' + slim.posY * 32 + 'px', left: '' + slim.posX * 32 + 'px', 'transform': 'scaleX(' + slim.scaleX + ')'}"></div> 
+    <div *ngFor="let druid of mapService.druids" class="DruidMonster" [ngStyle]="{top: '' + druid.posY * 32 + 'px', left: '' + druid.posX * 32 + 'px', 'transform': 'scaleX(' + druid.scaleX + ')'}"></div> 
+    <div *ngFor="let piece of mapService.pieces" class="piece"  [ngStyle]="{top: '' + piece.posY *  32 + 'px', left: '' + piece.posX * 32 + 'px'}"></div>
+
+
+<!--   <img src="/assets/textures/stopwatch.png" class="stopwatch">
+  <h4><span class="time">{{ (time>=0) ? time: "Go !" }} </span></h4> -->
+
+  <div class="avatar"></div>
+  <div class="coinAvatar"></div>
+  <div class="myCompt">{{ gameLoop.compt}}  X </div>
+ 
+</div>

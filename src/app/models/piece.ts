@@ -1,17 +1,5 @@
 export class Piece {
-    constructor(
-                public posY,
-                public posX ){
 
-    }
+    constructor(public posX,public posY){}
 }
-
-
-
-
-
-
-
-
-
 
