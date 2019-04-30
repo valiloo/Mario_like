@@ -368,12 +368,19 @@ export class GameloopService {
         
 
       }
-      if(this.mapService.monsters[i].isFlying === true){
+      if(this.mapService.monsters[i].isFlying === true && this.mapService.monsters[i].scaleX === 1){
 
         this.mapService.monsters[i].posX += 0.5
         this.mapService.monsters[i].posY -= 0.2
         this.mapService.monsters[i].isRotating += 10
       }
+      if(this.mapService.monsters[i].isFlying === true && this.mapService.monsters[i].scaleX === -1){
+
+        this.mapService.monsters[i].posX -= 0.5
+        this.mapService.monsters[i].posY -= 0.2
+        this.mapService.monsters[i].isRotating += 10
+      }
+
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
 
 
@@ -410,13 +417,20 @@ export class GameloopService {
         this.mapService.ogrs[i].isFlying = true
         
       }
-      if(this.mapService.ogrs[i].isFlying === true){
+      if(this.mapService.ogrs[i].isFlying === true && this.mapService.ogrs[i].scaleX === 1){
 
         this.mapService.ogrs[i].posX += 0.5
         this.mapService.ogrs[i].posY -= 0.2
         this.mapService.ogrs[i].isRotating += 10
       }
+      if(this.mapService.ogrs[i].isFlying === true && this.mapService.ogrs[i].scaleX === -1){
 
+        this.mapService.ogrs[i].posX -= 0.5
+        this.mapService.ogrs[i].posY -= 0.2
+        this.mapService.ogrs[i].isRotating += 10
+      }
+
+ 
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
 
         this.gameOver()
@@ -451,12 +465,24 @@ export class GameloopService {
         this.mapService.slims[i].isFlying = true
 
       }
-      if(this.mapService.slims[i].isFlying === true){
+      if(this.mapService.slims[i].isFlying === true && this.mapService.slims[i].scaleX === 1){
 
         this.mapService.slims[i].posX += 0.5
         this.mapService.slims[i].posY -= 0.2
         this.mapService.slims[i].isRotating += 10
       }
+      if(this.mapService.slims[i].isFlying === true && this.mapService.slims[i].scaleX === -1){
+
+        this.mapService.slims[i].posX -= 0.5
+        this.mapService.slims[i].posY -= 0.2
+        this.mapService.slims[i].isRotating += 10
+      }
+
+      if(this.mapService.slims[i].isFlying === true && (this.mapService.slims[i].posX > this.gameService.playerX + this.innerWidth / 2 || this.mapService.slims[i].posX < this.gameService.playerX - this.innerWidth/2)){
+
+        this.mapService.slims.splice(i,1)
+  
+       }
 
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
 
@@ -492,12 +518,24 @@ export class GameloopService {
         this.mapService.druids[i].isFlying = true
 
       }
-      if(this.mapService.druids[i].isFlying === true){
+      if(this.mapService.druids[i].isFlying === true && this.mapService.druids[i].scaleX === 1){
 
         this.mapService.druids[i].posX += 0.5
         this.mapService.druids[i].posY -= 0.2
         this.mapService.druids[i].isRotating += 10
       }
+
+      if(this.mapService.druids[i].isFlying === true && this.mapService.druids[i].scaleX === -1){
+
+        this.mapService.druids[i].posX -= 0.5
+        this.mapService.druids[i].posY -= 0.2
+        this.mapService.druids[i].isRotating += 10
+      }
+     if(this.mapService.druids[i].isFlying === true && (this.mapService.druids[i].posX > this.gameService.playerX + this.innerWidth / 2 || this.mapService.druids[i].posX < this.gameService.playerX - this.innerWidth/2)){
+
+      this.mapService.druids.splice(i,1)
+
+     }
 
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
 
