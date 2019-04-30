@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MapService } from './map.service';
 import { Tir } from './models/tir';
+import { Piece } from './models/piece';
 
 export const MOVE_RIGHT = 1
 export const MOVE_LEFT = 2
@@ -31,10 +32,14 @@ public isOnFire : any = 0
 public fireBalls : Tir[] = []
 public death : number = 0
 public dash : any = 0
+
 public startTime: Date
 public gameDuration : number = 0;
 public endTime: Date;
 
+
+
+public piecePos: Piece[] = []
 
 
 

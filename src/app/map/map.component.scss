@@ -27,12 +27,12 @@ div {
 .OsMonster {
   width: 65px;
   height: 71px;
-  background: url("/assets/Sprites/os1.png");
+  background: url("/assets/Sprites/os.png");
   position: absolute;
   top: 0;
   left: 0;
-  animation: moveX 3s steps(9) infinite, moveY 3s steps(4) infinite;
-  transform: scaleX(-1);
+  animation: moveX 3s steps(9) infinite;
+  transform: scaleX(1);
 }
 @keyframes moveX {
   from {
@@ -53,13 +53,33 @@ div {
 
 .OgrMonster {
   width: 64px;
-  height: 64px;
-  background: url("/assets/Sprites/ogr.png");
+  height: 71px;
+  background: url("/assets/Sprites/ogr1.png");
   position: absolute;
   top: O;
   left: 20px;
-  animation: moveX 3s steps(9) infinite, moveY 3s steps(4) infinite;
+  animation: moveX 3s steps(9) infinite;
   transform: scaleX(-1);
+}
+
+.SlimMonster {
+  width: 43px;
+  height: 48px;
+  background: url("/assets/Sprites/slim.png");
+  position: absolute;
+  top: O;
+  left: 20px;
+  animation: moveS 1s steps(8) infinite;
+  transform: scaleX(-1);
+}
+
+@keyframes moveS {
+  from {
+    background-position-x: 0px;
+  }
+  to {
+    background-position-x: -399px;
+  }
 }
 
 /* .stopwatch {
@@ -82,4 +102,32 @@ div {
   font-size: 40px;
   margin-left: 80px;
   text-align: center;
+
+.piece{
+  height: 37px;
+  width: 37px;
+  background: url('/assets/Sprites/coinMotion.png');
+  animation: parX 0.6s steps(3) infinite,
+  parY 0.6s steps(2) infinite; 
+  position: absolute;
+  top: 300px;
+  left: 300px;
+}
+
+@keyframes parX{
+  from{background-position-x: 0px; }
+  to{ background-position-x: 8100px; }
+}
+
+@keyframes parY{
+  from{ background-position-y: 0px; }
+  to{ background-position-y: 100px; }
+}
+
+.myCompt{
+  font-size: 30px;
+  color: rgb(103, 5, 122);
+  position: fixed;
+  left: 1300px;
+
 }

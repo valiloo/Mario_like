@@ -8,8 +8,14 @@
 <!-- <p class="endTime">{{ endTime }}"</p>
  -->
  <p class="endTime"> {{ gameService.gameDuration }}></p>
+
   <button [routerLink]="['/player']">PLAY AGAIN</button>
   <button [routerLink]="['/menu']">MENU</button>
 
 
+
+
+  <audio #audioOption>
+    <source src='/assets/audio/winSong.mp3' type="audio/mp3">
+  </audio>
 </div>

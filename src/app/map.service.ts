@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 
 import {  OsMonster, } from './models/monster';
 import {OgrMonster} from './models/ogr';
+import { SlimMonster} from './models/slim'
 import { mapChildrenIntoArray } from '@angular/router/src/url_tree';
+import { Piece } from './models/piece';
 
 
 const VI = 0
@@ -145,13 +147,34 @@ export class MapService {
 
 
   public monsters : OsMonster[] = [
-    new OsMonster(29, 18.2),
+    new OsMonster(24, 18.2),
     new OsMonster(39, 18.2),
+    new OsMonster(70, 18.2),
+    new OsMonster(120, 18.2)
   ]
-  public ogrs: OgrMonster[] = [new OgrMonster(40, 18),]
+  public ogrs: OgrMonster[] = [
+    new OgrMonster(110, 8.2), 
+    new OgrMonster(45, 6.2), 
+    new OgrMonster(140, 18.2),
+    new OgrMonster(10, 11.2),
+  ]
+  public slims: SlimMonster[] = [
+    new SlimMonster(86, 18.8)
+  ]
 
   
-    
+  public pieces : Piece[] = [
+    new Piece(10, 8),
+    new Piece(25, 5),
+    new Piece(45, 3),
+    new Piece(45, 14),
+    new Piece(42, 3),
+    new Piece(62, 15),
+    new Piece(75, 8),
+    new Piece(98.5, 9),
+    new Piece(127.3, 8),
+    new Piece(145.5, 9),
+]  
 
   
 
