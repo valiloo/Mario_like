@@ -53,6 +53,7 @@ export class GameloopService {
   public jumpDown
   public deathSound
   public lockScale
+  public lastPosX
   // this.deathSound = new Audio()
   //this.deathSound.src = "assets/audio/death.ogg"
   //this.deathSound.load()
@@ -492,82 +493,82 @@ isTheEnd(playerBlocX, playerBlocY){
     return false
     }
 }
-isOnFire(){
-    this.innerWidth = window.innerWidth
+isOnFire() {
+  this.lastPosX = this.gameService.playerX
+  this.innerWidth = window.innerWidth
 
 
-    // Utile pour déterminer avec précision le sprite de la première balle selon l' orientation du personnage
+  // Utile pour déterminer avec précision le sprite de la première balle selon l' orientation du personnage
 
 
-    if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === -1) {
-      this.lockScale = -1
-      let fireBall = new Tir(this.gameService.playerX + 70, (this.gameService.playerY - 10) + this.gameService.playerHeight / 2);
-      this.gameService.fireBalls.push(fireBall)
-      this.lastFireballDate = new Date();
-      this.gunSound = new Audio();
-      this.gunSound.src = "assets/audio/gun.mp3"
-      this.gunSound.load()
-      this.gunSound.play()
+  if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === -1) {
+    this.lastPosX = this.gameService.playerX
+    let fireBall = new Tir(this.gameService.playerX + 70, this.gameService.playerY + this.gameService.playerHeight / 2);
+    this.gameService.fireBalls.push(fireBall)
+    this.lastFireballDate = new Date();
+    this.gunSound = new Audio();
+    this.gunSound.src = "assets/audio/gun.mp3"
+    this.gunSound.load()
+    this.gunSound.play()
+  }
+
+  if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === 1) {
+    this.lastPosX = this.gameService.playerX
+    let fireBall = new Tir(this.gameService.playerX, this.gameService.playerY + this.gameService.playerHeight / 2);
+    this.gameService.fireBalls.push(fireBall)
+    this.lastFireballDate = new Date();
+    this.gunSound = new Audio();
+    this.gunSound.src = "assets/audio/gun.mp3"
+    this.gunSound.load()
+    this.gunSound.play()
+  }
+
+
+
+  if (this.gameService.playerScaleX === -1) {  //Comportement des balles lorsque le personnage est orienté vers la droite
+    for (let i = 0; i < this.gameService.fireBalls.length; i++) {
+
+      if (this.gameService.fireBalls[i].posX <= this.lastPosX + (this.innerWidth / 2) && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
+        this.gameService.fireBalls[i].posX += 10
+      }
+      else {
+        this.gameService.fireBalls.splice(i, 1)
+
+      }
+
     }
+  }
+  else if (this.gameService.playerScaleX === 1) {  // Comportement des balles lorsque le personnage est orienté vers la gauche
 
-    if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === 1) {
-      this.lockScale = 1
-      let fireBall = new Tir(this.gameService.playerX, (this.gameService.playerY - 10) + this.gameService.playerHeight / 2);
-      this.gameService.fireBalls.push(fireBall)
-      this.lastFireballDate = new Date();
-      this.gunSound = new Audio();
-      this.gunSound.src = "assets/audio/gun.mp3"
-      this.gunSound.load()
-      this.gunSound.play()
-    }
+    for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
-
-
-    if (this.lockScale == -1) {  //Comportement des balles lorsque le personnage est orienté vers la droite
-      for (let i = 0; i < this.gameService.fireBalls.length; i++) {
-
-        if (this.gameService.fireBalls[i].posX <= this.gameService.fireBalls[i].initX + (this.innerWidth / 2) ) {
-          this.gameService.fireBalls[i].posX += 10
-        }
-        else {
-          this.gameService.fireBalls.splice(i, 1)
-
-        }
+      if (this.gameService.fireBalls[i].posX >= this.gameService.playerX - (this.innerWidth / 2) && this.gameService.fireBalls[i].posX <= this.gameService.playerX) {
+        this.gameService.fireBalls[i].posX -= 10 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
+        // Dès que la balle sort de l' écran elle disparaît
+      }
+      else {
+        this.gameService.fireBalls.splice(i, 1)
 
       }
     }
-    else if (this.lockScale == 1) {  // Comportement des balles lorsque le personnage est orienté vers la gauche
+  }
 
-      for (let i = 0; i < this.gameService.fireBalls.length; i++) {
+  //Permet de voir l'animation du personnage lorsqu' il rengaine
+  if (this.gameService.isOnFire === FINTIR && this.timerEndFire === 0) {
 
-        if (this.gameService.fireBalls[i].posX >= this.gameService.fireBalls[i].initX - (this.innerWidth / 2) ) {
-          this.gameService.fireBalls[i].posX -= 10 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
-          // Dès que la balle sort de l' écran elle disparaît
-        }
-        else  {
-          this.gameService.fireBalls.splice(i, 1)
-
-        }
-      }
-    }
-
-    //Permet de voir l'animation du personnage lorsqu' il rengaine
-    if (this.gameService.isOnFire === FINTIR && this.timerEndFire === 0) {
-
-      this.gameService.isOnFire = 0
+    this.gameService.isOnFire = 0
 
 
-    }
+  }
 
-    if (this.timerEndFire <= 0) {
-      this.timerEndFire = 5
-    }
+  if (this.timerEndFire <= 0) {
+    this.timerEndFire = 5
+  }
 
-    if (this.gameService.isOnFire !== ISONFIRE && this.gameService.isOnFire === FINTIR) {
-      this.timerEndFire -= 1
-    }
+  if (this.gameService.isOnFire !== ISONFIRE && this.gameService.isOnFire === FINTIR) {
+    this.timerEndFire -= 1
+  }
 }
-
 
 
   // fonction gerant la collision a droite //
