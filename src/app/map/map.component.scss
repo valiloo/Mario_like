@@ -112,6 +112,7 @@ div {
   font-size: 40px;
   margin-left: 80px;
   text-align: center;
+}
 
 .piece{
   height: 37px;
@@ -159,13 +160,5 @@ div {
   height : 36px ;
   width : 36px;
   top : 48px;
-  left : 120px
-}
-
-.borderFrame {
-  background: url('/assets/Sprites/frameBorder.png') no-repeat;
-  position: fixed ;
-  height : 270px;
-  width : 263px;
-
+  left : 120px;
 }

@@ -64,7 +64,7 @@ export class GameloopService {
   //this.deathSound.load()
   //this.deathSound.play()
 
-  public lastPosX
+  
 
 
 
@@ -200,7 +200,8 @@ export class GameloopService {
 
       }
 
-    }
+    
+  
 
 
     // si aucune touche enfonce, le perso sera immobile //
@@ -476,6 +477,7 @@ export class GameloopService {
 
       }
     }
+  }
 
     monsterDeathAxes() {
 
@@ -654,26 +656,12 @@ isTheEnd(playerBlocX, playerBlocY){
   this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
   
   if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
-    this.getTimePlayed()
     this.youWin()
     return true
   }
+}
 
-  isTheEnd(playerBlocX, playerBlocY) {
-    this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
-    this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel vers une valeur de l'array de la carte  //
-    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
-
-    if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
-     // this.getTimePlayed()
-      this.youWin()
-      return true
-    }
-
-    else if (this.mapTheme.blocs[this.cell].isEnd === false) {
-      return false
-    }
-  }
+  
   isOnFire() {
     this.lastPosX = this.gameService.playerX
     this.innerWidth = window.innerWidth
