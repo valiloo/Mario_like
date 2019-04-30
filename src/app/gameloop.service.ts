@@ -64,7 +64,6 @@ export class GameloopService {
   //this.deathSound.load()
   //this.deathSound.play()
 
-  public lastPosX
 
 
 
