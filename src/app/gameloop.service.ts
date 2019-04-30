@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, ISDEAD ,DASH } from './gamestate.service';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, ISDEAD, DASH } from './gamestate.service';
 import { MapTheme, MapService, } from './map.service';
 import { Tir } from './models/tir'
 import { Router } from '@angular/router';
@@ -34,9 +34,9 @@ export class GameloopService {
   public fireBall
   public lastFireballDate = new Date();
   public isDead = new Date();
-  public startTime: number
-  public endTime: number
-  public canStopTime: boolean = true
+  //public startTime: number
+  //public endTime: number
+  //public canStopTime: boolean = true
   public jumpNumber: number = 2
   public jumpSound
   public gameMusic
@@ -56,7 +56,7 @@ export class GameloopService {
   //this.deathSound.src = "assets/audio/death.ogg"
   //this.deathSound.load()
   //this.deathSound.play()
-  public lastPosX 
+  public lastPosX
 
 
 
@@ -67,7 +67,7 @@ export class GameloopService {
     this.gameMusic = new Audio();
     this.gameMusic.src = "assets/audio/songMap.mp3"
     this.gameMusic.load()
-    this.gameMusic.play()   
+    this.gameMusic.play()
   }
 
 
@@ -109,7 +109,7 @@ export class GameloopService {
       this.gameService.playerX += 6 // deplace le personnage de 8px sur la droite //
       this.move = 1 // indique le mouvement en cours //
       this.jumpDown = 3
-    
+
 
 
 
@@ -126,9 +126,9 @@ export class GameloopService {
 
     }
 
-    if ((this.gameService.dash === DASH)  && this.gameService.playerScaleX === 1 && this.dashCount >0) {
+    if ((this.gameService.dash === DASH) && this.gameService.playerScaleX === 1 && this.dashCount > 0) {
 
-  
+
       this.gameService.xVelocity = 0
       this.gameService.playerX -= 40 // deplace le personnage de 8px sur la gauche//
       this.dashCount -= 1
@@ -137,7 +137,7 @@ export class GameloopService {
 
     }
 
-    if ((this.gameService.dash === DASH) && this.gameService.playerScaleX === -1  && this.dashCount >0)  {
+    if ((this.gameService.dash === DASH) && this.gameService.playerScaleX === -1 && this.dashCount > 0) {
 
       this.gameService.xVelocity = 0
       this.gameService.playerX += 40 // deplace le personnage de 8px sur la droite //
@@ -146,60 +146,60 @@ export class GameloopService {
       this.jumpDown = 3
 
     }
-    else if( this.gameService.dash !== DASH && this.dashCount === 0 && new Date().getTime() - this.dash.getTime() > 3000){
+    else if (this.gameService.dash !== DASH && this.dashCount === 0 && new Date().getTime() - this.dash.getTime() > 3000) {
       this.gameService.xVelocity = MOVE_FORWARD
       this.dashCount = 2
-      
+
     }
 
 
     if (this.gameService.playerY > 650) {
       this.gameService.playerY = 0
       this.gameOver()
-      this.gameMusic.pause() 
+      this.gameMusic.pause()
       this.gameMusic.currentTime = 0
 
     }
 
 
-      if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
-        this.jump = 45 // gere l'animation de saut //
-        this.jumpNumber -= 1 // retire un du nombre de saut disponible //
-        this.jumpSound = new Audio()
-        this.jumpSound.src = "assets/audio/jump.mp3"
-        this.jumpSound.load()
-        this.jumpSound.play()
-        this.jumpDown = 1
-        
-  
-  
-        for (let i = 0; i <= 6; i++) { // boucle for decoupant le saut en 6 partie //
-          if (this.jumpNumber === 0) { // si plus de saut disponible //
-            this.canJump = false // ne peux plus sauter avant de toucher le sol //
-  
-          } 
-          
-          if (this.getTopCollision(this.playerBlocX, this.playerBlocY)) { // check tout les 32px / tout les blocs si le bloc du dessus est traversable //
-              this.gameService.playerY -= 20 // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
-              this.gameService.yVelocity = 0 // indication saut //
-            }
-          
-          }
+    if (this.gameService.yVelocity === MOVE_UPWARD && this.gameService.playerY > 150 && this.getTopCollision(this.playerBlocX, this.playerBlocY) && (this.canJump === true)) {
+      this.jump = 45 // gere l'animation de saut //
+      this.jumpNumber -= 1 // retire un du nombre de saut disponible //
+      this.jumpSound = new Audio()
+      this.jumpSound.src = "assets/audio/jump.mp3"
+      this.jumpSound.load()
+      this.jumpSound.play()
+      this.jumpDown = 1
 
-      }
-    
 
-    // si aucune touche enfonce, le perso sera immobile //
-    else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
-      if (this.getBottomCollision(this.playerBlocX,this.playerBlocY) === true){
-      this.move = 0
-      }
-      else if (this.getBottomCollision(this.playerBlocX, this.playerBlocY)=== false) {
-      this.jumpDown = 3
+
+      for (let i = 0; i <= 6; i++) { // boucle for decoupant le saut en 6 partie //
+        if (this.jumpNumber === 0) { // si plus de saut disponible //
+          this.canJump = false // ne peux plus sauter avant de toucher le sol //
+
+        }
+
+        if (this.getTopCollision(this.playerBlocX, this.playerBlocY)) { // check tout les 32px / tout les blocs si le bloc du dessus est traversable //
+          this.gameService.playerY -= 20 // si le bloc est traversable le jump augmente de 32 px / 1 bloc //
+          this.gameService.yVelocity = 0 // indication saut //
+        }
+
       }
 
     }
 
+
+    // si aucune touche enfonce, le perso sera immobile //
+    else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
+      if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === true) {
+        this.move = 0
+      }
+      else if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === false) {
+        this.jumpDown = 3
+      }
+
+    }
+    this.gameService.gameDuration = new Date().getTime() - this.gameService.startTime.getTime()
   }
 
 
@@ -210,7 +210,7 @@ export class GameloopService {
     window.scroll(this.gameService.playerX - ((this.innerWidth / 2) - 27), this.gameService.playerY) // bloque le scroll de page sur la position X du joueur - la moitie de l'ecran //
   }
 
-  getTimePlayed() {
+/*   getTimePlayed() {
     if (this.canStopTime === true) {
       this.endTime = Math.floor((Date.now() - this.startTime) / 1000)
 
@@ -218,7 +218,7 @@ export class GameloopService {
 
     }
   }
-
+ */
   // fonction faisant se deplacer les monstres //
   moveMonster() {
     for (let index in this.mapService.monsters) {
@@ -263,26 +263,26 @@ export class GameloopService {
 
   }
 
-  canDash(){
+  canDash() {
 
-    if ((this.gameService.dash === DASH)  && this.gameService.playerScaleX === 1 && new Date().getTime() - this.dash.getTime() > 50 ){
+    if ((this.gameService.dash === DASH) && this.gameService.playerScaleX === 1 && new Date().getTime() - this.dash.getTime() > 50) {
 
-  
+
 
       this.gameService.playerX -= 20 // deplace le personnage de 8px sur la gauche//
       this.dash = new Date();
       this.jumpDown = 3
-    
+
 
     }
 
-    if ((this.gameService.dash === DASH) && this.gameService.playerScaleX === -1 && new Date().getTime() - this.dash.getTime() > 50){
+    if ((this.gameService.dash === DASH) && this.gameService.playerScaleX === -1 && new Date().getTime() - this.dash.getTime() > 50) {
 
-  
+
       this.gameService.playerX += 20 // deplace le personnage de 8px sur la droite //
-      this.dash= new Date();
+      this.dash = new Date();
       this.jumpDown = 3
-  
+
 
     }
   }
@@ -301,10 +301,10 @@ export class GameloopService {
         this.isDead = new Date()
       }
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
-       
+
         this.stop = true
-        this.gameOver()    
-        this.gameMusic.pause() 
+        this.gameOver()
+        this.gameMusic.pause()
         this.gameMusic.currentTime = 0
 
 
@@ -338,24 +338,24 @@ export class GameloopService {
         }
 
       }
-      }
     }
-
-isTheEnd(playerBlocX, playerBlocY){
-  this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
-  this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel vers une valeur de l'array de la carte  //
-  this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
-  
-  if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
-    this.getTimePlayed()
-    this.youWin()
-    return true
   }
-  else if (this.mapTheme.blocs[this.cell].isEnd === false) {
-    return false
+
+  isTheEnd(playerBlocX, playerBlocY) {
+    this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
+    this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel vers une valeur de l'array de la carte  //
+    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
+
+    if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
+     // this.getTimePlayed()
+      this.youWin()
+      return true
     }
-}
-isOnFire(){
+    else if (this.mapTheme.blocs[this.cell].isEnd === false) {
+      return false
+    }
+  }
+  isOnFire() {
     this.lastPosX = this.gameService.playerX
     this.innerWidth = window.innerWidth
 
@@ -390,7 +390,7 @@ isOnFire(){
     if (this.gameService.playerScaleX === -1) {  //Comportement des balles lorsque le personnage est orienté vers la droite
       for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
-        if (this.gameService.fireBalls[i].posX <= this.lastPosX+ (this.innerWidth / 2) && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
+        if (this.gameService.fireBalls[i].posX <= this.lastPosX + (this.innerWidth / 2) && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
           this.gameService.fireBalls[i].posX += 10
         }
         else {
@@ -509,9 +509,11 @@ isOnFire(){
   }
 
   start() {
+    this.gameService.startTime = new Date()
+
     this.reInit() // Reinitialise toutes les variables
     this.loop() // lance le loop au lancement du jeu //
-    this.startTime = Date.now()
+    //this.startTime = Date.now()
     this.playGameMusic()
 
 
@@ -522,7 +524,7 @@ isOnFire(){
     this.route.navigate(['/Over'])
   }
 
-  youWin(){
+  youWin() {
     this.route.navigate(['/win'])
   }
 
@@ -538,7 +540,7 @@ isOnFire(){
     this.gameService.isOnFire = 0
     this.gameService.fireBalls = []
     this.gameService.death = 0
-    this.mapService.monsters =  [
+    this.mapService.monsters = [
       new OsMonster(29, 18.2),
       new OsMonster(39, 18.2),
     ]

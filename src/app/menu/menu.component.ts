@@ -33,7 +33,7 @@ export class MenuComponent implements OnInit {
     this.menuMusic.load()
     this.menuMusic.play()
     setInterval(() => { if (this.time >= 0) this.time++; }, 1000);
-
+ 
   }
 
   ngOnDestroy() {

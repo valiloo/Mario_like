@@ -8,9 +8,9 @@ import { GameloopService } from '../gameloop.service';
 })
 export class WinPageComponent implements OnInit {
 
-  endTime = this.gameloop.endTime
+  /* endTime = this.gameloop.endTime
   constructor(private gameloop: GameloopService) {}
-    
+     */
    
 
 

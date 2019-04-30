@@ -2,13 +2,14 @@
 
   <h1>COOL COOL COOL GAME</h1>
 
-  <audio id="myaudio" src="/assets/son/cool.mp3"></audio>
-  <button onmouseover="document.getElementById('myAudio').play()" class="button curseur" [routerLink]="['/player']">Play Game</button> <br>
-  <button onmouseover="document.getElementById('myAudio').play()" class="button curseur" [routerLink]="['/settings']" >Settings</button> <br>
-  <button onmouseover="document.getElementById('myAudio').play()" class="button curseur">Exit</button>
+  <button class="button curseur" [routerLink]="['/player']">Play Game</button> <br>
+  <button class="button curseur" [routerLink]="['/settings']" >Settings</button> <br>
+  <button class="button curseur">Exit</button>
 
   
-
+<!-- <audio autoplay loop>
+  <source src="/assets/audio/musiqueMenu.mp3" type="audio/mp3">
+</audio> -->
 
   <router-outlet></router-outlet>
 

@@ -14,7 +14,7 @@
 
     <div *ngFor="let monster of mapService.monsters" class="OsMonster" [ngStyle]="{top: '' + monster.posY * 32 + 'px', left: '' + monster.posX * 32 + 'px'}"></div> 
     <div *ngFor="let ogr of mapService.ogrs" class="OgrMonster" [ngStyle]="{top: '' + ogr.posY * 32 + 'px', left: '' + ogr.posX * 32 + 'px'}"></div> 
-  
+    <p class="endTime"> {{ gameService.gameDuration }}></p>
 <!--   <img src="/assets/textures/stopwatch.png" class="stopwatch">
   <h4><span class="time">{{ (time>=0) ? time: "Go !" }} </span></h4> -->
 
