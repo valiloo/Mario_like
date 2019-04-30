@@ -12,7 +12,7 @@ export class WinPageComponent implements OnInit {
   
 
 
-  endTime = this.gameloop.endTime
+  
 
   constructor(private gameloop: GameloopService) { }
 

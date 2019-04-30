@@ -1,6 +1,6 @@
 
 import { Component, OnInit, HostListener, HostBinding, ElementRef, AfterContentChecked, AfterContentInit, DoCheck } from '@angular/core';
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, DASH } from '../gamestate.service';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, DASH, ISANINJA, THROWAXES } from '../gamestate.service';
 import { GameloopService } from '../gameloop.service';
 import { MapService } from '../map.service';
 import { MenuComponent } from '../menu/menu.component';
@@ -53,12 +53,18 @@ export class PlayerComponent implements OnInit{
       this.gameService.yVelocity = MOVE_UPWARD
     }
 
-    if(event.keyCode === KEY_CODE.EPOWER) {
+    if(event.keyCode === KEY_CODE.EPOWER && this.gameService.playerStat === 0) {
 
       this.gameService.isOnFire = ISONFIRE
       this.gameService.xVelocity = 0
       this.gameService.yVelocity = 0
 
+    }
+    if(event.keyCode === KEY_CODE.EPOWER && this.gameService.playerStat === ISANINJA){
+
+      this.gameService.isOnFire = THROWAXES
+      this.gameService.xVelocity = 0
+      this.gameService.yVelocity = 0
     }
     if (event.keyCode === KEY_CODE.DASH){
       this.gameService.dash = DASH
