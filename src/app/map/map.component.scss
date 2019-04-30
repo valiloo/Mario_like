@@ -82,6 +82,16 @@ div {
   }
 }
 
+.DruidMonster {
+  width: 99px;
+  height: 80px;
+  background: url("/assets/Sprites/druid.png");
+  position: absolute;
+  top: O;
+  left: 20px;
+  transform: scaleX(-1);
+}
+
 /* .stopwatch {
   position: fixed;
   width: 50px;
