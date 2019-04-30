@@ -59,6 +59,7 @@ export class GameloopService {
   public deathSound
   public lockScale
   public lastPosX
+  public axeSound
   // this.deathSound = new Audio()
   //this.deathSound.src = "assets/audio/death.ogg"
   //this.deathSound.load()
@@ -754,24 +755,24 @@ isThrowingAxes(){
 
   if (this.gameService.isOnFire === THROWAXES && new Date().getTime() - this.lastAxesDate.getTime() > 500 && this.gameService.playerScaleX === -1) {
     this.lastPosX = this.gameService.playerX
-    let axe = new Axes(this.gameService.playerX + 70, this.gameService.playerY + this.gameService.playerHeight / 2);
+    let axe = new Axes(this.gameService.playerX + 70, this.gameService.playerY - 30 + this.gameService.playerHeight / 2);
     this.gameService.axes.push(axe)
     this.lastAxesDate = new Date();
-    this.gunSound = new Audio();
-    this.gunSound.src = "assets/audio/gun.mp3"
-    this.gunSound.load()
-    this.gunSound.play()
+    this.axeSound = new Audio();
+    this.axeSound.src = "assets/audio/axes.mp3"
+    this.axeSound.load()
+    this.axeSound.play()
   }
 
   if (this.gameService.isOnFire === THROWAXES && new Date().getTime() - this.lastAxesDate.getTime() > 500 && this.gameService.playerScaleX === 1) {
     this.lastPosX = this.gameService.playerX
-    let axe = new Axes(this.gameService.playerX, this.gameService.playerY + this.gameService.playerHeight / 2);
+    let axe = new Axes(this.gameService.playerX, this.gameService.playerY - 30 + this.gameService.playerHeight / 2);
     this.gameService.axes.push(axe)
     this.lastAxesDate = new Date();
-    this.gunSound = new Audio();
-    this.gunSound.src = "assets/audio/gun.mp3"
-    this.gunSound.load()
-    this.gunSound.play()
+    this.axeSound = new Audio();
+    this.axeSound.src = "assets/audio/axes.mp3"
+    this.axeSound.load()
+    this.axeSound.play()
   }
 
 
