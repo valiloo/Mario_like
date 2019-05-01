@@ -63,6 +63,7 @@ export class GameloopService {
   public lockScale
   public lastPosX
   public axeSound
+  public lastBossAttack = new Date()
   // this.deathSound = new Audio()
   //this.deathSound.src = "assets/audio/death.ogg"
   //this.deathSound.load()
@@ -1141,19 +1142,23 @@ monsterDeathBossAxes() {
     }
   }
   bossAttack(){
+    this.innerWidth = window.innerWidth
 
-    if (this.gameService.boss === ISATTACKING ) {
+    if(((this.mapService.bosss[0].posX * 32) - (this.gameService.playerX)) < (this.innerWidth /2)){
+
+      this.gameService.boss = ISATTACKING
+    }
+    else {
+      this.gameService.boss = 0
+    }
+
+    if (this.gameService.boss === ISATTACKING && new Date().getTime() - this.lastBossAttack.getTime() > 1000) {
       
       let fireBall = new BossAttacks(this.mapService.bosss[0].posX, this.mapService.bosss[0].posY);
       this.gameService.bossAttacks.push(fireBall)
+      this.lastBossAttack = new Date()
     }
 
-     if (this.gameService.boss === ISATTACKING ) {
-
-      let fireBall = new BossAttacks(this.mapService.bosss[0].posX, this.mapService.bosss[0].posY);
-      this.gameService.bossAttacks.push(fireBall)
-
-    }
   
   if (this.mapService.bosss[0].scaleX === -1) {  //Comportement des balles lorsque le personnage est orienté vers la droite
     for (let i = 0; i < this.gameService.bossAttacks.length; i++) {
@@ -1204,7 +1209,8 @@ monsterDeathBossAxes() {
     this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
     this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
-    console.log(this.mapService.bosss[0].posX)
+    console.log(this.gameService.boss)
+
   }
 
 

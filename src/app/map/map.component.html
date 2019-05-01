@@ -21,7 +21,7 @@
     <div *ngFor="let piece of mapService.pieces" class="piece"  [ngStyle]="{top: '' + piece.posY *  32 + 'px', left: '' + piece.posX * 32 + 'px'}"></div>
     <div *ngFor="let boss of mapService.bosss" class="BossMonster" [ngStyle]="{top: '' + boss.posY * 32 + 'px', left: '' + boss.posX * 32 + 'px', 'transform': 'scaleX(' + boss.scaleX + ')'}"></div> 
     <div *ngFor="let fire of gameService.bossAttacks">
-      <div class="fireball" [ngStyle]="{top: '' + fire.posY+ 'px', left: '' + fire.posX+ 'px'}">
+      <div class="fireball" [ngStyle]="{top: '' + fire.posY * 32+ 'px', left: '' + fire.posX * 32+ 'px'}">
       </div>
     
     </div>
