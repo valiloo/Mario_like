@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, ISDEAD, DASH, THROWAXES, ISANINJA, SHOOTTHEMALL } from './gamestate.service';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, ISDEAD, DASH, THROWAXES, ISANINJA, SHOOTTHEMALL, ISATTACKING } from './gamestate.service';
 import { MapTheme, MapService, } from './map.service';
 import { Tir } from './models/tir'
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { SlimMonster } from './models/slim';
 import { Axes } from './models/axes';
 import { DruidMonster } from './models/druid';
 import { BossMonster} from './models/boss';
+import { BossAttacks } from './models/bossAttacks';
 
 
 
@@ -21,7 +22,6 @@ import { BossMonster} from './models/boss';
   providedIn: 'root'
 })
 export class GameloopService {
-
 
   public lastKick = new Date()
   public goNinja = new Date()
@@ -1006,7 +1006,7 @@ monsterDeath() {
 
   isaNinja() {
 
-    if (this.compt === 2) {
+    if (this.compt === 5) {
       this.goNinja = new Date()
       this.gameService.playerStat = ISANINJA
       this.compt = 0
@@ -1140,10 +1140,41 @@ monsterDeathBossAxes() {
     }
     }
   }
+  bossAttack(){
+
+    if (this.gameService.boss === ISATTACKING ) {
+      
+      let fireBall = new BossAttacks(this.mapService.bosss[0].posX, this.mapService.bosss[0].posY);
+      this.gameService.bossAttacks.push(fireBall)
+    }
+
+     if (this.gameService.boss === ISATTACKING ) {
+
+      let fireBall = new BossAttacks(this.mapService.bosss[0].posX, this.mapService.bosss[0].posY);
+      this.gameService.bossAttacks.push(fireBall)
+
+    }
+  
+  if (this.mapService.bosss[0].scaleX === -1) {  //Comportement des balles lorsque le personnage est orienté vers la droite
+    for (let i = 0; i < this.gameService.bossAttacks.length; i++) {
+
+        this.gameService.bossAttacks[i].posX += 10
+
+    }
+  }
+  else if (this.mapService.bosss[0].scaleX === 1) {  // Comportement des balles lorsque le personnage est orienté vers la gauche
+
+    for (let i = 0; i < this.gameService.bossAttacks.length; i++) {
+
+        this.gameService.bossAttacks[i].posX -= 10 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
+        // Dès que la balle sort de l' écran elle disparaît
+      }
+    }
+  }
 
 
   loop() {
-
+    
     this.stopKick()
     this.isaNinja()
     this.getPosPiece()
@@ -1169,10 +1200,11 @@ monsterDeathBossAxes() {
     this.moveSlim()
     this.moveDruid()
     this.moveBoss()
+    this.bossAttack()
     this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
     this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
-
+    console.log(this.mapService.bosss[0].posX)
   }
 
 

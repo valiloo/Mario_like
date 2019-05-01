@@ -22,7 +22,7 @@
   </div>
 </div>
 <div *ngFor="let tir of gameService.fireBalls">
-  <div class="fireball" [ngStyle]="{'transform': 'translateX(' + tir.posX + 'px) translateY('+ tir.posY +'px)'}">
+  <div class="fireball" [ngStyle]="{'transform': 'translateX(' + mapService.bosss[0].tir.posX + 'px) translateY('+ mapService.bosss[0].tir.posY +'px)'}">
   </div>
 
 </div>
