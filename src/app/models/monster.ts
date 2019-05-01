@@ -11,7 +11,9 @@ export class OsMonster extends Monster {
                 public  initPosY: number, 
                 public amplitude: number = 3, 
                 public direction = 1 /* MOVE_RIGHT */,
-                public scaleX = -1) {
+                public scaleX = -1,
+                public isFlying = false,
+                public isRotating = 0) {
 
         super('/assets/Sprites/os3.png', initPosX, initPosY)
     }
