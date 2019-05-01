@@ -360,7 +360,7 @@ export class GameloopService {
         this.isDead = new Date()
       }
 
-      if (differanceX < 2 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
+      if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
     
         this.gameService.kick = SHOOTTHEMALL
         this.lastKick = new Date()
@@ -410,7 +410,7 @@ export class GameloopService {
         this.isDead = new Date()
       }
 
-      if (differanceX < 2 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
+      if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
      
         this.gameService.kick = SHOOTTHEMALL
         this.lastKick = new Date()
@@ -458,7 +458,7 @@ export class GameloopService {
         this.isDead = new Date()
       }
 
-      if (differanceX < 2 && differanceY < 1 && this.gameService.playerStat === ISANINJA) {
+      if (differanceX < 3 && differanceY < 1 && this.gameService.playerStat === ISANINJA) {
 
         this.gameService.kick = SHOOTTHEMALL
         this.lastKick = new Date()
@@ -478,11 +478,6 @@ export class GameloopService {
         this.mapService.slims[i].isRotating += 10
       }
 
-      if(this.mapService.slims[i].isFlying === true && (this.mapService.slims[i].posX > this.gameService.playerX + this.innerWidth / 2 || this.mapService.slims[i].posX < this.gameService.playerX - this.innerWidth/2)){
-
-        this.mapService.slims.splice(i,1)
-  
-       }
 
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
 
@@ -511,7 +506,7 @@ export class GameloopService {
         this.isDead = new Date()
       }
 
-      if (differanceX < 2 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
+      if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
 
         this.gameService.kick = SHOOTTHEMALL
         this.lastKick = new Date()
@@ -531,11 +526,6 @@ export class GameloopService {
         this.mapService.druids[i].posY -= 0.2
         this.mapService.druids[i].isRotating += 10
       }
-     if(this.mapService.druids[i].isFlying === true && (this.mapService.druids[i].posX > this.gameService.playerX + this.innerWidth / 2 || this.mapService.druids[i].posX < this.gameService.playerX - this.innerWidth/2)){
-
-      this.mapService.druids.splice(i,1)
-
-     }
 
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
 
@@ -563,7 +553,7 @@ export class GameloopService {
         let diffY = Math.abs(this.fireBlocY - posY)
 
 
-        if (diffX < 0.15 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.monsters.splice(i, 1)
           this.gameService.fireBalls.splice(j, 1)
@@ -591,7 +581,7 @@ export class GameloopService {
         let diffY = Math.abs(this.fireBlocY - posY)
 
 
-        if (diffX < 0.3 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.monsters.splice(i, 1)
           this.gameService.axes.splice(j, 1)
@@ -619,7 +609,7 @@ export class GameloopService {
         let diffY = Math.abs(this.fireBlocY - posY)
 
 
-        if (diffX < 0.15 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.ogrs.splice(i, 1)
           this.gameService.fireBalls.splice(j, 1)
@@ -647,7 +637,7 @@ export class GameloopService {
         let diffY = Math.abs(this.fireBlocY - posY)
 
 
-        if (diffX < 0.3 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.ogrs.splice(i, 1)
           this.gameService.axes.splice(j, 1)
@@ -676,7 +666,7 @@ export class GameloopService {
         let diffY = Math.abs(this.fireBlocY - posY)
 
 
-        if (diffX < 0.15 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.slims.splice(i, 1)
           this.gameService.fireBalls.splice(j, 1)
@@ -704,7 +694,7 @@ export class GameloopService {
         let diffY = Math.abs(this.fireBlocY - posY)
 
 
-        if (diffX < 0.15 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.slims.splice(i, 1)
           this.gameService.axes.splice(j, 1)
@@ -733,7 +723,7 @@ export class GameloopService {
         let diffY = Math.abs(this.fireBlocY - posY)
 
 
-        if (diffX < 0.15 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.druids.splice(i, 1)
           this.gameService.fireBalls.splice(j, 1)

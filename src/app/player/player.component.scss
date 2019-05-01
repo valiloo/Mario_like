@@ -76,7 +76,7 @@
     width: 63px;
     background: url('/assets/textures/ninjaKick.png/') no-repeat;
     transform: scaleX(-1);
-    animation : ninjaKick 0.5s steps(8) forwards;
+    animation : ninjaKick 0.4s steps(8);
  }
 
   .ninjaStatic {
@@ -159,7 +159,7 @@
  @keyframes death {
 
      from{background-position : 0px;}
-     to{background-position : -504px;}
+     to{background-position : -567px;}
  }
 
 @keyframes fire {
