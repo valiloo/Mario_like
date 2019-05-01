@@ -16,6 +16,7 @@ export const ISDEAD = 9
 export const DASH = 10
 export const ISANINJA = 11
 export const THROWAXES = 12
+export const SHOOTTHEMALL = 13
 
 
 @Injectable({
@@ -35,13 +36,10 @@ public isOnFire : any = 0
 public fireBalls : Tir[] = []
 public death : number = 0
 public dash : any = 0
-
+public kick = 0
 public startTime: Date
 public gameDuration : number = 0;
 public endTime: Date;
-
-
-
 public piecePos: Piece[] = []
 public playerStat = 0
 public axes : Axes[] = []

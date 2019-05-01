@@ -36,9 +36,9 @@
 
 .fireball{
     position:absolute;
-    height:7px;
-    width:10px;
-    background: url('/assets/textures/bullet.png/');
+    height:32px;
+    width:32px;
+    background: url('/assets/textures/bullet.png/') no-repeat;
 }
 
 .isDead {
@@ -76,7 +76,7 @@
     width: 63px;
     background: url('/assets/textures/ninjaKick.png/') no-repeat;
     transform: scaleX(-1);
-    animation : ninjaKick 0.7s steps(8) forwards ;
+    animation : ninjaKick 0.4s steps(8);
  }
 
   .ninjaStatic {
@@ -103,8 +103,8 @@
   .Axes {
       position : absolute;
       height : 33px;
-      width : 35px;
-      background: url('/assets/Sprites/Axes.png/');
+      width : 32px;
+      background: url('/assets/Sprites/Axes.png/') no-repeat;
       animation: moveAxes 0.3s steps(3) infinite;
   }
 
@@ -143,7 +143,7 @@
      position: absolute;
      height : 70px;
      width : 76px;
-     background: url('/assets/textures/saut.png');
+     background: url('/assets/textures/saut.png') no-repeat;
      transform: scaleX(-1);
      animation : doubleJump 1s steps(9) forwards;
  }
@@ -159,7 +159,7 @@
  @keyframes death {
 
      from{background-position : 0px;}
-     to{background-position : -504px;}
+     to{background-position : -567px;}
  }
 
 @keyframes fire {
