@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, ISDEAD, DASH, THROWAXES, ISANINJA, SHOOTTHEMALL } from './gamestate.service';
+import { GamestateService, MOVE_RIGHT, MOVE_LEFT, MOVE_FORWARD, MOVE_BACKWARD, MOVE_UPWARD, ISONFIRE, FINTIR, ISDEAD, DASH, THROWAXES, ISANINJA, SHOOTTHEMALL, BOSSATTACK } from './gamestate.service';
 import { MapTheme, MapService, } from './map.service';
 import { Tir } from './models/tir'
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { SlimMonster } from './models/slim';
 import { Axes } from './models/axes';
 import { DruidMonster } from './models/druid';
 import { BossMonster} from './models/boss';
+import { BossAttack } from './models/bossAttack';
 
 
 
@@ -22,7 +23,7 @@ import { BossMonster} from './models/boss';
 })
 export class GameloopService {
 
-
+  public lastBossFire = new Date()
   public lastKick = new Date()
   public goNinja = new Date()
   public lastAxesDate = new Date()
@@ -63,6 +64,10 @@ export class GameloopService {
   public lockScale
   public lastPosX
   public axeSound
+  public kickSound
+  public goblinScream
+  public bossHit
+  public lastBossAttack
   // this.deathSound = new Audio()
   //this.deathSound.src = "assets/audio/death.ogg"
   //this.deathSound.load()
@@ -77,7 +82,7 @@ export class GameloopService {
 
   playGameMusic() {
     this.gameMusic = new Audio();
-    this.gameMusic.src = "assets/audio/map2.mp3"
+    this.gameMusic.src = "assets/audio/gameAsg.mp3"
     this.gameMusic.load()
     this.gameMusic.play()
   }
@@ -327,9 +332,17 @@ moveDruid() {
 
   }
 }
+
+
+
 moveBoss() {
+  
+  
   for (let index in this.mapService.bosss) {
     const boss = this.mapService.bosss[index]
+
+     
+    
 
     if (boss.direction == MOVE_RIGHT) {
       boss.scaleX = -1
@@ -372,6 +385,7 @@ canDash() {
   }
 }
 getMonsterCollision() {
+ 
   this.playerBlocY = Math.round(this.gameService.playerY / 32)
   this.playerBlocX = Math.round(this.gameService.playerX / 32)
   for (let i = 0; i < this.mapService.monsters.length; i++) {
@@ -389,19 +403,25 @@ getMonsterCollision() {
       if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
     
         this.gameService.kick = SHOOTTHEMALL
+        this.kickSound = new Audio()
+        this.kickSound.src = "assets/audio/kickSound.mp3"
+        this.kickSound.load()
+        this.kickSound.play()
         this.lastKick = new Date()
         this.mapService.monsters[i].isFlying = true
-        
+        this.goblinScream = new Audio()
+        this.goblinScream.src = "assets/audio/goblinScream.mp3"
+        this.goblinScream.load()
+        this.goblinScream.play()
 
       }
       if(this.mapService.monsters[i].isFlying === true && this.mapService.monsters[i].scaleX === 1){
-
+        
         this.mapService.monsters[i].posX += 0.5
         this.mapService.monsters[i].posY -= 0.2
         this.mapService.monsters[i].isRotating += 10
       }
       if(this.mapService.monsters[i].isFlying === true && this.mapService.monsters[i].scaleX === -1){
-
         this.mapService.monsters[i].posX -= 0.5
         this.mapService.monsters[i].posY -= 0.2
         this.mapService.monsters[i].isRotating += 10
@@ -419,6 +439,7 @@ getMonsterCollision() {
 }
 
 getOgrCollision() {
+
   this.playerBlocY = Math.round(this.gameService.playerY / 32)
   this.playerBlocX = Math.round(this.gameService.playerX / 32)
   for (let i = 0; i < this.mapService.ogrs.length; i++) {
@@ -438,18 +459,25 @@ getOgrCollision() {
       if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
      
         this.gameService.kick = SHOOTTHEMALL
+        this.kickSound = new Audio()
+        this.kickSound.src = "assets/audio/kickSound.mp3"
+        this.kickSound.load()
+        this.kickSound.play()
         this.lastKick = new Date()
         this.mapService.ogrs[i].isFlying = true
-        
+        this.goblinScream = new Audio()
+        this.goblinScream.src = "assets/audio/goblinScream.mp3"
+        this.goblinScream.load()
+        this.goblinScream.play()
       }
       if(this.mapService.ogrs[i].isFlying === true && this.mapService.ogrs[i].scaleX === 1){
-
+        
         this.mapService.ogrs[i].posX += 0.5
         this.mapService.ogrs[i].posY -= 0.2
         this.mapService.ogrs[i].isRotating += 10
       }
       if(this.mapService.ogrs[i].isFlying === true && this.mapService.ogrs[i].scaleX === -1){
-
+        
         this.mapService.ogrs[i].posX -= 0.5
         this.mapService.ogrs[i].posY -= 0.2
         this.mapService.ogrs[i].isRotating += 10
@@ -468,6 +496,7 @@ getOgrCollision() {
   
   
 getSlimCollision() {
+ 
   this.playerBlocY = Math.round(this.gameService.playerY / 32)
   this.playerBlocX = Math.round(this.gameService.playerX / 32)
   for (let i = 0; i < this.mapService.slims.length; i++) {
@@ -485,18 +514,26 @@ getSlimCollision() {
       if (differanceX < 3 && differanceY < 1 && this.gameService.playerStat === ISANINJA) {
 
         this.gameService.kick = SHOOTTHEMALL
+        this.kickSound = new Audio()
+        this.kickSound.src = "assets/audio/kickSound.mp3"
+        this.kickSound.load()
+        this.kickSound.play()
         this.lastKick = new Date()
         this.mapService.slims[i].isFlying = true
+        this.goblinScream = new Audio()
+        this.goblinScream.src = "assets/audio/goblinScream.mp3"
+        this.goblinScream.load()
+        this.goblinScream.play()
 
       }
       if(this.mapService.slims[i].isFlying === true && this.mapService.slims[i].scaleX === 1){
-
+        
         this.mapService.slims[i].posX += 0.5
         this.mapService.slims[i].posY -= 0.2
         this.mapService.slims[i].isRotating += 10
       }
       if(this.mapService.slims[i].isFlying === true && this.mapService.slims[i].scaleX === -1){
-
+        
         this.mapService.slims[i].posX -= 0.5
         this.mapService.slims[i].posY -= 0.2
         this.mapService.slims[i].isRotating += 10
@@ -514,6 +551,7 @@ getSlimCollision() {
 }
 
 getDruidCollision() {
+ 
   this.playerBlocY = Math.round(this.gameService.playerY / 32)
   this.playerBlocX = Math.round(this.gameService.playerX / 32)
   for (let i = 0; i < this.mapService.druids.length; i++) {
@@ -531,19 +569,27 @@ if (differanceX < 1 && differanceY < 1 && this.gameService.playerStat !== ISANIN
       if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
 
         this.gameService.kick = SHOOTTHEMALL
+        this.kickSound = new Audio()
+        this.kickSound.src = "assets/audio/kickSound.mp3"
+        this.kickSound.load()
+        this.kickSound.play()
         this.lastKick = new Date()
         this.mapService.druids[i].isFlying = true
+        this.goblinScream = new Audio()
+        this.goblinScream.src = "assets/audio/goblinScream.mp3"
+        this.goblinScream.load()
+        this.goblinScream.play()
 
       }
       if(this.mapService.druids[i].isFlying === true && this.mapService.druids[i].scaleX === 1){
-
+        
         this.mapService.druids[i].posX += 0.5
         this.mapService.druids[i].posY -= 0.2
         this.mapService.druids[i].isRotating += 10
       }
 
       if(this.mapService.druids[i].isFlying === true && this.mapService.druids[i].scaleX === -1){
-
+        
         this.mapService.druids[i].posX -= 0.5
         this.mapService.druids[i].posY -= 0.2
         this.mapService.druids[i].isRotating += 10
@@ -597,11 +643,11 @@ monsterDeath() {
       for (let i = 0; i < this.mapService.monsters.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
         let posX = this.mapService.monsters[i].posX;
         let posY = this.mapService.monsters[i].posY;
-        let diffX = Math.abs(this.fireBlocX - posX)
-        let diffY = Math.abs(this.fireBlocY - posY)
+        let diffX = Math.round(Math.abs(this.fireBlocX - posX))
+        let diffY = Math.round(Math.abs(this.fireBlocY - posY))
 
 
-        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY >= 1 && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.monsters.splice(i, 1)
           this.gameService.fireBalls.splice(j, 1)
@@ -624,11 +670,11 @@ monsterDeath() {
       for (let i = 0; i < this.mapService.monsters.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
         let posX = this.mapService.monsters[i].posX;
         let posY = this.mapService.monsters[i].posY;
-        let diffX = Math.abs(this.fireBlocX - posX)
-        let diffY = Math.abs(this.fireBlocY - posY)
+        let diffX = Math.round(Math.abs(this.fireBlocX - posX))
+        let diffY = Math.round(Math.abs(this.fireBlocY - posY))
 
 
-        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY >= 1 && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.monsters.splice(i, 1)
           this.gameService.axes.splice(j, 1)
@@ -652,11 +698,11 @@ monsterDeath() {
       for (let i = 0; i < this.mapService.ogrs.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
         let posX = this.mapService.ogrs[i].posX;
         let posY = this.mapService.ogrs[i].posY;
-        let diffX = Math.abs(this.fireBlocX - posX)
-        let diffY = Math.abs(this.fireBlocY - posY)
+        let diffX = Math.round(Math.abs(this.fireBlocX - posX))
+        let diffY = Math.round(Math.abs(this.fireBlocY - posY))
 
 
-        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY >= 1 && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.ogrs.splice(i, 1)
           this.gameService.fireBalls.splice(j, 1)
@@ -680,11 +726,11 @@ monsterDeath() {
       for (let i = 0; i < this.mapService.ogrs.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
         let posX = this.mapService.ogrs[i].posX;
         let posY = this.mapService.ogrs[i].posY;
-        let diffX = Math.abs(this.fireBlocX - posX)
-        let diffY = Math.abs(this.fireBlocY - posY)
+        let diffX = Math.round(Math.abs(this.fireBlocX - posX))
+        let diffY = Math.round(Math.abs(this.fireBlocY - posY))
 
 
-        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY >= 1 && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.ogrs.splice(i, 1)
           this.gameService.axes.splice(j, 1)
@@ -708,11 +754,11 @@ monsterDeath() {
       for (let i = 0; i < this.mapService.slims.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
         let posX = this.mapService.slims[i].posX;
         let posY = this.mapService.slims[i].posY;
-        let diffX = Math.abs(this.fireBlocX - posX)
-        let diffY = Math.abs(this.fireBlocY - posY)
+        let diffX = Math.round(Math.abs(this.fireBlocX - posX))
+        let diffY = Math.round(Math.abs(this.fireBlocY - posY))
 
 
-        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY >= 1 && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.slims.splice(i, 1)
           this.gameService.fireBalls.splice(j, 1)
@@ -736,11 +782,11 @@ monsterDeath() {
       for (let i = 0; i < this.mapService.slims.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
         let posX = this.mapService.slims[i].posX;
         let posY = this.mapService.slims[i].posY;
-        let diffX = Math.abs(this.fireBlocX - posX)
-        let diffY = Math.abs(this.fireBlocY - posY)
+        let diffX = Math.round(Math.abs(this.fireBlocX - posX))
+        let diffY = Math.round(Math.abs(this.fireBlocY - posY))
 
 
-        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY >= 1 && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.slims.splice(i, 1)
           this.gameService.axes.splice(j, 1)
@@ -764,11 +810,11 @@ monsterDeath() {
       for (let i = 0; i < this.mapService.druids.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
         let posX = this.mapService.druids[i].posX;
         let posY = this.mapService.druids[i].posY;
-        let diffX = Math.abs(this.fireBlocX - posX)
-        let diffY = Math.abs(this.fireBlocY - posY)
+        let diffX = Math.round(Math.abs(this.fireBlocX - posX))
+        let diffY = Math.round(Math.abs(this.fireBlocY - posY))
 
 
-        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY >= 1 && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.druids.splice(i, 1)
           this.gameService.fireBalls.splice(j, 1)
@@ -792,11 +838,11 @@ monsterDeath() {
       for (let i = 0; i < this.mapService.druids.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
         let posX = this.mapService.druids[i].posX;
         let posY = this.mapService.druids[i].posY;
-        let diffX = Math.abs(this.fireBlocX - posX)
-        let diffY = Math.abs(this.fireBlocY - posY)
+        let diffX = Math.round(Math.abs(this.fireBlocX - posX))
+        let diffY = Math.round(Math.abs(this.fireBlocY - posY))
 
 
-        if (diffX < 0.5 && diffY < 1) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY >= 1 && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
           //need death animation with date method here voir getMonsterCollision
           this.mapService.druids.splice(i, 1)
           this.gameService.axes.splice(j, 1)
@@ -823,17 +869,25 @@ monsterDeath() {
         for (let i = 0; i < this.mapService.bosss.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
           let posX = this.mapService.bosss[i].posX;
           let posY = this.mapService.bosss[i].posY;
-          let diffX = Math.abs(this.fireBlocX - posX)
-          let diffY = Math.abs(this.fireBlocY - posY)
+          let diffX = Math.round(Math.abs(this.fireBlocX - posX))
           
-          if (diffX < 0.3 && diffY < 1.5 && this.mapService.bosss[i].pdv>0){
+          let diffY = Math.round(Math.abs(this.fireBlocY - posY))
+          
+          
+          
+          if (diffX < 0.5 && diffY >= 1 && diffY <=3 && this.mapService.bosss[i].pdv>0){
 
             this.mapService.bosss[i].pdv -= 1
-
+            this.gameService.fireBalls.splice(j, 1)
+            this.bossHit = new Audio()
+            this.bossHit.src = "assets/audio/ting.mp3"
+            this.bossHit.load()
+            this.bossHit.play()
+            
 
           } 
   
-          if (diffX < 0.3 && diffY < 1.5 && this.mapService.bosss[i].pdv===0) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+          if (diffX < 0.5 && diffY >= 1 && diffY <= 3 && this.mapService.bosss[i].pdv===0) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
             //need death animation with date method here voir getMonsterCollision
             this.mapService.bosss.splice(i, 1)
             this.gameService.fireBalls.splice(j, 1)
@@ -1103,6 +1157,47 @@ stopKick(){
   }
 }
 
+monsterDeathBossAxes() {
+
+
+  for (let j = 0; j < this.gameService.axes.length; j++) {
+  this.fireBlocX = Math.round(this.gameService.axes[j].posX / 32)
+  this.fireBlocY = Math.round(this.gameService.axes[j].posY / 32)
+  
+  for (let i = 0; i < this.mapService.bosss.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
+  let posX = this.mapService.bosss[i].posX;
+  let posY = this.mapService.bosss[i].posY;
+  let diffX = Math.round(Math.abs(this.fireBlocX - posX))
+  let diffY = Math.round(Math.abs(this.fireBlocY - posY))
+  
+  if (diffX < 0.5 && diffY >= 1 && diffY <=3 && this.mapService.bosss[i].pdv>0){
+  
+  this.mapService.bosss[i].pdv -= 1
+  this.gameService.axes.splice(j, 1)
+  this.bossHit = new Audio()
+  this.bossHit.src = "assets/audio/ting.mp3"
+  this.bossHit.load()
+  this.bossHit.play()
+  
+  
+  }
+  
+  if (diffX < 0.5 && diffY >= 1 && diffY <=3 && this.mapService.bosss[i].pdv===0) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+  //need death animation with date method here voir getMonsterCollision
+  this.mapService.bosss.splice(i, 1)
+  this.gameService.axes.splice(j, 1)
+  this.osDie = new Audio()
+  this.osDie.src = "assets/audio/osMonsterDie.mp3"
+  this.osDie.load()
+  this.osDie.play()
+  
+  
+  }
+  
+  }
+  }
+  } 
+ 
 
 
   loop() {
@@ -1127,15 +1222,17 @@ stopKick(){
     this.monsterDeathSlimAxes()
     this.monsterDeathDruid()
     this.monsterDeathDruidAxes()
+    this.monsterDeathBossAxes()
     this.moveMonster() // appelle de fonction explique au dessus //
     this.moveOgr() // appelle de fonction explique au dessus //
     this.moveSlim()
     this.moveDruid()
     this.moveBoss()
-    this.cameraLock() // appelle de fonction explique au dessus //
+    this.bossFire()
+    //this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
-    this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
-
+      this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
+   console.log(this.gameService.bossAttacks)
   }
 
 
@@ -1201,7 +1298,7 @@ stopKick(){
         new DruidMonster(100, 7)
       ]
       this.mapService.bosss = [
-      new BossMonster(205, 16),
+      new BossMonster(30, 16),
     ]
 
     }

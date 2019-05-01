@@ -101,6 +101,9 @@ div {
   transform: scaleX(-1);
   animation: moveB 1s steps(6) infinite;
 }
+
+
+
 @keyframes moveB {
   from {
     background-position: 0px;
@@ -109,6 +112,8 @@ div {
     background-position: -589px;
   }
 }
+
+
 
 /* .stopwatch {
   position: fixed;

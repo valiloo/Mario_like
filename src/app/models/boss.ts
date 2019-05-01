@@ -11,7 +11,8 @@ export class BossMonster extends Boss {
         public amplitude: number = 3, 
         public direction = 1,/* MOVE_RIGHT */
         public scaleX = -1,
-        public pdv = 20
+        public pdv = 20,
+        public attack : boolean = false
         )
          {
 

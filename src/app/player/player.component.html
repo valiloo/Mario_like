@@ -10,12 +10,16 @@
         'ninjaStatic' : gameService.move === 0 && gameService.isOnFire === 0 && gameService.playerStat === 11 && gameService.kick !==13,
         'ninjaWalk' :  gameService.move !== 0  && gameService.isOnFire === 0 && gameService.playerStat === 11  ,
         'ninjaAxe' : gameService.isOnFire === 12 && gameService.playerStat === 11 && gameService.kick !==13 ,
-        'ninjaKick' : gameService.kick === 13 && gameService.playerStat === 11
-
+        'ninjaKick' : gameService.kick === 13 && gameService.playerStat === 11        
      }"
   [ngStyle]="{'transform': 'translateX(' + gameService.playerX + 'px) translateY('+gameService.playerY +'px) scaleX('+ gameService.playerScaleX + ')'}">
 </div>
 
+<div *ngFor="let fire of gameService.bossAttacks" >
+<div class="bossAttack" [ngStyle]="{'transform': 'translateX(' + fire.posX +'px) translateY(' + fire.posY +'px)'}">
+
+</div>
+</div>
 <div *ngFor="let axe of gameService.axes">
   <div class="Axes" [ngStyle]="{'transform': 'translateX(' + axe.posX +'px) translateY(' + axe.posY +'px)'}">
 

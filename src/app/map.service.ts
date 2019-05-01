@@ -201,7 +201,7 @@ export class MapService {
 ]  
 
 public bosss: BossMonster[] = [
-  new BossMonster(205, 16),
+  new BossMonster(30, 16),
 
 ]
 
