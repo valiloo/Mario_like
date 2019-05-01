@@ -47,7 +47,8 @@ public playerStat = 0
 public axes : Axes[] = []
 public boss = 0
 public bossAttacks : BossAttacks[]= []
-
+public bossHeight : number = 98
+public bossWidth : number = 145
 
 
 

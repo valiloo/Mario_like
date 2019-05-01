@@ -1007,10 +1007,10 @@ monsterDeath() {
 
   isaNinja() {
 
-    if (this.compt === 5) {
+    if (this.compt%5 === 0 && this.compt !== 0) {
       this.goNinja = new Date()
       this.gameService.playerStat = ISANINJA
-      this.compt = 0
+      
     }
     if (new Date().getTime() - this.goNinja.getTime() > 10000 && this.gameService.playerStat === ISANINJA) {
 
@@ -1154,7 +1154,7 @@ monsterDeathBossAxes() {
 
     if (this.gameService.boss === ISATTACKING && new Date().getTime() - this.lastBossAttack.getTime() > 1000) {
       
-      let fireBall = new BossAttacks(this.mapService.bosss[0].posX, this.mapService.bosss[0].posY);
+      let fireBall = new BossAttacks(this.mapService.bosss[0].posX, this.mapService.bosss[0].posY + (this.gameService.bossHeight/32));
       this.gameService.bossAttacks.push(fireBall)
       this.lastBossAttack = new Date()
     }
@@ -1163,18 +1163,19 @@ monsterDeathBossAxes() {
   if (this.mapService.bosss[0].scaleX === -1) {  //Comportement des balles lorsque le personnage est orienté vers la droite
     for (let i = 0; i < this.gameService.bossAttacks.length; i++) {
 
-        this.gameService.bossAttacks[i].posX += 10
+        this.gameService.bossAttacks[i].posX += 0.3
 
     }
   }
-  else if (this.mapService.bosss[0].scaleX === 1) {  // Comportement des balles lorsque le personnage est orienté vers la gauche
+  if (this.mapService.bosss[0].scaleX === 1) {  // Comportement des balles lorsque le personnage est orienté vers la gauche
 
     for (let i = 0; i < this.gameService.bossAttacks.length; i++) {
-
-        this.gameService.bossAttacks[i].posX -= 10 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
+      
+        this.gameService.bossAttacks[i].posX -= 0.3 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
         // Dès que la balle sort de l' écran elle disparaît
       }
     }
+    
   }
 
 
@@ -1209,8 +1210,7 @@ monsterDeathBossAxes() {
     this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
     this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
-    console.log(this.gameService.boss)
-
+  
   }
 
 
