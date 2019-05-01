@@ -13,7 +13,6 @@ export class WinPageComponent implements OnInit {
 
 
 
-
   constructor(private gameloop: GameloopService) { }
 
   @ViewChild('audioOption') audioPlayerRef: ElementRef;
