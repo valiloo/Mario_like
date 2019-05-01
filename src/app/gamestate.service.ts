@@ -45,8 +45,7 @@ public endTime: Date;
 public piecePos: Piece[] = []
 public playerStat = 0
 public axes : Axes[] = []
-public bossAttacks : BossAttack[] = []
-public isBossAttacking = BOSSATTACK
+
 
 
 

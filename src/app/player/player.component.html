@@ -15,11 +15,7 @@
   [ngStyle]="{'transform': 'translateX(' + gameService.playerX + 'px) translateY('+gameService.playerY +'px) scaleX('+ gameService.playerScaleX + ')'}">
 </div>
 
-<div *ngFor="let fire of gameService.bossAttacks" >
-<div class="bossAttack" [ngStyle]="{'transform': 'translateX(' + fire.posX +'px) translateY(' + fire.posY +'px)'}">
 
-</div>
-</div>
 <div *ngFor="let axe of gameService.axes">
   <div class="Axes" [ngStyle]="{'transform': 'translateX(' + axe.posX +'px) translateY(' + axe.posY +'px)'}">
 
