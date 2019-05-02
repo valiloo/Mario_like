@@ -119,7 +119,7 @@ export class GameloopService {
     if ((this.gameService.move === MOVE_RIGHT) && this.gameService.xVelocity === MOVE_FORWARD && this.getRightCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) {
 
       this.gameService.playerScaleX = -1 // gere le reverse d'animation du personnage //
-      this.gameService.playerX += 6 // deplace le personnage de 8px sur la droite //
+      this.gameService.playerX += 4 // deplace le personnage de 8px sur la droite //
       this.move = 1 // indique le mouvement en cours //
       this.jumpDown = 3
 
@@ -132,7 +132,7 @@ export class GameloopService {
 
       this.gameService.playerScaleX = 1 // gere le reverse d'animation du personnage //
 
-      this.gameService.playerX -= 6 // deplace le personnage de 8px sur la gauche//
+      this.gameService.playerX -= 4 // deplace le personnage de 8px sur la gauche//
 
       this.move = 1 // indique le mouvement en cours //
       this.jumpDown = 3
@@ -1013,7 +1013,7 @@ isOnFire() {
 
 
         if (this.gameService.fireBalls[i].posX <= this.lastPosX + (this.innerWidth / 2) && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
-          this.gameService.fireBalls[i].posX += 10
+          this.gameService.fireBalls[i].posX += 8
         }
         else {
           this.gameService.fireBalls.splice(i, 1)
@@ -1027,7 +1027,7 @@ isOnFire() {
       for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
         if (this.gameService.fireBalls[i].posX >= this.gameService.playerX - (this.innerWidth / 2) && this.gameService.fireBalls[i].posX <= this.gameService.playerX) {
-          this.gameService.fireBalls[i].posX -= 10 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
+          this.gameService.fireBalls[i].posX -= 8 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
           // Dès que la balle sort de l' écran elle disparaît
         }
         else {
@@ -1091,7 +1091,7 @@ isOnFire() {
       for (let i = 0; i < this.gameService.axes.length; i++) {
 
         if (this.gameService.axes[i].posX <= this.lastPosX + (this.innerWidth / 2) && this.gameService.axes[i].posX >= this.gameService.playerX) {
-          this.gameService.axes[i].posX += 10
+          this.gameService.axes[i].posX += 8
         }
         else {
           this.gameService.axes.splice(i, 1)
@@ -1105,7 +1105,7 @@ isOnFire() {
       for (let i = 0; i < this.gameService.axes.length; i++) {
 
         if (this.gameService.axes[i].posX >= this.gameService.playerX - (this.innerWidth / 2) && this.gameService.axes[i].posX <= this.gameService.playerX) {
-          this.gameService.axes[i].posX -= 10 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
+          this.gameService.axes[i].posX -= 8 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
           // Dès que la balle sort de l' écran elle disparaît
         }
         else {
