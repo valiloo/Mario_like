@@ -13,7 +13,9 @@ export class WinPageComponent implements OnInit,OnDestroy {
 
 
 
+
   constructor(public gameloop: GameloopService) { }
+
 
   @ViewChild('audioOption') audioPlayerRef: ElementRef;
 
