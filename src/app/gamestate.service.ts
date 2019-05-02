@@ -52,6 +52,7 @@ public bossAttacks : BossAttacks[]= []
 public bossHeight : number = 98
 public bossWidth : number = 145
 public bossJumpTimer: number = 200
+public bossIsDead = 0
 
 
 

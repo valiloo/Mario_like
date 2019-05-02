@@ -946,6 +946,7 @@ monsterDeath() {
   
           if (diffX < 0.5 && diffY >= 1 && diffY <= 3 && this.mapService.bosss[i].pdv===0) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
             //need death animation with date method here voir getMonsterCollision
+            this.gameService.bossIsDead = ISDEAD
             this.mapService.bosss.splice(i, 1)
             this.gameService.fireBalls.splice(j, 1)
             this.osDie = new Audio()
@@ -1225,7 +1226,7 @@ isOnFire() {
     this.innerWidth = window.innerWidth
 
 
-    if (this.mapService.bosss[0].pdv > 0) {
+    if (this.gameService.bossIsDead !== ISDEAD) {
     if (this.gameService.boss === ISATTACKING) {
       this.gameService.bossJumpTimer -= 1
       if (this.gameService.playerX / 32 < this.mapService.bosss[0].posX) {
@@ -1391,7 +1392,7 @@ monsterDeathBossAxes() {
          
 
   loop() {
-
+    
     this.stopKick()
     this.isaNinja()
     this.getPosPiece()
@@ -1461,6 +1462,7 @@ monsterDeathBossAxes() {
       this.gameService.isOnFire = 0
       this.gameService.fireBalls = []
       this.gameService.death = 0
+      this.gameService.bossIsDead = 0
 
       this.mapService.monsters = [
         new OsMonster(24, 18.2),
