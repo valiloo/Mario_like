@@ -399,7 +399,7 @@ getMonsterCollision() {
         this.jumpNumber = 0
       }
 
-      if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
+      if (differanceX < 2 && differanceY < 1 && this.gameService.playerStat === ISANINJA) {
 
         this.gameService.kick = SHOOTTHEMALL
         this.kickSound = new Audio()
@@ -462,7 +462,7 @@ getOgrCollision() {
         this.gameService.yVelocity = 0
       }
 
-      if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
+      if (differanceX < 2 && differanceY < 1 && this.gameService.playerStat === ISANINJA) {
 
         this.gameService.kick = SHOOTTHEMALL
         this.kickSound = new Audio()
@@ -524,7 +524,7 @@ getSlimCollision() {
         this.gameService.yVelocity = 0
       }
 
-      if (differanceX < 3 && differanceY < 1 && this.gameService.playerStat === ISANINJA) {
+      if (differanceX < 2 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
 
         this.gameService.kick = SHOOTTHEMALL
         this.kickSound = new Audio()
@@ -585,7 +585,7 @@ if (differanceX < 1 && differanceY < 1 && this.gameService.playerStat !== ISANIN
         this.gameService.yVelocity = 0
       }
 
-      if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
+      if (differanceX < 2 && differanceY < 1 && this.gameService.playerStat === ISANINJA) {
 
         this.gameService.kick = SHOOTTHEMALL
         this.kickSound = new Audio()
@@ -1225,7 +1225,7 @@ isOnFire() {
     this.innerWidth = window.innerWidth
 
 
-    if (this.gameService.boss[0].pdv > 0) {
+    if (this.mapService.bosss[0].pdv > 0) {
     if (this.gameService.boss === ISATTACKING) {
       this.gameService.bossJumpTimer -= 1
       if (this.gameService.playerX / 32 < this.mapService.bosss[0].posX) {
