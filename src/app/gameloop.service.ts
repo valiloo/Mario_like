@@ -65,6 +65,7 @@ export class GameloopService {
   public lastBossAttack = new Date()
   public menuMusic
   public gameDuration: number = 0
+  public coinMusic
   // this.deathSound = new Audio()
   //this.deathSound.src = "assets/audio/death.ogg"
   //this.deathSound.load()
@@ -81,8 +82,15 @@ export class GameloopService {
     this.gameMusic = new Audio();
     this.gameMusic.src = "assets/audio/gameAsg.mp3"
     this.gameMusic.load()
+    this.gameMusic.loop = true
     this.gameMusic.play()
+
   }
+  playCoins(){
+    this.coinMusic = new Audio();
+    this.coinMusic.src ="assets/audio/coin.wav"
+    this.coinMusic.play()
+  } 
 
 
   // fonction globale encadrant tout les types de deplacements //
@@ -1199,7 +1207,7 @@ isOnFire() {
       if (differanceX < 2 && differanceY < 2) {
         this.mapService.pieces.splice(i, 1);
         this.compt++
-
+        this.playCoins()
 
       }
     }
@@ -1494,16 +1502,6 @@ monsterDeathBossAxes() {
       this.mapService.bosss = [
       new BossMonster(205, 14),
     ]
-    this.mapService.druids = [
-      new DruidMonster(50, 18),
-      new DruidMonster(190, 4),
-      new DruidMonster(80, 7),
-      new DruidMonster(100, 7)
-    ]
-    this.mapService.bosss = [
-      new BossMonster(40, 14),
-    ]
-
     this.mapService.pieces = [
         new Piece(10, 8),
         new Piece(12, 8),
