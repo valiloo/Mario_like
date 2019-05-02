@@ -66,6 +66,7 @@ export class GameloopService {
   public menuMusic
   public gameDuration: number = 0
   public coinMusic
+  lastCompt: number;
   // this.deathSound = new Audio()
   //this.deathSound.src = "assets/audio/death.ogg"
   //this.deathSound.load()
@@ -577,14 +578,14 @@ getDruidCollision() {
     let differanceX = Math.abs(this.playerBlocX - posX);
     let differanceY = Math.abs(this.playerBlocY - posY)
 
-if (differanceX < 1 && differanceY < 1 && this.gameService.playerStat !== ISANINJA) {
+if (differanceX < 1 && differanceY < 2 && this.gameService.playerStat !== ISANINJA) {
 
         this.gameService.death = ISDEAD
         this.isDead = new Date()
         this.gameService.yVelocity = 0
       }
 
-      if (differanceX < 2 && differanceY < 1 && this.gameService.playerStat === ISANINJA) {
+      if (differanceX < 2 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
 
         this.gameService.kick = SHOOTTHEMALL
         this.kickSound = new Audio()
@@ -790,7 +791,7 @@ monsterDeath() {
         let diffY = Math.round(Math.abs(this.fireBlocY - posY))
 
 
-        if (diffX < 0.5 && diffY >= 1 && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5  && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
 
           //need death animation with date method here voir getMonsterCollision
           this.mapService.slims.splice(i, 1)
@@ -819,7 +820,7 @@ monsterDeath() {
         let diffY = Math.round(Math.abs(this.fireBlocY - posY))
 
 
-        if (diffX < 0.5 && diffY >= 1 && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
 
           //need death animation with date method here voir getMonsterCollision
           this.mapService.slims.splice(i, 1)
@@ -1121,7 +1122,8 @@ isOnFire() {
 
   isaNinja() {
 
-    if (this.compt % 5 === 0 && this.compt !== 0 && this.gameService.playerStat !== ISANINJA) {
+    if (this.compt % 5 === 0 && this.compt !== 0 && this.lastCompt !== this.compt && this.gameService.playerStat !== ISANINJA) {
+      this.lastCompt = this.compt
       this.goNinja = new Date()
       this.gameService.playerStat = ISANINJA
 
@@ -1459,6 +1461,8 @@ monsterDeathBossAxes() {
 
 
     reInit() {
+      this.lastCompt = 0
+      this.gameService.playerStat = 0
       this.compt = 0
       this.gameService.move = 0
       this.gameService.xVelocity = 0
