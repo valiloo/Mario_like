@@ -12,6 +12,7 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
   }
+  
 ngOnDestroy(){
   this.loop.menuMusic.pause()
   this.loop.menuMusic = null
