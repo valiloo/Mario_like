@@ -10,6 +10,8 @@ import { Axes } from './models/axes';
 import { DruidMonster } from './models/druid';
 import { BossMonster } from './models/boss';
 import { BossAttacks } from './models/bossAttacks';
+import { endTimeRange } from '@angular/core/src/profile/wtf_impl';
+import { Piece } from './models/piece';
 
 
 @Injectable({
@@ -38,8 +40,8 @@ export class GameloopService {
   public fireBall
   public lastFireballDate = new Date();
   public isDead = new Date();
-  //public startTime: number
-  //public endTime: number
+  public startTime = new Date()
+  public endTime: number
   //public canStopTime: boolean = true
   public jumpNumber: number = 2
   public jumpSound
@@ -61,6 +63,10 @@ export class GameloopService {
   public goblinScream
   public bossHit
   public lastBossAttack = new Date()
+  public menuMusic
+  public gameDuration: number = 0
+  public coinMusic
+  lastCompt: number;
   // this.deathSound = new Audio()
   //this.deathSound.src = "assets/audio/death.ogg"
   //this.deathSound.load()
@@ -77,8 +83,15 @@ export class GameloopService {
     this.gameMusic = new Audio();
     this.gameMusic.src = "assets/audio/gameAsg.mp3"
     this.gameMusic.load()
+    this.gameMusic.loop = true
     this.gameMusic.play()
+
   }
+  playCoins(){
+    this.coinMusic = new Audio();
+    this.coinMusic.src ="assets/audio/coin.wav"
+    this.coinMusic.play()
+  } 
 
 
   // fonction globale encadrant tout les types de deplacements //
@@ -119,7 +132,7 @@ export class GameloopService {
     if ((this.gameService.move === MOVE_RIGHT) && this.gameService.xVelocity === MOVE_FORWARD && this.getRightCollision(this.playerBlocX, this.playerBlocY) && this.gameService.isOnFire === 0 && this.gameService.death !== ISDEAD) {
 
       this.gameService.playerScaleX = -1 // gere le reverse d'animation du personnage //
-      this.gameService.playerX += 6 // deplace le personnage de 8px sur la droite //
+      this.gameService.playerX += 4 // deplace le personnage de 8px sur la droite //
       this.move = 1 // indique le mouvement en cours //
       this.jumpDown = 3
 
@@ -132,7 +145,7 @@ export class GameloopService {
 
       this.gameService.playerScaleX = 1 // gere le reverse d'animation du personnage //
 
-      this.gameService.playerX -= 6 // deplace le personnage de 8px sur la gauche//
+      this.gameService.playerX -= 4 // deplace le personnage de 8px sur la gauche//
 
       this.move = 1 // indique le mouvement en cours //
       this.jumpDown = 3
@@ -212,7 +225,6 @@ export class GameloopService {
   }
 
 }
-this.gameService.gameDuration = new Date().getTime() - this.gameService.startTime.getTime()
   }
 
   
@@ -226,18 +238,6 @@ cameraLock() {
 }
 
 
-
-
-  /*   getTimePlayed() {
-      if (this.canStopTime === true) {
-        this.endTime = Math.floor((Date.now() - this.startTime) / 1000)
-  
-        this.canStopTime = false
-  
-      }
-    }
-
-   */
   // fonction faisant se deplacer les monstres //
   moveMonster() {
     for (let index in this.mapService.monsters) {
@@ -399,7 +399,7 @@ getMonsterCollision() {
         this.jumpNumber = 0
       }
 
-      if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
+      if (differanceX < 2 && differanceY < 1 && this.gameService.playerStat === ISANINJA) {
 
         this.gameService.kick = SHOOTTHEMALL
         this.kickSound = new Audio()
@@ -462,7 +462,7 @@ getOgrCollision() {
         this.gameService.yVelocity = 0
       }
 
-      if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
+      if (differanceX < 2 && differanceY < 1 && this.gameService.playerStat === ISANINJA) {
 
         this.gameService.kick = SHOOTTHEMALL
         this.kickSound = new Audio()
@@ -524,7 +524,7 @@ getSlimCollision() {
         this.gameService.yVelocity = 0
       }
 
-      if (differanceX < 3 && differanceY < 1 && this.gameService.playerStat === ISANINJA) {
+      if (differanceX < 2 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
 
         this.gameService.kick = SHOOTTHEMALL
         this.kickSound = new Audio()
@@ -578,14 +578,14 @@ getDruidCollision() {
     let differanceX = Math.abs(this.playerBlocX - posX);
     let differanceY = Math.abs(this.playerBlocY - posY)
 
-if (differanceX < 1 && differanceY < 1 && this.gameService.playerStat !== ISANINJA) {
+if (differanceX < 1 && differanceY < 2 && this.gameService.playerStat !== ISANINJA) {
 
         this.gameService.death = ISDEAD
         this.isDead = new Date()
         this.gameService.yVelocity = 0
       }
 
-      if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
+      if (differanceX < 2 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
 
         this.gameService.kick = SHOOTTHEMALL
         this.kickSound = new Audio()
@@ -791,7 +791,7 @@ monsterDeath() {
         let diffY = Math.round(Math.abs(this.fireBlocY - posY))
 
 
-        if (diffX < 0.5 && diffY >= 1 && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5  && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
 
           //need death animation with date method here voir getMonsterCollision
           this.mapService.slims.splice(i, 1)
@@ -820,7 +820,7 @@ monsterDeath() {
         let diffY = Math.round(Math.abs(this.fireBlocY - posY))
 
 
-        if (diffX < 0.5 && diffY >= 1 && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+        if (diffX < 0.5 && diffY <=3 ) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
 
           //need death animation with date method here voir getMonsterCollision
           this.mapService.slims.splice(i, 1)
@@ -906,7 +906,7 @@ monsterDeath() {
       
 
       if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
-        // this.getTimePlayed()
+        this.getTimePlayed()
         this.youWin()
         return true
       }
@@ -946,6 +946,7 @@ monsterDeath() {
   
           if (diffX < 0.5 && diffY >= 1 && diffY <= 3 && this.mapService.bosss[i].pdv===0) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
             //need death animation with date method here voir getMonsterCollision
+            this.gameService.bossIsDead = ISDEAD
             this.mapService.bosss.splice(i, 1)
             this.gameService.fireBalls.splice(j, 1)
             this.osDie = new Audio()
@@ -1013,7 +1014,7 @@ isOnFire() {
 
 
         if (this.gameService.fireBalls[i].posX <= this.lastPosX + (this.innerWidth / 2) && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
-          this.gameService.fireBalls[i].posX += 10
+          this.gameService.fireBalls[i].posX += 8
         }
         else {
           this.gameService.fireBalls.splice(i, 1)
@@ -1027,7 +1028,7 @@ isOnFire() {
       for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
         if (this.gameService.fireBalls[i].posX >= this.gameService.playerX - (this.innerWidth / 2) && this.gameService.fireBalls[i].posX <= this.gameService.playerX) {
-          this.gameService.fireBalls[i].posX -= 10 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
+          this.gameService.fireBalls[i].posX -= 8 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
           // Dès que la balle sort de l' écran elle disparaît
         }
         else {
@@ -1091,7 +1092,7 @@ isOnFire() {
       for (let i = 0; i < this.gameService.axes.length; i++) {
 
         if (this.gameService.axes[i].posX <= this.lastPosX + (this.innerWidth / 2) && this.gameService.axes[i].posX >= this.gameService.playerX) {
-          this.gameService.axes[i].posX += 10
+          this.gameService.axes[i].posX += 8
         }
         else {
           this.gameService.axes.splice(i, 1)
@@ -1105,7 +1106,7 @@ isOnFire() {
       for (let i = 0; i < this.gameService.axes.length; i++) {
 
         if (this.gameService.axes[i].posX >= this.gameService.playerX - (this.innerWidth / 2) && this.gameService.axes[i].posX <= this.gameService.playerX) {
-          this.gameService.axes[i].posX -= 10 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
+          this.gameService.axes[i].posX -= 8 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
           // Dès que la balle sort de l' écran elle disparaît
         }
         else {
@@ -1121,7 +1122,8 @@ isOnFire() {
 
   isaNinja() {
 
-    if (this.compt % 5 === 0 && this.compt !== 0 && this.gameService.playerStat !== ISANINJA) {
+    if (this.compt % 5 === 0 && this.compt !== 0 && this.lastCompt !== this.compt && this.gameService.playerStat !== ISANINJA) {
+      this.lastCompt = this.compt
       this.goNinja = new Date()
       this.gameService.playerStat = ISANINJA
 
@@ -1207,7 +1209,7 @@ isOnFire() {
       if (differanceX < 2 && differanceY < 2) {
         this.mapService.pieces.splice(i, 1);
         this.compt++
-
+        this.playCoins()
 
       }
     }
@@ -1225,7 +1227,7 @@ isOnFire() {
     this.innerWidth = window.innerWidth
 
 
-    
+    if (this.gameService.bossIsDead !== ISDEAD) {
     if (this.gameService.boss === ISATTACKING) {
       this.gameService.bossJumpTimer -= 1
       if (this.gameService.playerX / 32 < this.mapService.bosss[0].posX) {
@@ -1252,14 +1254,14 @@ isOnFire() {
       this.gameService.boss = 0
     }
 
-    if (this.gameService.boss === ISATTACKING && new Date().getTime() - this.lastBossAttack.getTime() > 1000 && this.mapService.bosss[0].scaleX === 1) {
+    if (this.gameService.boss === ISATTACKING && new Date().getTime() - this.lastBossAttack.getTime() > 2000 && this.mapService.bosss[0].scaleX === 1) {
 
       let fireBall = new BossAttacks(this.mapService.bosss[0].posX, this.mapService.bosss[0].posY + (this.gameService.bossHeight / 32));
       this.gameService.bossAttacks.push(fireBall)
       this.lastBossAttack = new Date()
     }
 
-    if (this.gameService.boss === ISATTACKING && new Date().getTime() - this.lastBossAttack.getTime() > 1000 && this.mapService.bosss[0].scaleX === -1) {
+    if (this.gameService.boss === ISATTACKING && new Date().getTime() - this.lastBossAttack.getTime() > 2000 && this.mapService.bosss[0].scaleX === -1) {
 
       let fireBall = new BossAttacks(this.mapService.bosss[0].posX + (160 / 32), this.mapService.bosss[0].posY + (this.gameService.bossHeight / 32));
       this.gameService.bossAttacks.push(fireBall)
@@ -1324,7 +1326,7 @@ isOnFire() {
           this.jumpNumber = 0
 
         }
-        
+
         if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
           this.gameOver()
           this.gameMusic.pause()
@@ -1344,6 +1346,7 @@ isOnFire() {
       }
     }
   }
+}
         
 monsterDeathBossAxes() {
 
@@ -1386,11 +1389,21 @@ monsterDeathBossAxes() {
   }
   } 
  
+  getSongMenu() {
 
-         
+    this.menuMusic = new Audio()
+    this.menuMusic.src = "assets/audio/musiqueMenu.mp3"
+    this.menuMusic.load()
+    this.menuMusic.play()
+  }
+  
+  getTimePlayed(){
+    this.gameDuration = new Date().getTime() - this.startTime.getTime()
+
+  
+}
 
   loop() {
-
     this.stopKick()
     this.isaNinja()
     this.getPosPiece()
@@ -1418,7 +1431,7 @@ monsterDeathBossAxes() {
     this.moveDruid()
     this.moveBoss()
     this.bossAttack()
-    this.cameraLock() // appelle de fonction explique au dessus //
+    //this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
     this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
   }
@@ -1431,7 +1444,7 @@ monsterDeathBossAxes() {
     
 
     start() {
-      this.gameService.startTime = new Date()
+      this.startTime = new Date()
        this.reInit() // Reinitialise toutes les variables
       this.loop() // lance le loop au lancement du jeu //
       //this.startTime = Date.now()
@@ -1460,6 +1473,7 @@ monsterDeathBossAxes() {
       this.gameService.isOnFire = 0
       this.gameService.fireBalls = []
       this.gameService.death = 0
+      this.gameService.bossIsDead = 0
 
       this.mapService.monsters = [
         new OsMonster(24, 18.2),
@@ -1471,7 +1485,7 @@ monsterDeathBossAxes() {
         new OgrMonster(110, 8.2),
         new OgrMonster(45, 6.2),
         new OgrMonster(140, 18.2),
-        new OgrMonster(10, 11.2),
+        new OgrMonster(10, 12.2),
       ]
       this.mapService.slims = [
         new SlimMonster(86, 18.8),
@@ -1488,18 +1502,32 @@ monsterDeathBossAxes() {
         new DruidMonster(100, 7)
       ]
       this.mapService.bosss = [
-      new BossMonster(30, 16),
+      new BossMonster(205, 14),
     ]
-    this.mapService.druids = [
-      new DruidMonster(50, 18),
-      new DruidMonster(190, 4),
-      new DruidMonster(80, 7),
-      new DruidMonster(100, 7)
+    this.mapService.pieces = [
+        new Piece(10, 8),
+        new Piece(12, 8),
+        new Piece(8, 8),
+        new Piece(25, 5),
+        new Piece(45, 3),
+        new Piece(47, 3),
+        new Piece(43, 3),
+        new Piece(45, 14),
+        new Piece(150, 8),
+        new Piece(155, 7),
+        new Piece(160, 6),
+        new Piece(178, 4),
+        new Piece(180, 4),
+        new Piece(182, 4),
+        new Piece(202, 3),
+        new Piece(204, 3),
+        new Piece(206, 3),
+        new Piece(62, 15),
+        new Piece(75, 8),
+        new Piece(98.5, 9),
+        new Piece(127.3, 8),
+        new Piece(145.5, 9),  
     ]
-    this.mapService.bosss = [
-      new BossMonster(40, 14),
-    ]
-
   }
 
 

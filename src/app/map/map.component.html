@@ -19,7 +19,7 @@
     <div *ngFor="let slim of mapService.slims" class="SlimMonster" [ngStyle]="{top: '' + slim.posY * 32 + 'px', left: '' + slim.posX * 32 + 'px', 'transform': 'rotate(' + slim.isRotating + 'deg) scaleX(' + slim.scaleX + ')'}"></div> 
     <div *ngFor="let druid of mapService.druids" class="DruidMonster" [ngStyle]="{top: '' + druid.posY * 32 + 'px', left: '' + druid.posX * 32 + 'px', 'transform': 'rotate(' + druid.isRotating + 'deg) scaleX(' + druid.scaleX + ')'}"></div> 
     <div *ngFor="let piece of mapService.pieces" class="piece"  [ngStyle]="{top: '' + piece.posY *  32 + 'px', left: '' + piece.posX * 32 + 'px'}"></div>
-    <div *ngFor="let boss of mapService.bosss" class="BossMonster" [ngStyle]="{top: '' + boss.posY * 32 + 'px', left: '' + boss.posX * 32 + 'px', 'transform': 'scaleX(' + boss.scaleX + ')'}"></div> 
+    <div *ngFor="let boss of mapService.bosss" class="BossMonster" [ngStyle]="{top: '' + boss.posY * 32 + 'px', left: '' + boss.posX * 32 + 'px', 'transform': 'scaleX(' + mapService.bosss[0].scaleX + ')'}"></div> 
 
     <div *ngFor="let fire of gameService.bossAttacks">
       <div class="fireball" [ngStyle]="{top: '' + fire.posY * 32+ 'px', left: '' + fire.posX * 32+ 'px'}">
@@ -27,8 +27,7 @@
     
     </div>
 
-<!--   <img src="/assets/textures/stopwatch.png" class="stopwatch">
-  <h4><span class="time">{{ (time>=0) ? time: "Go !" }} </span></h4> -->
+    
 
   <div [ngClass]="{'avatar' : gameService.playerStat === 0,
                   'ninja': gameService.playerStat === 11 }">
