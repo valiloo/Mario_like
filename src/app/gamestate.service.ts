@@ -3,6 +3,7 @@ import { MapService } from './map.service';
 import { Tir } from './models/tir';
 import { Piece } from './models/piece';
 import { Axes } from './models/axes';
+import { BossAttacks } from './models/bossAttacks';
 
 export const MOVE_RIGHT = 1
 export const MOVE_LEFT = 2
@@ -17,6 +18,7 @@ export const DASH = 10
 export const ISANINJA = 11
 export const THROWAXES = 12
 export const SHOOTTHEMALL = 13
+export const ISATTACKING = 14
 
 
 @Injectable({
@@ -43,7 +45,11 @@ public endTime: Date;
 public piecePos: Piece[] = []
 public playerStat = 0
 public axes : Axes[] = []
-
+public boss = 0
+public bossAttacks : BossAttacks[]= []
+public bossHeight : number = 98
+public bossWidth : number = 145
+public bossJumpTimer: number = 200
 
 
 

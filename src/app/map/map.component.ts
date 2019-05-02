@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { MapService, MapTheme } from '../map.service';
 import { GameloopService } from '../gameloop.service';
+import { GamestateService } from '../gamestate.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(public mapService: MapService, private mapTheme: MapTheme, public gameLoop: GameloopService) {
+  constructor(public mapService: MapService, private mapTheme: MapTheme, public gameLoop: GameloopService, public gameService: GamestateService) {
 
 
   }

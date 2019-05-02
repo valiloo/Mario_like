@@ -1,9 +1,9 @@
 <div [ngClass]="{
 
-        'player' : gameService.move === 0 && loop.jump === 0 && gameService.isOnFire === 0 && gameService.playerStat !== 11 && gameService.kick !==13,
+        'player' : gameService.move === 0 && gameService.isOnFire === 0 && gameService.playerStat !== 11 && gameService.kick !==13,
         'playerMovement' : gameService.move !== 0 && loop.jump === 0 && gameService.isOnFire === 0 && gameService.playerStat !== 11 &&  gameService.kick !==13,
-        'jumpUp' : loop.jump > 0 && gameService.isOnFire === 0 && loop.jumpNumber === 0 && gameService.death !== 9 && gameService.playerStat !== 11 && gameService.kick !==13,
-        'jumpDown' : loop.jump > 0 && gameService.isOnFire === 0 && loop.jumpNumber === 1 && gameService.death !== 9 && gameService.playerStat !== 11 && gameService.kick !==13,
+        'jumpUp' : loop.jump > 0 && gameService.isOnFire === 0 && (loop.jumpNumber === 0 || loop.jumpNumber === 2 ) && gameService.death !== 9 && gameService.playerStat !== 11 && gameService.kick !==13 ,
+        'jumpDown' : loop.jump > 0 && gameService.isOnFire === 0 && loop.jumpNumber === 1  && gameService.death !== 9 && gameService.playerStat !== 11 && gameService.kick !==13,
         'onFire' : gameService.isOnFire === 7 && gameService.playerStat !== 11 && gameService.kick !==13,
         'finTir' : gameService.isOnFire === 8 && gameService.playerStat !== 11 && gameService.kick !==13,
         'isDead' : gameService.death === 9 && gameService.playerStat !== 11 && gameService.kick !==13,
@@ -22,7 +22,7 @@
   </div>
 </div>
 <div *ngFor="let tir of gameService.fireBalls">
-  <div class="fireball" [ngStyle]="{'transform': 'translateX(' + tir.posX + 'px) translateY('+ tir.posY +'px)'}">
+  <div class="fireball" [ngStyle]="{'transform': 'translateX(' + tir.posX + 'px) translateY('+tir.posY +'px)'}">
   </div>
 
 </div>

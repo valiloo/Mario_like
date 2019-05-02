@@ -145,7 +145,7 @@
      width : 76px;
      background: url('/assets/textures/saut.png') no-repeat;
      transform: scaleX(-1);
-     animation : doubleJump 1s steps(9) forwards;
+     animation : doubleJump 0.8s steps(9)  ;
  }
 
  .jumpDown {
@@ -156,10 +156,11 @@
     transform: scaleX(-1);
 }
 
+
  @keyframes death {
 
      from{background-position : 0px;}
-     to{background-position : -567px;}
+     to{background-position : -503px;}
  }
 
 @keyframes fire {
