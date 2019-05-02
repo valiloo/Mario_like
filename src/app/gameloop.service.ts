@@ -655,9 +655,6 @@ export class GameloopService {
   getSongMenu() {
 
     this.menuMusic.play()
-
-
-    this.menuMusic.pl
   }
 
   ngOnDestroy() {

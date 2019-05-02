@@ -20,4 +20,9 @@ export class PlayersnameComponent implements OnInit {
 
   }
 
+  ngOnDestroy() {
+    this.loop.menuMusic.pause()
+    this.loop.menuMusic = null
+  }
+
 }
