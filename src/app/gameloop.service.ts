@@ -10,6 +10,7 @@ import { Axes } from './models/axes';
 import { DruidMonster } from './models/druid';
 import { BossMonster } from './models/boss';
 import { BossAttacks } from './models/bossAttacks';
+import { endTimeRange } from '@angular/core/src/profile/wtf_impl';
 
 
 @Injectable({
@@ -38,8 +39,8 @@ export class GameloopService {
   public fireBall
   public lastFireballDate = new Date();
   public isDead = new Date();
-  //public startTime: number
-  //public endTime: number
+  public startTime = new Date()
+  public endTime: number
   //public canStopTime: boolean = true
   public jumpNumber: number = 2
   public jumpSound
@@ -62,6 +63,7 @@ export class GameloopService {
   public bossHit
   public lastBossAttack = new Date()
   public menuMusic
+  public gameDuration: number = 0
   // this.deathSound = new Audio()
   //this.deathSound.src = "assets/audio/death.ogg"
   //this.deathSound.load()
@@ -213,7 +215,6 @@ export class GameloopService {
   }
 
 }
-this.gameService.gameDuration = new Date().getTime() - this.gameService.startTime.getTime()
   }
 
   
@@ -227,18 +228,6 @@ cameraLock() {
 }
 
 
-
-
-  /*   getTimePlayed() {
-      if (this.canStopTime === true) {
-        this.endTime = Math.floor((Date.now() - this.startTime) / 1000)
-  
-        this.canStopTime = false
-  
-      }
-    }
-
-   */
   // fonction faisant se deplacer les monstres //
   moveMonster() {
     for (let index in this.mapService.monsters) {
@@ -907,7 +896,7 @@ monsterDeath() {
       
 
       if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
-        // this.getTimePlayed()
+        this.getTimePlayed()
         this.youWin()
         return true
       }
@@ -1396,10 +1385,14 @@ monsterDeathBossAxes() {
     this.menuMusic.load()
     this.menuMusic.play()
   }
-         
+  
+  getTimePlayed(){
+    this.gameDuration = new Date().getTime() - this.startTime.getTime()
+
+  
+}
 
   loop() {
-    
     this.stopKick()
     this.isaNinja()
     this.getPosPiece()
@@ -1440,7 +1433,7 @@ monsterDeathBossAxes() {
     
 
     start() {
-      this.gameService.startTime = new Date()
+      this.startTime = new Date()
        this.reInit() // Reinitialise toutes les variables
       this.loop() // lance le loop au lancement du jeu //
       //this.startTime = Date.now()
