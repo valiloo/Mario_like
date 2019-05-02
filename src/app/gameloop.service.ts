@@ -330,11 +330,11 @@ export class GameloopService {
     }
   }
   moveBoss() {
-    
+
     for (let index in this.mapService.bosss) {
       const boss = this.mapService.bosss[index]
 
-      if (boss.direction == MOVE_RIGHT ) {
+      if (boss.direction == MOVE_RIGHT) {
         boss.scaleX = -1
         boss.posX += 0.01;
         if (boss.initPosX + boss.amplitude < boss.posX) {
@@ -349,11 +349,11 @@ export class GameloopService {
           boss.direction = MOVE_RIGHT
         }
       }
- 
+
     }
 
-      }
-    
+  }
+
 
   canDash() {
 
@@ -391,6 +391,8 @@ export class GameloopService {
       if (differanceX < 1 && differanceY < 1 && this.gameService.playerStat !== ISANINJA) {
         this.gameService.death = ISDEAD
         this.isDead = new Date()
+        this.move = 0
+        this.jumpNumber = 0
       }
 
       if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
@@ -415,7 +417,7 @@ export class GameloopService {
       }
 
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
-
+        
         this.gameOver()
         this.gameMusic.pause()
         this.gameMusic.currentTime = 0
@@ -440,6 +442,7 @@ export class GameloopService {
 
         this.gameService.death = ISDEAD
         this.isDead = new Date()
+        this.gameService.yVelocity = 0
       }
 
       if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
@@ -464,7 +467,7 @@ export class GameloopService {
 
 
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
-
+        this.stop = true
         this.gameOver()
         this.gameMusic.pause()
         this.gameMusic.currentTime = 0
@@ -487,6 +490,7 @@ export class GameloopService {
       if (differanceX < 1 && differanceY < 1 && this.gameService.playerStat !== ISANINJA) {
         this.gameService.death = ISDEAD
         this.isDead = new Date()
+        this.gameService.yVelocity = 0
       }
 
       if (differanceX < 3 && differanceY < 1 && this.gameService.playerStat === ISANINJA) {
@@ -533,6 +537,7 @@ export class GameloopService {
 
         this.gameService.death = ISDEAD
         this.isDead = new Date()
+        this.gameService.yVelocity = 0
       }
 
       if (differanceX < 3 && differanceY < 2 && this.gameService.playerStat === ISANINJA) {
@@ -540,7 +545,7 @@ export class GameloopService {
         this.gameService.kick = SHOOTTHEMALL
         this.lastKick = new Date()
         this.mapService.druids[i].isFlying = true
-
+        
       }
       if (this.mapService.druids[i].isFlying === true && this.mapService.druids[i].scaleX === 1) {
 
@@ -580,6 +585,7 @@ export class GameloopService {
       if (differanceX < 1 && differanceY < 1) {
         this.gameService.death = ISDEAD
         this.isDead = new Date()
+        this.gameService.yVelocity = 0
       }
       if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
 
@@ -1012,7 +1018,7 @@ export class GameloopService {
 
   isaNinja() {
 
-    if (this.compt % 5 === 0 && this.compt !== 0) {
+    if (this.compt % 5 === 0 && this.compt !== 0 && this.gameService.playerStat !== ISANINJA) {
       this.goNinja = new Date()
       this.gameService.playerStat = ISANINJA
 
@@ -1150,23 +1156,23 @@ export class GameloopService {
     this.innerWidth = window.innerWidth
 
     this.gameService.bossJumpTimer -= 1
-    if(this.gameService.boss === ISATTACKING){
-      if(this.gameService.playerX / 32 < this.mapService.bosss[0].posX){
+    if (this.gameService.boss === ISATTACKING) {
+      if (this.gameService.playerX / 32 < this.mapService.bosss[0].posX) {
         this.mapService.bosss[0].direction = MOVE_LEFT
       }
-      if(this.gameService.playerX / 32 > this.mapService.bosss[0].posX){
+      if (this.gameService.playerX / 32 > this.mapService.bosss[0].posX) {
         this.mapService.bosss[0].direction = MOVE_RIGHT
-    }
-      if(this.gameService.bossJumpTimer < 100){
+      }
+      if (this.gameService.bossJumpTimer < 100) {
         this.mapService.bosss[0].posY -= 0.02
       }
-      if(this.gameService.bossJumpTimer > 100){
+      if (this.gameService.bossJumpTimer > 100) {
         this.mapService.bosss[0].posY += 0.02
       }
-      if(this.gameService.bossJumpTimer <= 0){
+      if (this.gameService.bossJumpTimer <= 0) {
         this.gameService.bossJumpTimer = 200
       }
-  }
+    }
     if (((this.mapService.bosss[0].posX * 32) - (this.gameService.playerX)) < (this.innerWidth / 2)) {
 
       this.gameService.boss = ISATTACKING
@@ -1199,15 +1205,17 @@ export class GameloopService {
         let diffX = Math.round(Math.abs(this.fireBlocX - posX))
         let diffY = Math.round(Math.abs(this.fireBlocY - posY))
 
-        if (diffX < 3 && diffY < 2) {
+        if (diffX < 1 && diffY < 1) {
 
           this.gameService.death = ISDEAD
           this.isDead = new Date()
+          this.move = 0
+          this.jumpNumber = 0
 
         }
         if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
 
-          this.stop = true
+
           this.gameOver()
           this.gameMusic.pause()
           this.gameMusic.currentTime = 0
@@ -1236,16 +1244,18 @@ export class GameloopService {
         let diffX = Math.round(Math.abs(this.fireBlocX - posX))
         let diffY = Math.round(Math.abs(this.fireBlocY - posY))
 
-        if (diffX < 3 && diffY < 2) {
+        if (diffX < 1 && diffY < 1) {
 
 
           this.gameService.death = ISDEAD
           this.isDead = new Date()
+          this.move = 0
+          this.jumpNumber = 0
 
         }
         if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
 
-          this.stop = true
+
           this.gameOver()
           this.gameMusic.pause()
           this.gameMusic.currentTime = 0
@@ -1294,10 +1304,10 @@ export class GameloopService {
     this.moveDruid()
     this.moveBoss()
     this.bossAttack()
-   // this.cameraLock() // appelle de fonction explique au dessus //
+    this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
     this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
-    
+
 
   }
 
@@ -1336,6 +1346,9 @@ export class GameloopService {
     this.gameService.isOnFire = 0
     this.gameService.fireBalls = []
     this.gameService.death = 0
+    this.gameService.boss = 0
+    this.gameService.bossHeight = 98
+    this.gameService.bossWidth = 145
 
     this.mapService.monsters = [
       new OsMonster(24, 18.2),
@@ -1364,7 +1377,7 @@ export class GameloopService {
       new DruidMonster(100, 7)
     ]
     this.mapService.bosss = [
-      new BossMonster(40, 16),
+      new BossMonster(40, 15),
     ]
 
   }
