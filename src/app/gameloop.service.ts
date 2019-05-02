@@ -1252,14 +1252,14 @@ isOnFire() {
       this.gameService.boss = 0
     }
 
-    if (this.gameService.boss === ISATTACKING && new Date().getTime() - this.lastBossAttack.getTime() > 1000 && this.mapService.bosss[0].scaleX === 1) {
+    if (this.gameService.boss === ISATTACKING && new Date().getTime() - this.lastBossAttack.getTime() > 2000 && this.mapService.bosss[0].scaleX === 1) {
 
       let fireBall = new BossAttacks(this.mapService.bosss[0].posX, this.mapService.bosss[0].posY + (this.gameService.bossHeight / 32));
       this.gameService.bossAttacks.push(fireBall)
       this.lastBossAttack = new Date()
     }
 
-    if (this.gameService.boss === ISATTACKING && new Date().getTime() - this.lastBossAttack.getTime() > 1000 && this.mapService.bosss[0].scaleX === -1) {
+    if (this.gameService.boss === ISATTACKING && new Date().getTime() - this.lastBossAttack.getTime() > 2000 && this.mapService.bosss[0].scaleX === -1) {
 
       let fireBall = new BossAttacks(this.mapService.bosss[0].posX + (160 / 32), this.mapService.bosss[0].posY + (this.gameService.bossHeight / 32));
       this.gameService.bossAttacks.push(fireBall)
