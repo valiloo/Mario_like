@@ -1431,7 +1431,7 @@ monsterDeathBossAxes() {
     this.moveDruid()
     this.moveBoss()
     this.bossAttack()
-    //this.cameraLock() // appelle de fonction explique au dessus //
+    this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
     this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
   }
@@ -1461,6 +1461,7 @@ monsterDeathBossAxes() {
 
 
     reInit() {
+      this.gameService.playerStat = 0
       this.compt = 0
       this.gameService.move = 0
       this.gameService.xVelocity = 0
