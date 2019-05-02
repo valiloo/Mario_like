@@ -1461,6 +1461,7 @@ monsterDeathBossAxes() {
 
 
     reInit() {
+      this.lastCompt = 0
       this.gameService.playerStat = 0
       this.compt = 0
       this.gameService.move = 0
