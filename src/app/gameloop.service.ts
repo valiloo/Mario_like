@@ -1155,8 +1155,9 @@ export class GameloopService {
   bossAttack() {
     this.innerWidth = window.innerWidth
 
-    this.gameService.bossJumpTimer -= 1
+    
     if (this.gameService.boss === ISATTACKING) {
+      this.gameService.bossJumpTimer -= 1
       if (this.gameService.playerX / 32 < this.mapService.bosss[0].posX) {
         this.mapService.bosss[0].direction = MOVE_LEFT
       }
@@ -1360,7 +1361,7 @@ export class GameloopService {
       new OgrMonster(110, 8.2),
       new OgrMonster(45, 6.2),
       new OgrMonster(140, 18.2),
-      new OgrMonster(10, 11.2),
+      new OgrMonster(10, 12.2),
     ]
     this.mapService.slims = [
       new SlimMonster(86, 18.8),
@@ -1377,7 +1378,7 @@ export class GameloopService {
       new DruidMonster(100, 7)
     ]
     this.mapService.bosss = [
-      new BossMonster(40, 15),
+      new BossMonster(40, 14),
     ]
 
   }
