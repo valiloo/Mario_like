@@ -3,7 +3,7 @@ import { MapService } from './map.service';
 import { Tir } from './models/tir';
 import { Piece } from './models/piece';
 import { Axes } from './models/axes';
-import { BossAttack } from './models/bossAttack';
+
 
 export const MOVE_RIGHT = 1
 export const MOVE_LEFT = 2

@@ -10,7 +10,7 @@ import { SlimMonster } from './models/slim';
 import { Axes } from './models/axes';
 import { DruidMonster } from './models/druid';
 import { BossMonster} from './models/boss';
-import { BossAttack } from './models/bossAttack';
+
 
 
 
@@ -1228,11 +1228,10 @@ monsterDeathBossAxes() {
     this.moveSlim()
     this.moveDruid()
     this.moveBoss()
-    this.bossFire()
-    //this.cameraLock() // appelle de fonction explique au dessus //
+    this.cameraLock() // appelle de fonction explique au dessus //
     this.isTheEnd(this.playerBlocX, this.playerBlocY)
       this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
-   console.log(this.gameService.bossAttacks)
+   
   }
 
 

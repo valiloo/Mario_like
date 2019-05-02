@@ -22,11 +22,12 @@
     <div *ngFor="let boss of mapService.bosss" class="BossMonster" [ngStyle]="{top: '' + boss.posY * 32 + 'px', left: '' + boss.posX * 32 + 'px', 'transform': 'scaleX(' + boss.scaleX + ')'}"></div> 
     
       </div>
+      
 <!--   <img src="/assets/textures/stopwatch.png" class="stopwatch">
   <h4><span class="time">{{ (time>=0) ? time: "Go !" }} </span></h4> -->
 
   <div class="avatar"></div>
   <div class="coinAvatar"></div>
-  <div class="myCompt">{{ gameLoop.compt}}  X </div>
+  <div class="myCompt"> {{ gameLoop.compt}}  X </div>
  
-</div>
+
