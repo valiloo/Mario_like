@@ -1225,7 +1225,7 @@ isOnFire() {
     this.innerWidth = window.innerWidth
 
 
-    
+    if (this.gameService.boss[0].pdv > 0) {
     if (this.gameService.boss === ISATTACKING) {
       this.gameService.bossJumpTimer -= 1
       if (this.gameService.playerX / 32 < this.mapService.bosss[0].posX) {
@@ -1324,7 +1324,7 @@ isOnFire() {
           this.jumpNumber = 0
 
         }
-        
+
         if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
           this.gameOver()
           this.gameMusic.pause()
@@ -1344,6 +1344,7 @@ isOnFire() {
       }
     }
   }
+}
         
 monsterDeathBossAxes() {
 
