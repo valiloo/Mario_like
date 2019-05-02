@@ -25,6 +25,7 @@ h1 {
   opacity: 0.8;
   color: #001233;
   text-shadow: #d30255 1px 1px 5px;
+  margin-bottom: 1%;
 }
 
 button {
@@ -55,7 +56,7 @@ button:hover {
   background-color: #072b6d;
 }
 
-.dragon {
+/* .dragon {
   margin-left: 48%;
   position: absolute;
   top: 25%;
@@ -63,7 +64,7 @@ button:hover {
   height: 72px;
   background-image: url(http://i.imgur.com/xtk0SCC.png);
   animation: moveE 1s steps(10) infinite;
-}
+} */
 
 @keyframes moveE {
   from {
@@ -83,7 +84,7 @@ button:hover {
   position: absolute;
   width: 50px;
   height: auto;
-  display: block;
+  //display: block;
   margin-left: 700px;
   margin-right: auto;
 }
@@ -97,7 +98,9 @@ button:hover {
 
 .yourTime {
   font-family: "timer";
-  text-align: center;
+  //text-align: center;
   font-size: 30px;
-  top: 10%;
+  margin-top: 0px;
+  margin-left: 625px;
+
 }

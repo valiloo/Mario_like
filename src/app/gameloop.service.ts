@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { OsMonster } from './models/monster';
 import { OgrMonster } from './models/ogr';
 import { SlimMonster } from './models/slim';
+import { endTimeRange } from '@angular/core/src/profile/wtf_impl';
 
 
 
@@ -36,9 +37,9 @@ export class GameloopService {
   public fireBall
   public lastFireballDate = new Date();
   public isDead = new Date();
-  //public startTime: number
-  //public endTime: number
-  //public canStopTime: boolean = true
+  public startTime : Date
+// public endTime : Date
+  public canStopTime: boolean = true
   public jumpNumber: number = 2
   public jumpSound
   public gameMusic
@@ -57,6 +58,8 @@ export class GameloopService {
   //this.deathSound.load()
   //this.deathSound.play()
   public lastPosX
+  public gameDuration: number = 0
+
 
 
 
@@ -189,238 +192,248 @@ export class GameloopService {
 
     }
 
-  
+
 
 
     // si aucune touche enfonce, le perso sera immobile //
-    else if((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
-  if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === true) {
-    this.move = 0
-  }
-  else if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === false) {
-    this.jumpDown = 3
+    else if ((this.gameService.move !== MOVE_RIGHT) && (this.gameService.move !== MOVE_LEFT)) {
+      if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === true) {
+        this.move = 0
+      }
+      else if (this.getBottomCollision(this.playerBlocX, this.playerBlocY) === false) {
+        this.jumpDown = 3
+      }
+
+    }
+    //this.gameService.gameDuration = new Date().getTime() - this.gameService.startTime.getTime()
   }
 
+
+  // fonction bloquant la camera sur le personnage //
+  cameraLock() {
+
+    this.innerWidth = window.innerWidth // est egal a la moitie de l'ecran //
+    window.scroll(this.gameService.playerX - ((this.innerWidth / 2) - 27), this.gameService.playerY) // bloque le scroll de page sur la position X du joueur - la moitie de l'ecran //
+  }
+
+getTimePlayed(){
+    this.gameDuration = new Date().getTime() - this.startTime.getTime()
+
+  
 }
-this.gameService.gameDuration = new Date().getTime() - this.gameService.startTime.getTime()
-  }
 
 
-// fonction bloquant la camera sur le personnage //
-cameraLock() {
-
-  this.innerWidth = window.innerWidth // est egal a la moitie de l'ecran //
-  window.scroll(this.gameService.playerX - ((this.innerWidth / 2) - 27), this.gameService.playerY) // bloque le scroll de page sur la position X du joueur - la moitie de l'ecran //
-}
-
-/*   getTimePlayed() {
+  /* getTimePlayed() {
     if (this.canStopTime === true) {
-      this.endTime = Math.floor((Date.now() - this.startTime) / 1000)
+       this.diffTimeFin = this.endTime.getTime()
+       this.diffTimeDeb = this.startTime.getTime()
+       this.diffTime = (this.diffTimeFin - this.diffTimeDeb) / 1000
 
-      this.canStopTime = false
+
+        //Math.floor((Date.now() - this.startTime) / 1000)
 
     }
+  } */
+
+  // fonction faisant se deplacer les monstres //
+  moveMonster() {
+    for (let index in this.mapService.monsters) {
+      const monster = this.mapService.monsters[index]
+
+      if (monster.direction == MOVE_RIGHT) {
+        monster.scaleX = -1
+        monster.posX += 0.05;
+        if (monster.initPosX + monster.amplitude < monster.posX) {
+          monster.direction = MOVE_LEFT;
+        }
+      }
+      else if (monster.direction == MOVE_LEFT) {
+        monster.posX -= 0.05;
+        monster.scaleX = 1
+        if (monster.initPosX - monster.amplitude > monster.posX) {
+          monster.direction = MOVE_RIGHT
+        }
+      }
+    }
+
+
   }
- */
-// fonction faisant se deplacer les monstres //
-moveMonster() {
-  for (let index in this.mapService.monsters) {
-    const monster = this.mapService.monsters[index]
+  // fonction faisant se deplacer les monstres //
+  moveOgr() {
+    for (let index in this.mapService.ogrs) {
+      const ogr = this.mapService.ogrs[index]
 
-    if (monster.direction == MOVE_RIGHT) {
-      monster.scaleX = -1
-      monster.posX += 0.05;
-      if (monster.initPosX + monster.amplitude < monster.posX) {
-        monster.direction = MOVE_LEFT;
+      if (ogr.direction == MOVE_RIGHT) {
+        ogr.scaleX = -1
+        ogr.posX += 0.02;
+        if (ogr.initPosX + ogr.amplitude < ogr.posX) {
+          ogr.direction = MOVE_LEFT
+        }
       }
-    }
-    else if (monster.direction == MOVE_LEFT) {
-      monster.posX -= 0.05;
-      monster.scaleX = 1
-      if (monster.initPosX - monster.amplitude > monster.posX) {
-        monster.direction = MOVE_RIGHT
-      }
-    }
-  }
-
-
-}
-// fonction faisant se deplacer les monstres //
-moveOgr() {
-  for (let index in this.mapService.ogrs) {
-    const ogr = this.mapService.ogrs[index]
-
-    if (ogr.direction == MOVE_RIGHT) {
-      ogr.scaleX = -1
-      ogr.posX += 0.02;
-      if (ogr.initPosX + ogr.amplitude < ogr.posX) {
-        ogr.direction = MOVE_LEFT
-      }
-    }
-    else if (ogr.direction == MOVE_LEFT) {
-      ogr.scaleX = 1;
-      ogr.posX -= 0.02;
-      if (ogr.initPosX - ogr.amplitude > ogr.posX) {
-        ogr.direction = MOVE_RIGHT
-      }
-    }
-  }
-}
-moveSlim() {
-  for (let index in this.mapService.slims) {
-    const slim = this.mapService.slims[index]
-
-    if (slim.direction == MOVE_RIGHT) {
-      slim.scaleX = -1
-      slim.posX += 0.01;
-      if (slim.initPosX + slim.amplitude < slim.posX) {
-        slim.direction = MOVE_LEFT
-      }
-    }
-    else if (slim.direction == MOVE_LEFT) {
-      slim.scaleX = 1;
-      slim.posX -= 0.01;
-      if (slim.initPosX - slim.amplitude > slim.posX) {
-        slim.direction = MOVE_RIGHT
+      else if (ogr.direction == MOVE_LEFT) {
+        ogr.scaleX = 1;
+        ogr.posX -= 0.02;
+        if (ogr.initPosX - ogr.amplitude > ogr.posX) {
+          ogr.direction = MOVE_RIGHT
+        }
       }
     }
   }
+  moveSlim() {
+    for (let index in this.mapService.slims) {
+      const slim = this.mapService.slims[index]
 
-}
-
-
-canDash() {
-
-  if ((this.gameService.dash === DASH) && this.gameService.playerScaleX === 1 && new Date().getTime() - this.dash.getTime() > 50) {
-
-
-
-    this.gameService.playerX -= 20 // deplace le personnage de 8px sur la gauche//
-    this.dash = new Date();
-    this.jumpDown = 3
-
-
-  }
-
-  if ((this.gameService.dash === DASH) && this.gameService.playerScaleX === -1 && new Date().getTime() - this.dash.getTime() > 50) {
-
-
-    this.gameService.playerX += 20 // deplace le personnage de 8px sur la droite //
-    this.dash = new Date();
-    this.jumpDown = 3
-
-
-  }
-}
-getMonsterCollision() {
-  this.playerBlocY = Math.round(this.gameService.playerY / 32)
-  this.playerBlocX = Math.round(this.gameService.playerX / 32)
-  for (let i = 0; i < this.mapService.monsters.length; i++) {
-    let posX = this.mapService.monsters[i].posX;
-    let posY = this.mapService.monsters[i].posY;
-    let differanceX = Math.abs(this.playerBlocX - posX);
-    let differanceY = Math.abs(this.playerBlocY - posY)
-
-
-    if (differanceX < 1 && differanceY < 1) {
-      this.gameService.death = ISDEAD
-      this.isDead = new Date()
+      if (slim.direction == MOVE_RIGHT) {
+        slim.scaleX = -1
+        slim.posX += 0.01;
+        if (slim.initPosX + slim.amplitude < slim.posX) {
+          slim.direction = MOVE_LEFT
+        }
+      }
+      else if (slim.direction == MOVE_LEFT) {
+        slim.scaleX = 1;
+        slim.posX -= 0.01;
+        if (slim.initPosX - slim.amplitude > slim.posX) {
+          slim.direction = MOVE_RIGHT
+        }
+      }
     }
-    if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
+
+  }
 
 
-      this.gameOver()
-      this.gameMusic.pause()
-      this.gameMusic.currentTime = 0
+  canDash() {
+
+    if ((this.gameService.dash === DASH) && this.gameService.playerScaleX === 1 && new Date().getTime() - this.dash.getTime() > 50) {
+
+
+
+      this.gameService.playerX -= 20 // deplace le personnage de 8px sur la gauche//
+      this.dash = new Date();
+      this.jumpDown = 3
+
+
+    }
+
+    if ((this.gameService.dash === DASH) && this.gameService.playerScaleX === -1 && new Date().getTime() - this.dash.getTime() > 50) {
+
+
+      this.gameService.playerX += 20 // deplace le personnage de 8px sur la droite //
+      this.dash = new Date();
+      this.jumpDown = 3
 
 
     }
   }
-
-}
-
-getOgrCollision() {
-  this.playerBlocY = Math.round(this.gameService.playerY / 32)
-  this.playerBlocX = Math.round(this.gameService.playerX / 32)
-  for (let i = 0; i < this.mapService.ogrs.length; i++) {
-    let posX = this.mapService.ogrs[i].posX;
-    let posY = this.mapService.ogrs[i].posY;
-    let differanceX = Math.abs(this.playerBlocX - posX);
-    let differanceY = Math.abs(this.playerBlocY - posY)
-
-
-    if (differanceX < 1 && differanceY < 1) {
-      this.gameService.death = ISDEAD
-      this.isDead = new Date()
-    }
-    if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
-
-      this.gameOver()
-      this.gameMusic.pause()
-      this.gameMusic.currentTime = 0
-
-
-    }
-  }
-
-}
-
-getSlimCollision() {
-  this.playerBlocY = Math.round(this.gameService.playerY / 32)
-  this.playerBlocX = Math.round(this.gameService.playerX / 32)
-  for (let i = 0; i < this.mapService.slims.length; i++) {
-    let posX = this.mapService.slims[i].posX;
-    let posY = this.mapService.slims[i].posY;
-    let differanceX = Math.abs(this.playerBlocX - posX);
-    let differanceY = Math.abs(this.playerBlocY - posY)
-
-
-    if (differanceX < 1 && differanceY < 1) {
-      this.gameService.death = ISDEAD
-      this.isDead = new Date()
-    }
-    if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
-
-      this.stop = true
-      this.gameOver()
-      this.gameMusic.pause()
-      this.gameMusic.currentTime = 0
-
-
-    }
-  }
-
-}
-
-
-monsterDeath() {
-
-  for (let j = 0; j < this.gameService.fireBalls.length; j++) {
-    this.fireBlocX = Math.round(this.gameService.fireBalls[j].posX / 32)
-    this.fireBlocY = Math.round(this.gameService.fireBalls[j].posY / 32)
-
-    for (let i = 0; i < this.mapService.monsters.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
+  getMonsterCollision() {
+    this.playerBlocY = Math.round(this.gameService.playerY / 32)
+    this.playerBlocX = Math.round(this.gameService.playerX / 32)
+    for (let i = 0; i < this.mapService.monsters.length; i++) {
       let posX = this.mapService.monsters[i].posX;
       let posY = this.mapService.monsters[i].posY;
-      let diffX = Math.abs(this.fireBlocX - posX)
-      let diffY = Math.abs(this.fireBlocY - posY)
+      let differanceX = Math.abs(this.playerBlocX - posX);
+      let differanceY = Math.abs(this.playerBlocY - posY)
 
 
-      if (diffX < 0.3 && diffY < 2.5) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
-        //need death animation with date method here voir getMonsterCollision
-        this.mapService.monsters.splice(i, 1)
-        this.gameService.fireBalls.splice(j, 1)
-        this.osDie = new Audio()
-        this.osDie.src = "assets/audio/osMonsterDie.mp3"
-        this.osDie.load()
-        this.osDie.play()
+      if (differanceX < 1 && differanceY < 1) {
+        this.gameService.death = ISDEAD
+        this.isDead = new Date()
+      }
+      if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
+
+
+        this.gameOver()
+        this.gameMusic.pause()
+        this.gameMusic.currentTime = 0
 
 
       }
+    }
 
+  }
+
+  getOgrCollision() {
+    this.playerBlocY = Math.round(this.gameService.playerY / 32)
+    this.playerBlocX = Math.round(this.gameService.playerX / 32)
+    for (let i = 0; i < this.mapService.ogrs.length; i++) {
+      let posX = this.mapService.ogrs[i].posX;
+      let posY = this.mapService.ogrs[i].posY;
+      let differanceX = Math.abs(this.playerBlocX - posX);
+      let differanceY = Math.abs(this.playerBlocY - posY)
+
+
+      if (differanceX < 1 && differanceY < 1) {
+        this.gameService.death = ISDEAD
+        this.isDead = new Date()
+      }
+      if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
+
+        this.gameOver()
+        this.gameMusic.pause()
+        this.gameMusic.currentTime = 0
+
+
+      }
+    }
+
+  }
+
+  getSlimCollision() {
+    this.playerBlocY = Math.round(this.gameService.playerY / 32)
+    this.playerBlocX = Math.round(this.gameService.playerX / 32)
+    for (let i = 0; i < this.mapService.slims.length; i++) {
+      let posX = this.mapService.slims[i].posX;
+      let posY = this.mapService.slims[i].posY;
+      let differanceX = Math.abs(this.playerBlocX - posX);
+      let differanceY = Math.abs(this.playerBlocY - posY)
+
+
+      if (differanceX < 1 && differanceY < 1) {
+        this.gameService.death = ISDEAD
+        this.isDead = new Date()
+      }
+      if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
+
+        this.stop = true
+        this.gameOver()
+        this.gameMusic.pause()
+        this.gameMusic.currentTime = 0
+
+
+      }
+    }
+
+  }
+
+
+  monsterDeath() {
+
+    for (let j = 0; j < this.gameService.fireBalls.length; j++) {
+      this.fireBlocX = Math.round(this.gameService.fireBalls[j].posX / 32)
+      this.fireBlocY = Math.round(this.gameService.fireBalls[j].posY / 32)
+
+      for (let i = 0; i < this.mapService.monsters.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
+        let posX = this.mapService.monsters[i].posX;
+        let posY = this.mapService.monsters[i].posY;
+        let diffX = Math.abs(this.fireBlocX - posX)
+        let diffY = Math.abs(this.fireBlocY - posY)
+
+
+        if (diffX < 0.3 && diffY < 2.5) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
+          //need death animation with date method here voir getMonsterCollision
+          this.mapService.monsters.splice(i, 1)
+          this.gameService.fireBalls.splice(j, 1)
+          this.osDie = new Audio()
+          this.osDie.src = "assets/audio/osMonsterDie.mp3"
+          this.osDie.load()
+          this.osDie.play()
+
+
+        }
+
+      }
     }
   }
-}
   monsterDeathOgr() {
 
     for (let j = 0; j < this.gameService.fireBalls.length; j++) {
@@ -481,256 +494,257 @@ monsterDeath() {
 
 
 
-    isTheEnd(playerBlocX, playerBlocY) {
-      this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
-      this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel vers une valeur de l'array de la carte  //
-      this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
+  isTheEnd(playerBlocX, playerBlocY) {
+    this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
+    this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel vers une valeur de l'array de la carte  //
+    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
 
-      if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
-        //this.getTimePlayed()
-        this.youWin()
-        return true
-      }
-      else if (this.mapTheme.blocs[this.cell].isEnd === false) {
-        return false
-      }
+    if (this.mapTheme.blocs[this.cell].isEnd === true) { // cf dessus //
+      this.getTimePlayed()
+
+      this.youWin()
+      return true
     }
-    isOnFire() {
+    else if (this.mapTheme.blocs[this.cell].isEnd === false) {
+      return false
+    }
+  }
+  isOnFire() {
+    this.lastPosX = this.gameService.playerX
+    this.innerWidth = window.innerWidth
+
+
+    // Utile pour déterminer avec précision le sprite de la première balle selon l' orientation du personnage
+
+
+    if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === -1) {
       this.lastPosX = this.gameService.playerX
-      this.innerWidth = window.innerWidth
+      let fireBall = new Tir(this.gameService.playerX + 70, this.gameService.playerY + this.gameService.playerHeight / 2);
+      this.gameService.fireBalls.push(fireBall)
+      this.lastFireballDate = new Date();
+      this.gunSound = new Audio();
+      this.gunSound.src = "assets/audio/gun.mp3"
+      this.gunSound.load()
+      this.gunSound.play()
+    }
 
-
-      // Utile pour déterminer avec précision le sprite de la première balle selon l' orientation du personnage
-
-
-      if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === -1) {
-        this.lastPosX = this.gameService.playerX
-        let fireBall = new Tir(this.gameService.playerX + 70, this.gameService.playerY + this.gameService.playerHeight / 2);
-        this.gameService.fireBalls.push(fireBall)
-        this.lastFireballDate = new Date();
-        this.gunSound = new Audio();
-        this.gunSound.src = "assets/audio/gun.mp3"
-        this.gunSound.load()
-        this.gunSound.play()
-      }
-
-      if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === 1) {
-        this.lastPosX = this.gameService.playerX
-        let fireBall = new Tir(this.gameService.playerX, this.gameService.playerY + this.gameService.playerHeight / 2);
-        this.gameService.fireBalls.push(fireBall)
-        this.lastFireballDate = new Date();
-        this.gunSound = new Audio();
-        this.gunSound.src = "assets/audio/gun.mp3"
-        this.gunSound.load()
-        this.gunSound.play()
-      }
+    if (this.gameService.isOnFire === ISONFIRE && new Date().getTime() - this.lastFireballDate.getTime() > 250 && this.gameService.playerScaleX === 1) {
+      this.lastPosX = this.gameService.playerX
+      let fireBall = new Tir(this.gameService.playerX, this.gameService.playerY + this.gameService.playerHeight / 2);
+      this.gameService.fireBalls.push(fireBall)
+      this.lastFireballDate = new Date();
+      this.gunSound = new Audio();
+      this.gunSound.src = "assets/audio/gun.mp3"
+      this.gunSound.load()
+      this.gunSound.play()
+    }
 
 
 
-      if (this.gameService.playerScaleX === -1) {  //Comportement des balles lorsque le personnage est orienté vers la droite
-        for (let i = 0; i < this.gameService.fireBalls.length; i++) {
+    if (this.gameService.playerScaleX === -1) {  //Comportement des balles lorsque le personnage est orienté vers la droite
+      for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
-          if (this.gameService.fireBalls[i].posX <= this.lastPosX + (this.innerWidth / 2) && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
-            this.gameService.fireBalls[i].posX += 10
-          }
-          else {
-            this.gameService.fireBalls.splice(i, 1)
-
-          }
-
+        if (this.gameService.fireBalls[i].posX <= this.lastPosX + (this.innerWidth / 2) && this.gameService.fireBalls[i].posX >= this.gameService.playerX) {
+          this.gameService.fireBalls[i].posX += 10
         }
-      }
-      else if (this.gameService.playerScaleX === 1) {  // Comportement des balles lorsque le personnage est orienté vers la gauche
+        else {
+          this.gameService.fireBalls.splice(i, 1)
 
-        for (let i = 0; i < this.gameService.fireBalls.length; i++) {
-
-          if (this.gameService.fireBalls[i].posX >= this.gameService.playerX - (this.innerWidth / 2) && this.gameService.fireBalls[i].posX <= this.gameService.playerX) {
-            this.gameService.fireBalls[i].posX -= 10 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
-            // Dès que la balle sort de l' écran elle disparaît
-          }
-          else {
-            this.gameService.fireBalls.splice(i, 1)
-
-          }
-        }
-      }
-
-      //Permet de voir l'animation du personnage lorsqu' il rengaine
-      if (this.gameService.isOnFire === FINTIR && this.timerEndFire === 0) {
-
-        this.gameService.isOnFire = 0
-
-
-      }
-
-      if (this.timerEndFire <= 0) {
-        this.timerEndFire = 5
-      }
-
-      if (this.gameService.isOnFire !== ISONFIRE && this.gameService.isOnFire === FINTIR) {
-        this.timerEndFire -= 1
-      }
-    }
-
-
-
-    // fonction gerant la collision a droite //
-    getRightCollision(playerBlocX, playerBlocY): boolean { // prend deux options : playerBlocY et playerBlocX // 
-      this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
-      this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel une valeur de l'array de la carte  //
-      this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX + 1] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et rajoute 1 a la coordone X pour checker le bloc a droite de la position du joueur//
-
-      if (this.mapTheme.blocs[this.cell].canGoThrough === false) { //check si la propriete canGoThrough de la donne de la carte est false//
-
-        return false
-      }
-      else if (this.mapTheme.blocs[this.cell].canGoThrough === true) { //check si la propriete canGoThrough de la donne de la carte est false//
-        return true
-      }
-    }
-
-    // fonction gerant la collision en bas //
-    getBottomCollision(playerBlocX, playerBlocY): boolean { // prend deux options : playerBlocY et playerBlocX // 
-      this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
-      this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel une valeur de l'array de la carte  //
-      this.cell = this.mapService.map[this.playerBlocY + 1][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et rajoute 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
-
-      if (this.mapTheme.blocs[this.cell].canGoThrough === false) { // cf dessus //
-
-        return false
-      }
-      else if (this.mapTheme.blocs[this.cell].canGoThrough === true) { // cf dessus //
-        return true
-      }
-    }
-
-    getLeftCollision(playerBlocX, playerBlocY): boolean { // prend deux options : playerBlocY et playerBlocX // 
-      this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
-      this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel  vers une valeur de l'array de la carte  //
-      this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX - 1] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone X pour checker le bloc au gauche de la position du joueur//
-
-      if (this.mapTheme.blocs[this.cell].canGoThrough === false) { // cf dessus //
-
-        return false
-      }
-      else if (this.mapTheme.blocs[this.cell].canGoThrough === true) { // cf dessus //
-        return true
-      }
-    }
-
-    getTopCollision(playerBlocX, playerBlocY) { // prend deux options : playerBlocY et playerBlocX // 
-      this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
-      this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel vers une valeur de l'array de la carte  //
-      this.cell = this.mapService.map[this.playerBlocY - 1][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
-
-      if (this.mapTheme.blocs[this.cell].canGoThrough === false) { // cf dessus //
-        return false
-      }
-      else if (this.mapTheme.blocs[this.cell].canGoThrough === true) { // cf dessus //
-        return true
-      }
-    }
-
-    getPosPiece(){
-      this.playerBlocY = Math.round(this.gameService.playerY / 32)
-      this.playerBlocX = Math.round(this.gameService.playerX / 32)
-      for (let i = 0; i < this.mapService.pieces.length; i++) {
-        let posX = this.mapService.pieces[i].posX;
-        let posY = this.mapService.pieces[i].posY;
-        let differanceX = Math.abs(this.playerBlocX - posX);
-        let differanceY = Math.abs(this.playerBlocY - posY)
-
-        if (differanceX < 2 && differanceY < 2) {
-          this.mapService.pieces.splice(i, 1);
-          this.compt++
         }
 
       }
     }
+    else if (this.gameService.playerScaleX === 1) {  // Comportement des balles lorsque le personnage est orienté vers la gauche
 
+      for (let i = 0; i < this.gameService.fireBalls.length; i++) {
 
-    loop() {
-      this.getPosPiece()
-      this.canMove() // appelle de fonction explique au dessus /  // 
-      this.isOnFire()
-      this.getMonsterCollision()
-      this.getOgrCollision()
-      this.getSlimCollision()
-      this.monsterDeath()
-      this.monsterDeathOgr()
-      this.monsterDeathSlim()
-      this.moveMonster() // appelle de fonction explique au dessus //
-      this.moveOgr() // appelle de fonction explique au dessus //
-      this.moveSlim()
-      this.cameraLock() // appelle de fonction explique au dessus //
-      this.isTheEnd(this.playerBlocX, this.playerBlocY)
-      this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
+        if (this.gameService.fireBalls[i].posX >= this.gameService.playerX - (this.innerWidth / 2) && this.gameService.fireBalls[i].posX <= this.gameService.playerX) {
+          this.gameService.fireBalls[i].posX -= 10 // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
+          // Dès que la balle sort de l' écran elle disparaît
+        }
+        else {
+          this.gameService.fireBalls.splice(i, 1)
 
-
+        }
+      }
     }
 
-    start() {
-      this.gameService.startTime = new Date()
+    //Permet de voir l'animation du personnage lorsqu' il rengaine
+    if (this.gameService.isOnFire === FINTIR && this.timerEndFire === 0) {
 
-      this.reInit() // Reinitialise toutes les variables
-      this.loop() // lance le loop au lancement du jeu //
-      //this.startTime = Date.now()
-      this.playGameMusic()
-
-
-
-    }
-    gameOver() {
-      this.stop = true
-      this.route.navigate(['/Over'])
-    }
-
-    youWin() {
-      this.route.navigate(['/win'])
-    }
-
-    reInit() {
-      this.compt = 0
-      this.gameService.move = 0
-      this.gameService.xVelocity = 0
-      this.gameService.yVelocity = 0
-      this.gameService.playerX = 20
-      this.gameService.playerY = 500
-      this.gameService.playerScaleX = 0
-      this.gameService.playerWidth = 53
-      this.gameService.playerHeight = 60
       this.gameService.isOnFire = 0
-      this.gameService.fireBalls = []
-      this.gameService.death = 0
 
-      this.mapService.monsters = [
-        new OsMonster(24, 18.2),
-        new OsMonster(39, 18.2),
-        new OsMonster(70, 18.2),
-        new OsMonster(120, 18.2),
-      ]
-      this.mapService.ogrs = [
-        new OgrMonster(110, 8.2),
-        new OgrMonster(45, 6.2),
-        new OgrMonster(140, 18.2),
-        new OgrMonster(10, 11.2),
-      ]
-      this.mapService.slims = [
-        new SlimMonster(86, 18.8),
-      ]
+
     }
 
+    if (this.timerEndFire <= 0) {
+      this.timerEndFire = 5
+    }
+
+    if (this.gameService.isOnFire !== ISONFIRE && this.gameService.isOnFire === FINTIR) {
+      this.timerEndFire -= 1
+    }
+  }
 
 
-    pause() {
-      if (!this.stop) {
-        requestAnimationFrame(() => this.loop())
-        this.stop = true;
-      } else if (this.stop) {
-        this.stop = false;
 
+  // fonction gerant la collision a droite //
+  getRightCollision(playerBlocX, playerBlocY): boolean { // prend deux options : playerBlocY et playerBlocX // 
+    this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
+    this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel une valeur de l'array de la carte  //
+    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX + 1] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et rajoute 1 a la coordone X pour checker le bloc a droite de la position du joueur//
+
+    if (this.mapTheme.blocs[this.cell].canGoThrough === false) { //check si la propriete canGoThrough de la donne de la carte est false//
+
+      return false
+    }
+    else if (this.mapTheme.blocs[this.cell].canGoThrough === true) { //check si la propriete canGoThrough de la donne de la carte est false//
+      return true
+    }
+  }
+
+  // fonction gerant la collision en bas //
+  getBottomCollision(playerBlocX, playerBlocY): boolean { // prend deux options : playerBlocY et playerBlocX // 
+    this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
+    this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel une valeur de l'array de la carte  //
+    this.cell = this.mapService.map[this.playerBlocY + 1][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et rajoute 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
+
+    if (this.mapTheme.blocs[this.cell].canGoThrough === false) { // cf dessus //
+
+      return false
+    }
+    else if (this.mapTheme.blocs[this.cell].canGoThrough === true) { // cf dessus //
+      return true
+    }
+  }
+
+  getLeftCollision(playerBlocX, playerBlocY): boolean { // prend deux options : playerBlocY et playerBlocX // 
+    this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
+    this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel  vers une valeur de l'array de la carte  //
+    this.cell = this.mapService.map[this.playerBlocY][this.playerBlocX - 1] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone X pour checker le bloc au gauche de la position du joueur//
+
+    if (this.mapTheme.blocs[this.cell].canGoThrough === false) { // cf dessus //
+
+      return false
+    }
+    else if (this.mapTheme.blocs[this.cell].canGoThrough === true) { // cf dessus //
+      return true
+    }
+  }
+
+  getTopCollision(playerBlocX, playerBlocY) { // prend deux options : playerBlocY et playerBlocX // 
+    this.playerBlocY = Math.round((this.gameService.playerY) / 32) // converti la position Y du personnage en pixel vers une valeur de l'array de la carte //
+    this.playerBlocX = Math.round((this.gameService.playerX) / 32) // converti la position X du personnage en pixel vers une valeur de l'array de la carte  //
+    this.cell = this.mapService.map[this.playerBlocY - 1][this.playerBlocX] // Recupere les valeurs precedentes pour pouvoir recuper la donne dans l'array map ex:[5][12] et enleve 1 a la coordone Y pour checker le bloc au dessus de la position du joueur//
+
+    if (this.mapTheme.blocs[this.cell].canGoThrough === false) { // cf dessus //
+      return false
+    }
+    else if (this.mapTheme.blocs[this.cell].canGoThrough === true) { // cf dessus //
+      return true
+    }
+  }
+
+  getPosPiece() {
+    this.playerBlocY = Math.round(this.gameService.playerY / 32)
+    this.playerBlocX = Math.round(this.gameService.playerX / 32)
+    for (let i = 0; i < this.mapService.pieces.length; i++) {
+      let posX = this.mapService.pieces[i].posX;
+      let posY = this.mapService.pieces[i].posY;
+      let differanceX = Math.abs(this.playerBlocX - posX);
+      let differanceY = Math.abs(this.playerBlocY - posY)
+
+      if (differanceX < 2 && differanceY < 2) {
+        this.mapService.pieces.splice(i, 1);
+        this.compt++
       }
+
     }
+  }
+
+
+  loop() {
+    this.getTimePlayed()
+
+    this.getPosPiece()
+    this.canMove() // appelle de fonction explique au dessus /  // 
+    this.isOnFire()
+    this.getMonsterCollision()
+    this.getOgrCollision()
+    this.getSlimCollision()
+    this.monsterDeath()
+    this.monsterDeathOgr()
+    this.monsterDeathSlim()
+    this.moveMonster() // appelle de fonction explique au dessus //
+    this.moveOgr() // appelle de fonction explique au dessus //
+    this.moveSlim()
+    this.cameraLock() // appelle de fonction explique au dessus //
+    this.isTheEnd(this.playerBlocX, this.playerBlocY)
+    this.pause() //Vérifie si la loop doit être arrếté, si false requestAnimationFrame 
 
 
   }
+
+  start() {
+    //this.gameService.startTime = new Date()
+    this.startTime = new Date()
+
+    this.reInit() // Reinitialise toutes les variables
+    this.loop() // lance le loop au lancement du jeu //
+    this.playGameMusic()
+  }
+
+  gameOver() {
+    this.stop = true
+    this.route.navigate(['/Over'])
+  }
+
+  youWin() {
+    this.route.navigate(['/win'])
+  }
+
+  reInit() {
+    this.compt = 0
+    this.gameService.move = 0
+    this.gameService.xVelocity = 0
+    this.gameService.yVelocity = 0
+    this.gameService.playerX = 20
+    this.gameService.playerY = 500
+    this.gameService.playerScaleX = 0
+    this.gameService.playerWidth = 53
+    this.gameService.playerHeight = 60
+    this.gameService.isOnFire = 0
+    this.gameService.fireBalls = []
+    this.gameService.death = 0
+
+    this.mapService.monsters = [
+      new OsMonster(24, 18.2),
+      new OsMonster(39, 18.2),
+      new OsMonster(70, 18.2),
+      new OsMonster(120, 18.2),
+    ]
+    this.mapService.ogrs = [
+      new OgrMonster(110, 8.2),
+      new OgrMonster(45, 6.2),
+      new OgrMonster(140, 18.2),
+      new OgrMonster(10, 11.2),
+    ]
+    this.mapService.slims = [
+      new SlimMonster(86, 18.8),
+    ]
+  }
+
+
+
+  pause() {
+    if (!this.stop) {
+      requestAnimationFrame(() => this.loop())
+      this.stop = true;
+    } else if (this.stop) {
+      this.stop = false;
+
+    }
+  }
+
+
+}

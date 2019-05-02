@@ -12,7 +12,6 @@ export class WinPageComponent implements OnInit {
   
 
 
-  endTime = this.gameloop.endTime
 
   constructor(private gameloop: GameloopService) { }
 
@@ -23,13 +22,17 @@ export class WinPageComponent implements OnInit {
   }
 
 
-
+  
+temps = this.gameloop.gameDuration
 
 
   ngOnInit() {
+
+
     this.onAudioPlay();
     this.gameloop.pause()
     this.gameloop.reInit()
+    this.gameloop.getTimePlayed()
   }
 
 }

@@ -21,9 +21,11 @@
     <div *ngFor="let piece of mapService.pieces" class="piece"  [ngStyle]="{top: '' + piece.posY *  32 + 'px', left: '' + piece.posX * 32 + 'px'}"></div>
 
 
-<!--   <img src="/assets/textures/stopwatch.png" class="stopwatch">
-  <h4><span class="time">{{ (time>=0) ? time: "Go !" }} </span></h4> -->
-
+<img src="/assets/textures/stopwatch.png" class="stopwatch">
+<!--   <h4><span class="time">{{ (time>=0) ? time: "Go !" }} </span></h4> 
+ -->
+   <div class="endTime">{{ gameLoop.gameDuration / 1000 }}</div>  
+ 
   <div class="myCompt">{{ gameLoop.compt}} PTS</div>
  
 </div>

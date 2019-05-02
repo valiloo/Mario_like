@@ -39,21 +39,13 @@ export class MapComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
 
-    this.initMap();
+  //  this.initMap();
+
   }
 
 
 
-  /* 
-    startTimer() {
-      this.interval = setInterval(() => {
-        if(this.timeLeft <1000) {
-          this.timeLeft++;
-        } else {
-          this.timeLeft = 0;
-        }
-      },1000)
-    }  */
+
 
 
 
