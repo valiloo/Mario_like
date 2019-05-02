@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { GameloopService } from '../gameloop.service';
 
 @Component({
   selector: 'app-menu',
@@ -22,27 +23,16 @@ export class MenuComponent implements OnInit {
     this.mSpanColor = "black";
   } */
 
-  constructor() {
+  constructor(public loop : GameloopService) {
 
   }
 
 
   ngOnInit() {
-    this.menuMusic = new Audio()
-    this.menuMusic.src = "assets/audio/musiqueMenu.mp3"
-    this.menuMusic.load()
-    this.menuMusic.play()
+    
     setInterval(() => { if (this.time >= 0) this.time++; }, 1000);
-
+    this.loop.getSongMenu();
   }
 
-  ngOnDestroy() {
-    this.menuMusic.pause()
-    this.menuMusic = null
-  }
-
-
-
-
-
+ 
 }

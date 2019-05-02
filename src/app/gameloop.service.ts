@@ -61,6 +61,7 @@ export class GameloopService {
   public goblinScream
   public bossHit
   public lastBossAttack = new Date()
+  public menuMusic
   // this.deathSound = new Audio()
   //this.deathSound.src = "assets/audio/death.ogg"
   //this.deathSound.load()
@@ -1388,7 +1389,13 @@ monsterDeathBossAxes() {
   }
   } 
  
+  getSongMenu() {
 
+    this.menuMusic = new Audio()
+    this.menuMusic.src = "assets/audio/musiqueMenu.mp3"
+    this.menuMusic.load()
+    this.menuMusic.play()
+  }
          
 
   loop() {
