@@ -619,7 +619,7 @@ monsterDeath() {
       this.fireBlocX = Math.round(this.gameService.fireBalls[j].posX / 32)
       this.fireBlocY = Math.round(this.gameService.fireBalls[j].posY / 32)
 
-      for (let i = 0; i < this.mapService.ogrs.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
+      for (let i = 0; i < this.mapService.monsters.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
         let posX = this.mapService.monsters[i].posX;
         let posY = this.mapService.monsters[i].posY;
         let diffX = Math.abs(this.fireBlocX - posX)
