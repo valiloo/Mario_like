@@ -4,23 +4,169 @@
     width: 53px;  
     background: url('/assets/textures/sprite_course.png/');
     animation: movement 0.7s steps(6) infinite; 
-    transform : scaleX(-1)
+    transform : scaleX(-1);
 }
 .player {
     position: absolute;
     height: 60px;
     width: 36px;
+    left: 15px;
     background: url('/assets/Sprites/sprite_course_perso/perso_debout.png/');
     transform: scaleX(-1); 
+    top : -10px;
 }
 
-.playerJump{
-    position : absolute;
-    height:66px;
-    width: 79px;
+
+.onFire{
+    position: absolute;
+    height:63px;
+    width:68px;
     transform: scaleX(-1);
-    background: url('/assets/textures/saut.png/');
-    animation : jump 0.9s steps(9);
+    background: url('/assets/textures/spriteTir.png/') no-repeat;
+    animation : fire 0.5s steps(9) forwards;
+    top : -10px;
+}
+.finTir{
+    position:absolute;
+    height:63px;
+    width:68px;
+    transform:scaleX(-1);
+    background: url('/assets/textures/finTir.png/');
+}
+
+.fireball{
+    position:absolute;
+    height:32px;
+    width:32px;
+    background: url('/assets/textures/bullet.png/') no-repeat;
+}
+
+.isDead {
+     position:absolute;
+     height:63px;
+     width:63px;
+     background: url('/assets/textures/spriteDeath.png/') no-repeat;
+     transform: scaleX(-1);
+     animation : death 1s steps(8) forwards ;
+ }
+ .dash{
+     position: absolute;
+     height:47px;
+     width: 84.5px;
+     background : url('/assets/Sprites/dash.png/');
+     transform: scaleX(-1);
+     animation : dash .01s steps(2) infinite;
+ }
+
+ .ninjaWalk {
+
+    position: absolute;
+    height : 69px;
+    width: 33px;
+    background: url('/assets/Sprites/ninjaWalk.png/');
+    transform: scaleX(-1);
+    animation : ninjaWalk 0.5s steps(6) infinite ;
+    top : -19px;
+
+ }
+ 
+ .ninjaKick {
+
+    position: absolute;
+    height: 64px;
+    width: 63px;
+    background: url('/assets/textures/ninjaKick.png/') no-repeat;
+    transform: scaleX(-1);
+    animation : ninjaKick 0.4s steps(8);
+ }
+
+  .ninjaStatic {
+
+    position : absolute;
+    height: 67px;
+    width:36px;
+    background: url('/assets/textures/ninjaStatic.png/');
+    transform: scaleX(-1);
+    top : -20px;
+  }
+
+  .ninjaAxe {
+
+    position : absolute;
+    height:68px;
+    width:50px;
+    background: url('/assets/Sprites/ninjaAxe.png/');
+    transform: scaleX(-1);
+    animation: ninjaAxe 0.45s steps(6) infinite;
+    top: -20px;
+  }
+
+  .Axes {
+      position : absolute;
+      height : 33px;
+      width : 32px;
+      background: url('/assets/Sprites/Axes.png/') no-repeat;
+      animation: moveAxes 0.3s steps(3) infinite;
+  }
+
+  @keyframes moveAxes {
+
+    from {background-position : 0px;}
+    to {background-position : -105px;}
+  }
+
+ @keyframes ninjaAxe {
+
+    from {background-position: 0px};
+    to {background-position: - 300px}
+  }
+
+ 
+
+ @keyframes ninjaKick {
+
+    from{background-position : 0px;}
+    to {background-position : -504px;}
+ }
+
+ @keyframes ninjaWalk {
+
+    from {background-position : 0px;}
+    to {background-position : -205px;}
+ }
+
+@keyframes dash{
+    from{background-position : 0px;}
+    to{background-position: -169px;}
+}
+
+ .jumpUp {
+     position: absolute;
+     height : 70px;
+     width : 76px;
+     background: url('/assets/textures/saut.png') no-repeat;
+     transform: scaleX(-1);
+     animation : doubleJump 0.8s steps(9)  ;
+ }
+
+ .jumpDown {
+    position: absolute;
+    height : 65px;
+    width : 48px;
+    background: url('/assets/Sprites/jumpDown.png');
+    transform: scaleX(-1);
+}
+
+
+ @keyframes death {
+
+     from{background-position : 0px;}
+     to{background-position : -503px;}
+ }
+
+@keyframes fire {
+    from {background-position : 0px;}
+    to{background-position : -612px;}
 }
 
 @keyframes movement {
@@ -29,10 +175,26 @@ from {background-position : 0px;}
 to {background-position: -318px;}
 
 }
+@keyframes doubleJump {
 
-@keyframes jump {
-
-    from{background-position : 0px;}
-    to{background-position: -710px}
+    from {background-position : 0px;}
+    to {background-position : -710px;}
 }
 
+
+.bossAttack {
+    position: absolute;
+    background: url("/assets/Sprites/tirBoss.jpg") no-repeat;
+    height : 150px;
+    width : 150 px;
+    animation: fireballBOSS 1s steps(6) infinite;
+  }
+  
+  @keyframes fireballBOSS {
+    from {
+      background-position: 0px;
+    }
+    to {
+      background-position: -900px;
+    }
+  }

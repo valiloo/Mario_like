@@ -1,7 +1,8 @@
 
 <body>
+
   <app-player></app-player>
-  <div class="game-view" [ngStyle]="{'background': 'url(assets/textures/test_fond.jpg) no-repeat fixed 100%'}">
+  <div class="game-view">
     <div class="map">
       <div class="row" *ngFor="let row of mapService.map">
         <div class="col" *ngFor="let case of row">
@@ -10,6 +11,28 @@
 
       </div>
     </div>
-    <div *ngFor="let monster of mapService.monsters" class="OsMonster" [ngStyle]="{top: '' + monster.posY * 32 + 'px', left: '' + monster.posX * 32 + 'px'}"></div> 
-    <div *ngFor="let ogr of mapService.ogrs" class="OgrMonster" [ngStyle]="{top: '' + ogr.posY * 32 + 'px', left: '' + ogr.posX * 32 + 'px'}"></div> 
-  </div>
+
+
+    <div *ngFor="let monster of mapService.monsters" class="OsMonster" [ngStyle]="{top: '' + monster.posY * 32 + 'px', left: '' + monster.posX * 32 + 'px','transform': 'rotate('+ monster.isRotating + 'deg) scaleX(' + monster.scaleX + ')'}"></div> 
+    <div *ngFor="let ogr of mapService.ogrs" class="OgrMonster" [ngStyle]="{top: '' + ogr.posY * 32 + 'px', left: '' + ogr.posX * 32 + 'px', 'transform': 'rotate(' + ogr.isRotating+  'deg) scaleX('+ ogr.scaleX +')'}"></div> 
+
+    <div *ngFor="let slim of mapService.slims" class="SlimMonster" [ngStyle]="{top: '' + slim.posY * 32 + 'px', left: '' + slim.posX * 32 + 'px', 'transform': 'rotate(' + slim.isRotating + 'deg) scaleX(' + slim.scaleX + ')'}"></div> 
+    <div *ngFor="let druid of mapService.druids" class="DruidMonster" [ngStyle]="{top: '' + druid.posY * 32 + 'px', left: '' + druid.posX * 32 + 'px', 'transform': 'rotate(' + druid.isRotating + 'deg) scaleX(' + druid.scaleX + ')'}"></div> 
+    <div *ngFor="let piece of mapService.pieces" class="piece"  [ngStyle]="{top: '' + piece.posY *  32 + 'px', left: '' + piece.posX * 32 + 'px'}"></div>
+    <div *ngFor="let boss of mapService.bosss" class="BossMonster" [ngStyle]="{top: '' + boss.posY * 32 + 'px', left: '' + boss.posX * 32 + 'px', 'transform': 'scaleX(' + mapService.bosss[0].scaleX + ')'}"></div> 
+
+    <div *ngFor="let fire of gameService.bossAttacks">
+      <div class="fireball" [ngStyle]="{top: '' + fire.posY * 32+ 'px', left: '' + fire.posX * 32+ 'px'}">
+      </div>
+    
+    </div>
+
+    
+
+  <div [ngClass]="{'avatar' : gameService.playerStat === 0,
+                  'ninja': gameService.playerStat === 11 }">
+                </div>
+  <div class="coinAvatar"></div>
+  <div class="myCompt"> {{ gameLoop.compt}}  X </div>
+ 
+

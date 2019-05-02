@@ -18,6 +18,7 @@ import { GamestateService } from './gamestate.service';
 import { GameloopService } from './gameloop.service';
 import { GameOverComponent } from './game-over/game-over.component';
 import { MechantComponent } from './mechant/mechant.component';
+import { WinPageComponent } from './win-page/win-page.component';
 
 
 
@@ -29,21 +30,22 @@ import { MechantComponent } from './mechant/mechant.component';
     PlayersnameComponent,
     SettingsComponent,
     MenuComponent,
-
     GameOverComponent,
-
     MechantComponent,
+    WinPageComponent,
+
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(ROUTES),
+    RouterModule.forRoot(ROUTES, {enableTracing:true}),
     BrowserAnimationsModule
+    
 
 
   ],
-  providers: [MapService, GamestateService, GameloopService],
+  providers: [MapService, GamestateService, GameloopService, GameOverComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
