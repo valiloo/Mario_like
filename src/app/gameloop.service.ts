@@ -1492,7 +1492,7 @@ monsterDeathBossAxes() {
         new DruidMonster(100, 7)
       ]
       this.mapService.bosss = [
-      new BossMonster(30, 16),
+      new BossMonster(205, 14),
     ]
     this.mapService.druids = [
       new DruidMonster(50, 18),
