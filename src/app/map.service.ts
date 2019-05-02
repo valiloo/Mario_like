@@ -204,7 +204,6 @@ public bosss: BossMonster[] = [
 
   new BossMonster(40, 14),
 
-
 ]
 
   
