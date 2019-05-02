@@ -60,7 +60,6 @@ export class GameloopService {
   public kickSound
   public goblinScream
   public bossHit
-  public lastBossAttack
   public lastBossAttack = new Date()
   // this.deathSound = new Audio()
   //this.deathSound.src = "assets/audio/death.ogg"
@@ -1221,41 +1220,6 @@ isOnFire() {
     }
   }
 
-  monsterDeathBossAxes() {
-
-
-    for (let j = 0; j < this.gameService.axes.length; j++) {
-      this.fireBlocX = Math.round(this.gameService.axes[j].posX / 32)
-      this.fireBlocY = Math.round(this.gameService.axes[j].posY / 32)
-
-      for (let i = 0; i < this.mapService.bosss.length; i++) {// Pour chaque balle on compare sa position x y avec celle des monstres
-        let posX = this.mapService.bosss[i].posX;
-        let posY = this.mapService.bosss[i].posY;
-        let diffX = Math.abs(this.fireBlocX - posX)
-        let diffY = Math.abs(this.fireBlocY - posY)
-
-        if (diffX < 0.3 && diffY < 1.5 && this.mapService.bosss[i].pdv > 0) {
-
-          this.mapService.bosss[i].pdv -= 1
-          this.gameService.axes.splice(j, 1)
-
-
-        }
-
-        if (diffX < 0.3 && diffY < 1.5 && this.mapService.bosss[i].pdv === 0) { //Si la balle se trouve dans la même case que le monstre, le monstre et la balle disparaissent.
-          //need death animation with date method here voir getMonsterCollision
-          this.mapService.bosss.splice(i, 1)
-          this.gameService.axes.splice(j, 1)
-          this.osDie = new Audio()
-          this.osDie.src = "assets/audio/osMonsterDie.mp3"
-          this.osDie.load()
-          this.osDie.play()
-
-
-      }
-    }
-
-  }}
     
   bossAttack() {
     this.innerWidth = window.innerWidth
@@ -1360,8 +1324,27 @@ isOnFire() {
           this.jumpNumber = 0
 
         }
+        
         if (this.gameService.death === ISDEAD && new Date().getTime() - this.isDead.getTime() > 850) {
+          this.gameOver()
+          this.gameMusic.pause()
+          this.gameMusic.currentTime = 0
 
+
+        }
+        if (this.gameService.bossAttacks[i].posX >= this.mapService.bosss[0].posX - ((this.innerWidth / 2) / 32) && this.gameService.bossAttacks[i].posX <= this.mapService.bosss[0].posX) {
+          // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
+          // Dès que la balle sort de l' écran elle disparaît
+          this.gameService.bossAttacks[i].posX -= 0.3
+        }
+        else {
+          this.gameService.bossAttacks.splice(i, 1)
+
+        }
+      }
+    }
+  }
+        
 monsterDeathBossAxes() {
 
 
@@ -1404,24 +1387,7 @@ monsterDeathBossAxes() {
   } 
  
 
-          this.gameOver()
-          this.gameMusic.pause()
-          this.gameMusic.currentTime = 0
-
-
-        }
-        if (this.gameService.bossAttacks[i].posX >= this.mapService.bosss[0].posX - ((this.innerWidth / 2) / 32) && this.gameService.bossAttacks[i].posX <= this.mapService.bosss[0].posX) {
-          // Tant que les balles ne dépassent pas une certaine distance, elles continuent leur trajet
-          // Dès que la balle sort de l' écran elle disparaît
-          this.gameService.bossAttacks[i].posX -= 0.3
-        }
-        else {
-          this.gameService.bossAttacks.splice(i, 1)
-
-        }
-      }
-    }
-  }
+         
 
   loop() {
 
