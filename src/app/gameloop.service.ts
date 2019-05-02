@@ -1475,7 +1475,7 @@ monsterDeathBossAxes() {
         new OgrMonster(110, 8.2),
         new OgrMonster(45, 6.2),
         new OgrMonster(140, 18.2),
-        new OgrMonster(10, 11.2),
+        new OgrMonster(10, 12.2),
       ]
       this.mapService.slims = [
         new SlimMonster(86, 18.8),
