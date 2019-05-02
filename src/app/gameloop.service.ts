@@ -11,6 +11,7 @@ import { DruidMonster } from './models/druid';
 import { BossMonster } from './models/boss';
 import { BossAttacks } from './models/bossAttacks';
 import { endTimeRange } from '@angular/core/src/profile/wtf_impl';
+import { Piece } from './models/piece';
 
 
 @Injectable({
@@ -1503,6 +1504,30 @@ monsterDeathBossAxes() {
       new BossMonster(40, 14),
     ]
 
+    this.mapService.pieces = [
+        new Piece(10, 8),
+        new Piece(12, 8),
+        new Piece(8, 8),
+        new Piece(25, 5),
+        new Piece(45, 3),
+        new Piece(47, 3),
+        new Piece(43, 3),
+        new Piece(45, 14),
+        new Piece(150, 8),
+        new Piece(155, 7),
+        new Piece(160, 6),
+        new Piece(178, 4),
+        new Piece(180, 4),
+        new Piece(182, 4),
+        new Piece(202, 3),
+        new Piece(204, 3),
+        new Piece(206, 3),
+        new Piece(62, 15),
+        new Piece(75, 8),
+        new Piece(98.5, 9),
+        new Piece(127.3, 8),
+        new Piece(145.5, 9),  
+    ]
   }
 
 
